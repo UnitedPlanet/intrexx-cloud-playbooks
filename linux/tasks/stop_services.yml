@@ -1,0 +1,11 @@
+---
+
+- name: service upixp_{{ ix_portal_name }} stop
+  service: name=upixp_{{ ix_portal_name }} state=stopped
+  ignore_errors: yes
+- name: service upixsupervisor stop
+  service: name=upixsupervisor state=stopped enabled=false
+  ignore_errors: yes
+- name: service upixsolr stop
+  service: name=upixsolr state=stopped
+  ignore_errors: yes

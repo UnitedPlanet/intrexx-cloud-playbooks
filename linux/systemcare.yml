@@ -1,0 +1,15 @@
+---
+
+# This Playbook would execute system care commands.
+
+- hosts: appserver_services appserver_portal
+  remote_user: "{{ ix_remote_user }}"
+  become: yes
+  vars_files:
+    - ./vars.yml
+  tasks:
+    - fetch: src={{ ix_portal_logpath }}/portal.log dest=logs/{{ inventory_hostname }}-portal.log flat=yes
+    - fetch: src={{ ix_portal_logpath }}/portal_startup.log dest=logs/{{ inventory_hostname }}-portal_startup.log flat=yes
+    - fetch: src={{ ix_portal_logpath }}/workflow.log dest=logs/{{ inventory_hostname }}-workflow.log flat=yes
+    - fetch: src={{ ix_portal_logpath }}/datagrid.log dest=logs/{{ inventory_hostname }}-datagrid.log flat=yes
+    - fetch: src={{ ix_portal_logpath }}/tomcat_access.log dest=logs/{{ inventory_hostname }}-tomcat_access.log flat=yes

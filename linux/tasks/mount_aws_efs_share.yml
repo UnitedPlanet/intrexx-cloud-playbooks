@@ -1,0 +1,13 @@
+---
+# set up EFS share
+- name: install nfs-common
+  apt: name=nfs-common state=present
+- name: install rpcbind
+  apt: name=rpcbind state=present
+- name: Ensure EFS volume is mounted.
+  mount:
+    name: "{{ ix_shared_folder }}"
+    src: "{{ ix_efs_dns_address }}:/"
+    fstype: nfs4
+    opts: nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport
+    state: mounted

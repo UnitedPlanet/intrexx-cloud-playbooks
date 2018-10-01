@@ -1,0 +1,14 @@
+---
+# This Playbook would deploy the file server
+
+- hosts: fileserver
+  remote_user: "{{ ix_remote_user }}"
+  become: yes
+  vars_files:
+    - ./vars.yml
+  pre_tasks:
+    - hostname: name="{{ hostname }}"
+      when: ix_cloud_provider == "aws" or "vagrant"
+    - file: path="{{ ix_shared_folder }}" state=directory mode=0755
+  roles:
+    - role: geerlingguy.nfs

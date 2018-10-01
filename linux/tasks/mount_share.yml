@@ -1,0 +1,8 @@
+---
+# set up shared filesystem
+- include: tasks/mount_nfs_share.yml
+  when: ix_filesystem_type == "nfs"
+- include: tasks/mount_glusterfs.yml
+  when: ix_filesystem_type == "glusterfs"
+- include: tasks/mount_aws_efs_share.yml
+  when: ix_filesystem_type == "efs"

@@ -1,0 +1,10 @@
+---
+
+- name: service upixp_{{ ix_portal_name }} start
+  service: name=upixp_{{ ix_portal_name }} state=started enabled=yes
+  when: "'appserver_portal' in group_names"
+  ignore_errors: yes
+- name: service upixsolr start
+  service: name=upixsolr state=started
+  when: "'appserver_services' in group_names"
+  ignore_errors: yes

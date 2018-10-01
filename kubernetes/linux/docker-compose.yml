@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  db:
+    image: "ixclouddb:latest"
+    environment:
+      - POSTGRES_PASSWORD:mysecretpassword
+  solr:
+    image: "ixcloudsolr:latest"
+  portal:
+    image: "ixcloud:latest"
+    command: /opt/intrexx/bin/linux/portal.sh
+    ports:
+      - "8080:1337"
+      - "8443:8443"
+      - "8101:8101"
+    volumes:
+      - "/home/manuel/development/projects/kubernetes-ix/share/cfg:/opt/intrexx/cfg"
+      - "/home/manuel/development/projects/kubernetes-ix/share/portal:/opt/intrexx/org/cloud"
+      - "/tmp/ixstandalone:/opt/intrexx/org/test/log"
+    depends_on:
+      - db
+      - solr
+    links:
+      - db:ixclouddbservice
+      - solr:ixcloudsolrservice
+    #deploy:
+    #  mode: replicated
+    #  replicas: 2  
+volumes:
+  files:

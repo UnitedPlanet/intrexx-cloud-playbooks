@@ -1,0 +1,6 @@
+---
+# This Playbook would deploy the complete cluster
+- include: dbserver.yml
+- include: fileserver.yml
+- include: appserver.yml
+- include: loadbalancer.yml

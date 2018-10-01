@@ -1,0 +1,12 @@
+[Unit]
+Description=Intrexx Portal
+After=syslog.target network.target remote-fs.target
+
+[Service]
+Type=forking
+ExecStart=/opt/intrexx/bin/linux/upixp_{{ ix_portal_name }} start sysd
+ExecStop=/opt/intrexx/bin/linux/upixp_{{ ix_portal_name }} stop sysd
+User=root
+
+[Install]
+WantedBy=multi-user.target

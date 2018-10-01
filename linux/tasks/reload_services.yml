@@ -1,0 +1,13 @@
+---
+# reload daemons (requires systemd module)
+- name: reload daemon upixp_{{ ix_portal_name }}
+  systemd:
+    state: started
+    daemon_reload: yes
+    name: upixp_{{ ix_portal_name }}
+- name: reload daemon upixsolr
+  systemd:
+    state: started
+    daemon_reload: yes
+    name: upixsolr
+  when: "'appserver_services' in group_names"

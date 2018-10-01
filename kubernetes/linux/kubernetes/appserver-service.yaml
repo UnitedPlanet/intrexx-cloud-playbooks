@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: ixcloudservice
+#  namespace: ixcloud
+spec:
+  selector:
+    app: ixcloudapp
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: 1337

@@ -1,0 +1,103 @@
+---
+# This Playbook would deploy the whole app server
+
+- hosts: appserver_portal
+  vars_files:
+    - ./vars.yml
+  tasks:
+  - name: Create directory structure
+    win_file:
+      path: C:\install
+      state: directory
+
+  - name: Copy 7zip
+    win_copy:
+      src: files/7z1700-x64.msi
+      dest: C:\install\7z1700-x64.msi
+
+  - name: Copy install.cmd for 7zip
+    win_copy:
+      src: files/install.cmd
+      dest: C:\install\install.cmd
+
+  - name: Install 7zip
+    args:
+      creates: 'C:\Program Files\7-Zip'
+      chdir: C:\install\
+    win_command: C:\install\install.cmd
+
+  - name: Copy setup
+    win_copy: 
+      src: files/professional.zip 
+      dest: C:\install\professional.zip
+    args:
+      creates: C:\install\professional.zip
+
+  - name: Copy setup cfg
+    win_template: 
+      src: files/configuration.j2
+      dest: C:\install\configuration.properties
+
+  - name: Unzip setup
+    win_command: '"C:\Program Files\7-Zip\7z.exe" x C:\install\professional.zip -oC:\install'    
+    args:
+      creates: C:\install\professional
+      
+  - name: Disable all firewalls
+    win_firewall:
+      state: disabled
+      profiles:
+      - Domain
+      - Public
+      - Private
+    tags: disable_firewall
+
+  - name: Install intrexx
+    win_command: C:\install\professional\setup.bat -t --configFile=C:\install\configuration.properties
+    args:
+      creates: C:\intrexx\bin\windows\portal.bat
+    
+  - name: Copy logon script 
+    win_template: src=files/LogonServices.j2 dest=C:\install\LogonServices.ps1
+
+  - name: Enable logon
+    win_shell: C:\install\LogonServices.ps1 "{{ aws_appserver_hostname }}\\{{ aws_username }}"
+
+  - name: Remove cfg
+    win_file:
+      path: C:\intrexx\cfg
+      state: absent
+
+  - name: Mount share
+    win_command: cmd /c mklink /D C:\share {{ ix_share_unc_path }}    
+    args:
+      creates: C:\share
+    
+  - name: Mount cfg
+    win_command: cmd /c mklink /D C:\intrexx\cfg C:\share\cfg    
+    args:
+      creates: C:\intrexx\cfg\initial.cfg
+    
+  - name: Create and start portal service
+    win_service:
+      name: upixp_{{ ix_portal_name }}
+      display_name: Intrexx Portal
+      path: C:\intrexx\bin\windows\amd64\wrapper.exe -s C:\share\{{ ix_portal_name }}\internal\cfg\portal.wcf
+      state: started
+      start_mode: auto
+      username: "{{ aws_username }}"
+      password: "{{ aws_portal_pw }}"
+
+  - name: Stop Supervisor service
+    win_service:
+      name: upixsupervisor
+      state: stopped
+      start_mode: manual
+      username: "{{ aws_username }}"
+      password: "{{ aws_portal_pw }}"
+
+  - name: Stop Solr service
+    win_service:
+      name: upixsolr
+      state: stopped
+      start_mode: manual

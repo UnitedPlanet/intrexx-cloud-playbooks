@@ -1,0 +1,11 @@
+*.retry
+.vagrant
+*.log
+authorized_keys
+trunk-professional.zip
+professional.zip
+*.pdf
+*.pem
+kubernetes/linux/professional/*
+kubernetes/linux/share/*
+*.tar.gz

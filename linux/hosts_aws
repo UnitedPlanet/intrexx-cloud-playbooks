@@ -1,0 +1,11 @@
+[fileserver]
+10.0.0.5 hostname=IxCloudVMTestApp1 ipaddr=10.0.0.5
+
+[loadbalancer]
+10.0.0.5 hostname=IxCloudVMTestApp1 ipaddr=10.0.0.5
+
+[appserver_services]
+10.0.0.5 hostname=IxCloudVMTestApp1 ipaddr=10.0.0.5
+
+[appserver_portal]
+10.0.0.6 hostname=IxCloudVMTestApp2 ipaddr=10.0.0.6

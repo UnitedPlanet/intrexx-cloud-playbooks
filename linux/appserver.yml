@@ -1,0 +1,4 @@
+---
+# This Playbook would deploy all app servers
+- include: appserver_services.yml
+- include: appserver_portal.yml

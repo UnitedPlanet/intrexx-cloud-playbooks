@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: ixclouddbservice
+#  namespace: ixcloud
+spec:
+  selector:
+    app: ixclouddb
+  ports:
+    - protocol: TCP
+      port: 5432
+      targetPort: 5432

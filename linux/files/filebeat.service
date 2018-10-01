@@ -1,0 +1,17 @@
+#
+# filebeat systemd service
+#
+
+[Unit]
+Description=Filebeat
+Documentation=https://www.elastic.co/guide
+After=network.target
+
+[Service]
+Type=simple
+Restart=always
+WorkingDirectory=/opt/filebeat
+ExecStart=/opt/filebeat/filebeat -c /opt/filebeat/filebeat.yml
+
+[Install]
+WantedBy=multi-user.target

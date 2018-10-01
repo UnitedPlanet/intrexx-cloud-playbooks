@@ -1,0 +1,29 @@
+---
+# prepare setup
+- name: copy setup
+  copy: src=files/professional.zip dest={{ ix_remote_home }}/professional.zip force=no
+- name: copy services setup cfg
+  template: src=files/configuration.properties.j2 dest="{{ ix_remote_home }}/configuration.properties" owner=root group=root mode=0644
+  when: "'appserver_services' in group_names"
+- name: copy portal setup cfg
+  template: src=files/configuration_portal.properties.j2 dest="{{ ix_remote_home }}/configuration.properties" owner=root group=root mode=0644
+  when: "'appserver_portal' in group_names"  
+- name: unzip setup
+  command: /usr/bin/7z x professional.zip
+  args:
+    chdir: "{{ ix_remote_home }}"
+    creates: "{{ ix_remote_home }}/professional/setup.sh"
+- name: chmod setup
+  file:
+    path: "{{ ix_remote_home }}/professional/setup.sh"
+    mode: 0777
+- name: chmod java
+  file:
+    path: "{{ ix_remote_home }}/professional/jre/linux/amd64/bin/java"
+    mode: 0777
+
+# install Intrexx
+- name: install intrexx
+  command: "{{ ix_remote_home }}/professional/setup.sh -t --configFile={{ ix_remote_home }}/configuration.properties"
+  args:
+    creates: /opt/intrexx/bin/linux/portal.sh

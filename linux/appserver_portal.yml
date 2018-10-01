@@ -1,0 +1,28 @@
+---
+# This Playbook would deploy additional app servers
+
+- hosts: appserver_portal
+  remote_user: "{{ ix_remote_user }}"
+  become: yes
+  vars_files:
+    - ./vars.yml
+    - ./dbVars.yml
+  tasks:
+    - include: tasks/appserver_common.yml
+    - include: tasks/mount_share.yml
+    - include: tasks/setup_intrexx.yml
+    - include: tasks/stop_services.yml
+    - include: tasks/link_cfg_folder.yml
+    - include: tasks/copy_service_files.yml
+
+    # copy files from services
+    - name: copy portal script
+      copy: src=files/upixp_{{ ix_portal_name }} dest=/opt/intrexx/bin/linux/upixp_{{ ix_portal_name }} mode=0777 force=yes
+
+    # start services
+    - include: tasks/reload_services.yml
+    - include: tasks/stop_services.yml
+    - include: tasks/start_services.yml
+
+ #   - name: create websurge-allow.txt
+ #     file: path="{{ ix_shared_folder }}/{{ ix_portal_name }}/external/htmlroot/websurge-allow.txt" state=touch mode=0644

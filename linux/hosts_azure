@@ -1,0 +1,19 @@
+[dbserver]
+10.0.0.5 hostname=IxServices ipaddr=10.0.0.5
+
+[fileserver]
+10.0.0.5 hostname=IxServices ipaddr=10.0.0.5
+
+[loadbalancer]
+10.0.0.5 hostname=IxServices ipaddr=10.0.0.5
+
+[appserver_services]
+10.0.0.5 hostname=IxServices ipaddr=10.0.0.5
+
+[appserver_portal]
+10.0.0.6 hostname=IxAPPSERVER ipaddr=10.0.0.6
+
+[glusterfs]
+10.0.0.10 hostname=IxGlusterFs1 ipaddr=10.0.0.10
+10.0.0.11 hostname=IxGlusterFs2 ipaddr=10.0.0.11
+10.0.0.12 hostname=IxGlusterFs3 ipaddr=10.0.0.12

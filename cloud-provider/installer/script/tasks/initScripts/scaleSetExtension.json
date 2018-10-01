@@ -1,0 +1,4 @@
+{
+  "commandToExecute": "powershell Start-Service upixp_cloud"
+}
+

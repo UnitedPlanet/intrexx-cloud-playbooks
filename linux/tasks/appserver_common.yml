@@ -1,0 +1,16 @@
+---
+# common
+- file: path="{{ ix_shared_folder }}" state=directory mode=0755
+- file: path=/var/log/intrexx state=directory mode=0755
+- name: install p7zip
+  apt: name=p7zip-full state=present
+
+# set host name
+- name: hostname
+  hostname: name="{{ hostname }}"
+  when: ix_cloud_provider == "aws" or "vagrant"
+- name: update hosts
+  template: src=files/hosts.j2 dest=/etc/hosts owner=root group=root mode=0644
+  when: ix_cloud_provider == "aws" or "vagrant"
+- name: update portal config
+  template: src=files/portal_config.j2 dest="{{ ix_remote_home }}/portal_config.xml" owner=root group=root mode=0644

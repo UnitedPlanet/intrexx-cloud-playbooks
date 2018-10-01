@@ -1,0 +1,4 @@
+---
+- include: tasks/install_glusterfs.yml
+- name: mount GlusterFs share dir
+  mount: name="{{ ix_shared_folder }}" src="{{ ix_glusterfs_share }}" fstype=glusterfs state=mounted

@@ -1,0 +1,64 @@
+---
+# partition disks
+- name: partition disk for Solr
+  parted:
+    device: /dev/sdc
+    number: 1
+    state: present
+  when: ix_cloud_provider == "azure"
+
+- name: Create a ext4 filesystem on /dev/sdc1
+  filesystem:
+    fstype: ext4
+    dev: /dev/sdc1
+  when: ix_cloud_provider == "azure"
+
+- name: Mount device
+  mount:
+    path: /solr
+    src: /dev/sdc1
+    fstype: ext4
+    state: mounted
+  when: ix_cloud_provider == "azure"
+
+- name: partition disk for Solr
+  parted:
+    device: /dev/sdb
+    number: 1
+    state: present
+  when: ix_cloud_provider == "aws"
+
+- name: Create a ext4 filesystem on /dev/sdc1
+  filesystem:
+    fstype: ext4
+    dev: /dev/sdb1
+  when: ix_cloud_provider == "aws"
+
+- name: Mount device
+  mount:
+    path: /solr
+    src: /dev/sdb1
+    fstype: ext4
+    state: mounted
+  when: ix_cloud_provider == "aws"
+
+- name: partition disk for shared folder
+  parted:
+    device: /dev/sdd
+    number: 1
+    state: present
+  when: ix_cloud_provider == "azure"
+
+- name: Create a ext4 filesystem on /dev/sdd1
+  filesystem:
+    fstype: ext4
+    dev: /dev/sdd1
+  when: ix_cloud_provider == "azure"
+
+- name: Mount device
+  mount:
+    path: /share
+    src: /dev/sdd1
+    fstype: ext4
+    state: mounted
+  when: ix_cloud_provider == "azure"

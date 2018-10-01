@@ -1,0 +1,13 @@
+---
+# This Playbook would deploy the load balancer
+
+- hosts: loadbalancer
+  remote_user: "{{ ix_remote_user }}"
+  become: yes
+  vars_files:
+    - ./vars.yml
+  pre_tasks:
+    - hostname: name="{{ hostname }}"
+      when: ix_cloud_provider == "aws" or "vagrant"
+  roles:
+    - role: geerlingguy.nginx

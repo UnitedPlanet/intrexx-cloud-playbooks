@@ -1,0 +1,14 @@
+---
+
+# This Playbook would restart all app servers
+
+- hosts: appserver_portal
+  remote_user: "{{ ix_remote_user }}"
+  become: yes
+  vars_files:
+    - ./vars.yml
+  tasks:
+    - name: service upixp_{{ ix_portal_name }} stop
+      service: name=upixp_{{ ix_portal_name }} state=stopped
+    - name: service upixp_{{ ix_portal_name }} start
+      service: name=upixp_{{ ix_portal_name }} state=started

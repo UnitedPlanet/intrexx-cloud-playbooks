@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<portal xmlns="http://schemas.unitedplanet.de/intrexx/2012/portal/builder" path="/opt/intrexx/org/cloud" name="cloud">
+	<template path="/opt/intrexx/orgtempl/blank"/>
+	<database type="postgresql" timezone="UTC" hostName="ixclouddbservice" port="5432" databaseName="ixcloud" adminLogin="postgres" 
+				adminPassword="mysecretpassword" create="true" userLogin="postgres" userPassword="mysecretpassword" characterSet="UTF8" driverIndex="0"/>
+	<connectorSoap bindAddress="0.0.0.0" port="8101"/>
+	<connectorWeb  hostName="0.0.0.0" port="1337"/>
+	<search class="de.uplanet.lucy.search.solr.SolrPortalManagerConfiguration">
+		<property name="de.uplanet.lucy.solr.authenticationType" value="none">
+		</property>
+
+		<property name="de.uplanet.lucy.solr.serverType" value="http">
+		</property>
+
+		<property name="de.uplanet.lucy.solr.configurationBaseDirectory" value="/opt/intrexx/solr/server/solr">
+		</property>
+
+		<property name="de.uplanet.lucy.solr.url" value="http://ixcloudsolrservice:8983/solr">
+		</property>
+	</search>
+	
+	<property name="de.uplanet.lucy.server.distributed.ipfinder" value="sharedfs" />
+	<property name="de.uplanet.lucy.server.distributed.ipfinder.sharedfs" value="/share/cluster/addresses" />
+	<!-- 
+	<property name="de.uplanet.lucy.server.distributed.ipfinder.static.addresses" value="172.17.0.1,172.17.0.2,172.17.0.3,172.17.0.4,172.17.0.5"/>	
+	<property name="de.uplanet.lucy.server.distributed.ipfinder.multicast.multicastGroup" value="224.2.2.3" />
+	-->
+	<property name="de.uplanet.lucy.server.portal.logpath" value="/var/log/intrexx"/>
+	<property name="de.uplanet.lucy.server.shutdown.delaySeconds" value="15" />
+</portal>

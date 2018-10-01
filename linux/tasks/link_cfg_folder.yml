@@ -1,0 +1,9 @@
+---
+
+- name: remove /opt/intrexx/cfg
+  file: path=/opt/intrexx/cfg state=absent
+- name: symbollink /opt/intrexx/cfg -> {{ ix_shared_folder }}/cfg
+  file: path=/opt/intrexx/cfg
+        src="{{ ix_shared_folder }}/cfg"
+        state=link
+        force=yes

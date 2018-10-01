@@ -1,0 +1,36 @@
+---
+# This Playbook would install filebeat on all app servers
+
+- hosts: appserver_services appserver_portal
+  remote_user: "{{ ix_remote_user }}"
+  become: yes
+  tasks:
+    - name: install unzip
+      apt: name=unzip state=present
+    
+    - name: copy Filebeat
+      copy: src=files/filebeat.zip dest={{ ix_remote_home }}/filebeat-install.zip force=yes
+
+    - name: unzip
+      command: unzip filebeat-install.zip
+      args:
+        creates: filebeat/filebeat
+
+    - name: move filebeat
+      command: mv {{ ix_remote_home }}/filebeat /opt/
+      args:
+        creates: /opt/filebeat/filebeat
+      become: yes
+
+    - name: copy filebeat.yml
+      copy: src=files/filebeat.yml dest={{ ix_remote_home }}/filebeat.yml mode=0644 force=yes
+
+    - name: move filebeat.yml
+      command: mv filebeat.yml /opt/filebeat/filebeat.yml
+      become: yes
+
+    - name: copy filebeat.service
+      copy: src=files/filebeat.service dest=/opt/systemd/system/filebeat.service mode=0755 force=yes
+
+    - name: service filebeat start
+      service: name=filebeat state=started enabled=yes

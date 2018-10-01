@@ -1,0 +1,16 @@
+[dbserver]
+192.168.55.11 hostname=dbserver ipaddr=192.168.55.11
+
+[fileserver]
+192.168.55.11 hostname=dbserver ipaddr=192.168.55.11
+
+[loadbalancer]
+192.168.55.11 hostname=dbserver ipaddr=192.168.55.11
+
+[appserver_services]
+192.168.55.11 hostname=appserver1 ipaddr=192.168.55.11
+
+[appserver_portal]
+192.168.55.12 hostname=appserver2 ipaddr=192.168.55.12
+192.168.55.13 hostname=appserver3 ipaddr=192.168.55.13
+192.168.55.14 hostname=appserver3 ipaddr=192.168.55.14

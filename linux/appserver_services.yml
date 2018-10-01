@@ -1,0 +1,51 @@
+---
+# This Playbook would deploy the first app server
+
+- hosts: appserver_services
+  remote_user: "{{ ix_remote_user }}"
+  become: yes
+  vars_files:
+    - ./vars.yml
+    - ./dbVars.yml
+  tasks:    
+    - include: tasks/prepare_services_disks.yml
+    - include: tasks/appserver_common.yml
+    - include: tasks/mount_share.yml
+      when: ix_cloud_provider == "aws" and ix_filesystem_type == "efs"
+    - include: tasks/setup_intrexx.yml
+
+    # install portal
+    - name: install portal
+      command: /opt/intrexx/bin/linux/buildportal.sh -t --configFile={{ ix_remote_home }}/portal_config.xml
+      args:
+        creates: "{{ ix_shared_folder }}/{{ ix_portal_name }}/internal/cfg/portal.wcf"
+
+    # stop services
+    - include: tasks/stop_services.yml
+
+    # copy and link cfg folder to share
+    - name: copy /opt/intrexx/cfg -> "{{ ix_shared_folder }}/cfg"
+      command: cp -R /opt/intrexx/cfg "{{ ix_shared_folder }}/cfg"
+      args:
+        creates: "{{ ix_shared_folder }}/cfg/service.cfg"
+    - include: tasks/link_cfg_folder.yml
+
+    # fetch service files
+    - name: fetch portal script
+      fetch: src="/opt/intrexx/bin/linux/upixp_{{ ix_portal_name }}" dest=files/ flat=yes force=yes
+
+    # copy service files
+    - include: tasks/copy_service_files.yml
+
+    # start services
+    - include: tasks/reload_services.yml
+    - include: tasks/start_services.yml
+    
+    # disable services
+    - name: disable portal service "upixp_{{ ix_portal_name }}"
+      service: name="upixp_{{ ix_portal_name }}" state=stopped enabled=false
+      ignore_errors: yes
+
+    # create websurge-allow.txt for load tests with WebSurge
+    #- name: create websurge-allow.txt
+    #  file: path="{{ ix_shared_folder }}/{{ ix_portal_name }}/external/htmlroot/websurge-allow.txt" state=touch mode=0644

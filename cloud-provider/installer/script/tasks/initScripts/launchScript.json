@@ -1,0 +1,4 @@
+{
+  "commandToExecute": "powershell Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/ansible/ansible/devel/examples/scripts/ConfigureRemotingForAnsible.ps1' -OutFile 'C:\\ConfigureRemotingForAnsible.ps1';powershell -File 'C:\\ConfigureRemotingForAnsible.ps1' -CertValidityDays 100;powershell Remove-Item C:\\ConfigureRemotingForAnsible.ps1"
+}
+
