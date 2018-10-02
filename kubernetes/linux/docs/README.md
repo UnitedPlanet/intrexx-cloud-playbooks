@@ -42,7 +42,7 @@ Services
 
 Optional load balancer
 
-- As gateway to the public internet an external load balancer managed by your cloudprovider can be used.
+- As gateway to the public internet an external load balancer managed by your cloud provider can be used.
 
 Container registry
 
@@ -50,23 +50,23 @@ Container registry
 
 Network File Server
 
-- A NFS service is installed to share the portal server with the pods.
+- A NFS service is installed to share the portal folder with the pods.
 
 ## Prerequisites
 
-- Linux box with Git and latest Docker packages installed.
+- A Linux box with Git and latest Docker packages installed.
 - An admin account with the cloud provider of your choice. This guide assumes Microsoft Azure.
-- General understanding of the Kubernetes architecture and concepts is required. Please refer to the [Kubernetes docs](https://kubernetes.io/docs/home/) for details about the concepts of nodes, pods, services, deployments, etc.
+- General understanding of the Kubernetes architecture and concepts is expected. Please refer to the [Kubernetes docs](https://kubernetes.io/docs/home/) for details about the concepts of nodes, pods, services, deployments, etc.
 
 ## Container setup
 
 First of all, the required Docker images for Intrexx must be prepared and built:
 
-1. Clone repository `git clone docker-git@ganymed.dev.unitedplanet.de:repositories/docker-intrexx.git` and `git checkout kubernetes-ix`.
-2. Download Intrexx setup tarball via `wget https://download.unitedplanet.com/intrexx/90000/intrexx-18.09.1-linux-x86_64.tar.gz` and extract it into the repository root folder: `tar cvfz intrexx-18.09.1-linux-x86_64.tar.gz`. The `IX_18.09` folder must now be renamed to `professional`.
+1. Clone repository `git clone https://github.com/UnitedPlanet/intrexx-cloud-playbooks`.
+2. Download Intrexx setup tarball via `wget https://download.unitedplanet.com/intrexx/90000/intrexx-18.09.1-linux-x86_64.tar.gz` and extract it into the repository root folder: `tar cvfz intrexx-18.09.1-linux-x86_64.tar.gz`. Then rename the `IX_18.09` folder to `professional`.
 3. Open `setup/resources/portal_config.xml` and verify the settings. If you chose to use a cloud provided database as a service, adjust the `database` attributes accordingly.
-4. Now it is time to build the Intrexx Docker images. Execute `sudo ./build_image.sh` to start the Intrexx setup process. You should see the output of the setup process in the console.
-5. After the build finished successfully, you will have a new `portal` folder and `portal.tar.gz` file. This contains all files for the shared portal folder. Furthermore, two Docker images were created. One for the application servers (`ixcloud`) and one for the Postgresql database (`ixclouddb`). Check that the images are available with `docker images`.
+4. Now it is time to build the Intrexx Docker images. Execute `./build_image.sh` to start the Intrexx setup process. You should see the output of the setup process in the console.
+5. After the build finished successfully, you will have a new `portal` folder and `portal.tar.gz` file. This contains all files for the shared portal folder. Furthermore, two Docker images were created and stored in the local Docker registry. One for the application servers (`ixcloud`), one for Solr (`ixcloudsolr`) and one for the Postgresql database (`ixclouddb`). Check that the images are available with `docker images`.
 
 ### Docker container registry
 
@@ -549,9 +549,9 @@ kubernetes         10.96.0.1       <none>        443/TCP          6d        <non
 To test access to the portal server instances, you can create HTTP requests to each node with the node port retrieved from the `kubectl get services` command. For example:
 
 ```bash
-curl http://10.0.0.5:32537:/cloud/default.ixsp
+curl http://10.0.0.5:32537/cloud/default.ixsp
 ...
-curl http://10.0.0.6:32537:/cloud/default.ixsp
+curl http://10.0.0.6:32537/cloud/default.ixsp
 ...
 ```
 

@@ -10,7 +10,7 @@ Furthermore, a nginx load balancer service is running on the db server distribut
 
 - Install latest Vagrant
 
-- Clone Git repo cloud-playbooks -> `git clone user@ganymed:git/cloud-playbooks.git`
+- Clone Git repo cloud-playbooks -> `git clone https://github.com/UnitedPlanet/intrexx-cloud-playbooks`
 
 - CD into Git project, `clould-provider/vagrant/ixcloud` -> `vagrant up`
 
