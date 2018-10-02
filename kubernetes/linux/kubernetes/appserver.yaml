@@ -2,9 +2,14 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ixcloud-deployment
+  labels:
+    app: ixcloudapp
   #namespace: ixcloud
 spec:
   replicas: 2
+  selector:
+    matchLabels:
+      app: ixcloudapp
   template:
     metadata:
       labels:

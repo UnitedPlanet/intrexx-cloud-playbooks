@@ -2,9 +2,14 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ixcloudsolr-deployment
+  labels:
+    app: ixcloudsolr
   #namespace: ixcloud
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: ixcloudsolr
   template:
     metadata:
       labels:
