@@ -1,27 +1,33 @@
-apiVersion: v1
-kind: Pod
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: ixclouddb
+  name: ixclouddb-deployment
   labels:
     app: ixclouddb
   #namespace: ixcloud
 spec:
-  containers:
-  - image: ixkubernetesregistry.azurecr.io/ixdocker/ixclouddb:latest
-    name: ixclouddb
-    imagePullPolicy: Always
-    resources:
-      limits:
-        cpu:  0.5
-        memory: 1024Mi
-      requests:
-        cpu:    0.25
-        memory:   256Mi
-    volumeMounts:
-    - mountPath: /var/lib/postgresql/data
-      name: ixclouddb-volume
-  imagePullSecrets:
-  - name: ixkubernetesregistry
-  volumes:
-  - name: ixclouddb-volume
-    emptyDir: {}
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: ixclouddb
+    spec:
+      containers:
+      - image: ixkubernetesregistry.azurecr.io/ixdocker/ixclouddb:latest
+        name: ixclouddb
+        imagePullPolicy: Always
+        resources:
+          limits:
+            cpu:  0.5
+            memory: 1024Mi
+          requests:
+            cpu:    0.25
+            memory:   256Mi
+        volumeMounts:
+        - mountPath: /var/lib/postgresql/data
+          name: ixclouddb-volume
+      imagePullSecrets:
+      - name: ixkubernetesregistry
+      volumes:
+      - name: ixclouddb-volume
+        emptyDir: {}
