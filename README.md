@@ -3,7 +3,7 @@
 This repository contains setup scripts and resources for manual and automatic Intrexx Cloud deployments.
 
 __Warning__:
-The following guides and examples should not be used as is for production deployments. Security and reliability of your cluster is out of scope of this documentation and not configured automatically by the setup scripts. Use this only for test and demonstration environments.
+The following guides and examples should not be used as is for production deployments. Security and reliability of your cluster is out of scope of this documentation. Use this only for test and demonstration environments.
 
 ## Introduction
 
@@ -83,7 +83,7 @@ Scripts and resources for installing Intrexx on a Kubernetes cluster. Requires a
 
 ### Vagrant for local test environments
 
-Build an Intrexx cluster on your local machine. Each node is deployed on a Ubuntu 16.04 server (headless) VirtualBox VM managed by Vagrant. After VM provisioning, Intrexx must be installed with the Ansible playbooks found under `/linux` oder `/windows`.
+Build an Intrexx cluster on your local machine. Each node is deployed on a Ubuntu 16.04 server (headless) VirtualBox VM managed by Vagrant. After VM provisioning, Intrexx must be installed with the Ansible playbooks found under `/linux` or `/windows`.
 
 See [cloud-provider/vagrant/README.md](cloud-provider/vagrant/README.md)
 
@@ -95,7 +95,7 @@ Setup a full stack Intrexx Cloud deployment on Microsoft Azure with Linux or Win
 - Script installer: [cloud-provider/installer/docs/README.md](cloud-provider/installer/docs/README.md)
 - Collect log files with Logstash/Filebeat: [cloud-provider/azure/docs/Logstash.md](cloud-provider/azure/docs/Logstash.md)
 
-After VM provisioning, Intrexx must be installed with the Ansible playbooks found under `/linux` oder `/windows`.
+After VM provisioning, Intrexx must be installed with the Ansible playbooks found under `/linux` or `/windows`.
 
 ### Amazon Web Services
 
@@ -105,7 +105,7 @@ Setup a full stack Intrexx Cloud deployment on Amazon Web Services with Linux or
 - Script installer: [cloud-provider/installer/docs/README.md](cloud-provider/installer/docs/README.md)
 - Collect log files with Logstash/Filebeat: [cloud-provider/azure/docs/Logstash.md](cloud-provider/azure/docs/Logstash.md)
 
-After VM provisioning, Intrexx must be installed with the Ansible playbooks found under `/linux` oder `/windows`.
+After VM provisioning, Intrexx must be installed with the Ansible playbooks found under `/linux` or `/windows`.
 
 ### Kubernetes
 
