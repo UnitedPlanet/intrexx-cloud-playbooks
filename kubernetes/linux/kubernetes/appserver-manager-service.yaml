@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: ixcloudmanagerservice
+#  namespace: ixcloud
+spec:
+  selector:
+    app: ixcloudmanager
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: 8101
