@@ -463,47 +463,66 @@ kubectl create -f solr.yaml
 kubectl create -f solr-service.yaml
 ```
 
-### Portal server deploment
+### Portal server deployment
 
 After the database is available, we can deploy the portal server pods. Edit the appserver.yaml file and verify that the container image URI and image pull secrets as well as the nfs server IP adress match your settings.
 
 ```yaml
-apiVersion: apps/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ixcloud-deployment
+  labels:
+    app: ixcloudapp
   #namespace: ixcloud
 spec:
   replicas: 2
+  selector:
+    matchLabels:
+      app: ixcloudapp
   template:
     metadata:
       labels:
         app: ixcloudapp
     spec:
       containers:
-      - image: ixcloud:latest
+      - image: ixkubernetesregistry.azurecr.io/ixdocker/ixcloud:latest
         name: ixcloudapp
         imagePullPolicy: Always
+        command: ["/opt/intrexx/bin/linux/portal.sh"]
+        args: ["/opt/intrexx/org/cloud"]
         resources:
           limits:
             cpu:  2
-            memory: 1536Mi
+            memory: 2048Mi
           requests:
             cpu:    1
             memory:   1024Mi
         volumeMounts:
         - mountPath: /opt/intrexx/org/cloud
           name: ixcloudapp-volume
+        - mountPath: /opt/intrexx/bin
+          name: ixcloudapp-volume-bin
+        - mountPath: /opt/intrexx/cfg
+          name: ixcloudapp-volume-cfg
       imagePullSecrets:
-      - name: ixclouddockertestregistry
+      - name: ixkubernetesregistry
       volumes:
       - name: ixcloudapp-volume
         nfs:
           server: 10.0.0.4
           path: /share/cloud
+      - name: ixcloudapp-volume-bin
+        nfs:
+          server: 10.0.0.4
+          path: /share/bin
+      - name: ixcloudapp-volume-cfg
+        nfs:
+          server: 10.0.0.4
+          path: /share/cfg
 ```
 
-This deployment desriptor creates two replicas of the portalserver container and mounts the nfs exported shared portal folder into the container.
+This deployment descriptor creates two replicas of the portalserver container and mounts the nfs exported shared portal folder into the container.
 
 ```bash
 $ kubectl create -f appserver.yaml
@@ -531,8 +550,7 @@ spec:
   type: NodePort
   ports:
     - protocol: TCP
-      port: 8080
-      targetPort: 8080
+      port: 1337
 ```
 
 ```bash
@@ -549,13 +567,22 @@ kubernetes         10.96.0.1       <none>        443/TCP          6d        <non
 To test access to the portal server instances, you can create HTTP requests to each node with the node port retrieved from the `kubectl get services` command. For example:
 
 ```bash
-curl http://10.0.0.5:32537/cloud/default.ixsp
+curl http://10.0.0.5:32537/default.ixsp
 ...
-curl http://10.0.0.6:32537/cloud/default.ixsp
+curl http://10.0.0.6:32537/default.ixsp
 ...
 ```
 
 Each request should output the Intrexx login page HTML to the console. You can now configure an [external load balancer/reverse proxy](https://kubernetes.io/docs/concepts/services-networking/service/#type-loadbalancer) to forward internet requests to the nodes. Another possibility is deploying a Kubernetes [ingress controller](https://kubernetes.io/docs/concepts/services-networking/ingress/). Both is beyond the scope of this tutorial.
+
+### Create portal administration/manager instance and service
+
+This deployment descriptor creates one instance of the portalserver container dedicated for portal manager administrative access.
+
+```bash
+$ kubectl create -f appserver-manager.yaml
+$ kubectl create -f appserver-manager-service.yaml
+```
 
 ### External load balancer (manually)
 
@@ -567,7 +594,14 @@ To allow traffic to the mapped frontend service (Tomcat) port on the agent nodes
 
 - Name: ix-http
 - Protocol: TCP
-- Port range: 32753
+- Port range: 32753 (get port from `kubectl get services`)
+- Action: Allow
+
+To allow traffic to the dedicated portal manager instance port on the agent nodes, an inbound security rule must be defined in the network security group.
+
+- Name: ix-soap
+- Protocol: TCP
+- Port range: xxxxx (get port from `kubectl get services`)
 - Action: Allow
 
 ![alt Create securtiy rule](images/011-security-rule.png)
@@ -597,7 +631,9 @@ To allow traffic to the mapped frontend service (Tomcat) port on the agent nodes
 
 ![alt Create load balancer](images/012-create-backend.png)
 
-5. Create load balancer rule
+5. Create load balancer rules
+
+Load balancing rule:
 
 - Name: IxKubernetesLbRule
 - Frontend IP: LoadBalancer Public IP
@@ -607,6 +643,15 @@ To allow traffic to the mapped frontend service (Tomcat) port on the agent nodes
 - Health probe: IxKubernetesLbHealthProbe
 - Session persistence: None
 - Timout: 4
+- Floating IP: disabled
+
+Inbound NAT rule:
+
+- Name: IxKubernetesLbManagerRule
+- Frontend IP: LoadBalancer Public IP
+- Protocol: TCP
+- Port: 8101
+- Target Port: xxxxx (get manager port from `kubectl get services`)
 - Floating IP: disabled
 
 ![alt Create load balancer](images/013-create-lb-rule.png)
