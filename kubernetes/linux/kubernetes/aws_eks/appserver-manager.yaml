@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ixcloud-manager-deployment
+  labels:
+    app: ixcloudmanager
+  #namespace: ixcloud
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ixcloudmanager
+  template:
+    metadata:
+      labels:
+        app: ixcloudmanager
+    spec:
+      containers:
+      - image: xxxxx.dkr.ecr.eu-west-1.amazonaws.com/ixcloud:latest
+        name: ixcloud
+        imagePullPolicy: Always
+        command: ["/opt/intrexx/bin/linux/portal.sh"]
+        args: ["/opt/intrexx/org/cloud"]
+        resources:
+          limits:
+            cpu:  1
+            memory: 1024Mi
+          requests:
+            cpu:    0.5
+            memory: 1024Mi
+        volumeMounts:
+        - mountPath: /opt/intrexx/org/cloud
+          name: ixcloudapp-volume
+        - mountPath: /opt/intrexx/bin
+          name: ixcloudapp-volume-bin
+        - mountPath: /opt/intrexx/cfg
+          name: ixcloudapp-volume-cfg
+      imagePullSecrets:
+      - name: ixkubernetesregistry
+      volumes:
+      - name: ixcloudapp-volume
+        nfs:
+          server: xxxxx.efs.eu-west-1.amazonaws.com
+          path: /share/cloud
+      - name: ixcloudapp-volume-bin
+        nfs:
+          server: xxxxx.efs.eu-west-1.amazonaws.com
+          path: /share/bin
+      - name: ixcloudapp-volume-cfg
+        nfs:
+          server: xxxxx.efs.eu-west-1.amazonaws.com
+          path: /share/cfg
