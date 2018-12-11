@@ -9,3 +9,5 @@ professional.zip
 kubernetes/linux/professional/*
 kubernetes/linux/share/*
 *.tar.gz
+kubectl
+aws-iam-authenticator

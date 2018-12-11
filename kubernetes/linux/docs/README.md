@@ -12,13 +12,14 @@
 8. [Sharing the portal folder](#sharing-the-portal-folder)
 9. [Prepare Intrexx deployment](#prepare-intrexx-deployment)
 10. [Cluster deployment](#cluster-deployment)
-11. [Building a Kubernetes Cluster with Azure AKS](#building-a-kubernetes-cluster-with-azure-aks)
-12. [Cluster operations](#cluster-operations)
-13. [Appendix](#appendix)
+11. [Setting up a Kubernetes Cluster with Azure AKS](#setting-up-a-kubernetes-cluster-with-azure-aks)
+12. [Setting up a Kubernetes Cluster with Amazon AWS EKS](#setting-up-a-kubernetes-cluster-with-amazon-aws-aks)
+13. [Cluster operations](#cluster-operations)
+14. [Appendix](#appendix)
 
 ## Abstract
 
-This document describes the steps required to setup a vanilla Kubernetes cluster for Intrexx containers on a cloud provider. Microsoft Azure was chosen for the following example but the steps can be easily replicated on AWS or GCE. Please note that it is always recommended to use the integrated Kubernetes solution of your cloud provider, if applicable. This comes with deeper integration with the cloud provider services (load balancers, elastic block devices, etc.). The goal of this guide is to be provider agnostic but an appendix was added to show the advantages of the Kubernetes template with Azure Kubernetes Services. For AWS see [Kops](https://github.com/kubernetes/kops) and GCE already offers first class Kubernetes integration.
+This document describes the steps required to setup a vanilla Kubernetes cluster for Intrexx containers on a cloud provider. Microsoft Azure was chosen for the following example but the steps can be easily replicated on AWS or GCE. Please note that it is always recommended to use the integrated Kubernetes solution of your cloud provider, if applicable. This comes with deeper integration with the cloud provider services (load balancers, elastic block devices, etc.). The goal of this guide is to be provider agnostic but another chapter was added to show the advantages of the Kubernetes template with Azure Kubernetes Service. On AWS you should use EKS or check out [Kops](https://github.com/kubernetes/kops) while Google already offers first class Kubernetes integration in GCE.
 
 Warning: This setup guide is meant for demonstration purposes only. Reliability and security issues are considered only on a very basic level. Do not use it as is for production clusters!
 
@@ -662,9 +663,9 @@ http://your-lb-public-ip/cloud/default.ixsp
 
 ![alt portal browser](images/014-portal-browser.png)
 
-## Building a Kubernetes Cluster with Azure AKS
+## Setting up a Kubernetes Cluster with Azure AKS
 
-The basic steps of building the docker images, however the uploading them to Azure differs slightly. Azure AKS allows to create a defineable amount of servers, which are managed via a API of Azure. In detail, the Azure Cli allows to receive the credentials of the kubernetes manager node, so that kubernetes cli (kubectl) can be used on the same machine where the docker images have been created to start and stop services/pods/etc. Furthermore, these managed servers are contained in an availability set, so that they are dynamically restarted in cases of unexpected server failures. An azure load balancer can be deployed via a kubernetes script (yaml file), which automatically links external traffic to the selected pods, which are in this case the pods containing the intrexx installation.
+The basic steps of building the docker images are the same as above. However, deploying them to Azure AKS differs slightly. Azure AKS allows to create a defineable amount of node instances, which are managed via an API of Azure. In detail, the Azure Cli allows to receive the credentials of the Kubernetes manager node, so that Kubernetes CLI (kubectl) can be used on the same machine where the Docker images have been created to start and stop services/pods/etc. Furthermore, these managed servers are contained in an availability set, so that they are dynamically restarted in cases of unexpected server failures. An Azure load balancer can be deployed via a Kubernetes script (yaml file), which automatically links external traffic to the selected pods, which are in this case the pods running the Intrexx containers.
 
 1. Create Azure Service Credentials
 
@@ -845,6 +846,165 @@ This will automatically create an Azure Load Balancer, however, the health probe
 8. Check Intrexx Reachability
 
 After the deployment, the health of Intrexx can be verified by entering the IP (external IP of the load balancer) into the browser.
+
+## Setting up a Kubernetes Cluster with Amazon AWS EKS
+
+Amazon Web Services offer with Elastic Kubernetes Service (EKS) a managed Kubernetes cluster which is fully integrated with other AWS services like Elastic Load Balancer or Elastic Block Storage. The following chapter describes the steps to set up an EKS cluster and deploy Intrexx portals on it.
+
+### Create EKS stack
+
+The required steps to set up an EKS cluster is explained here: (https://docs.aws.amazon.com/en_us/eks/latest/userguide/getting-started.html)
+
+First of all, follow the tasks in the guide to create an EKS service role and then the cluster VPC. Record the SubnetIds for the subnets that were created. You need this when you create your EKS cluster; these are the subnets that your worker nodes are launched into.
+
+### Create a dedicated Linux instance as a jump host
+
+This step is optional but highly recommended. In order to control your EKS cluster you can either use the required tools locally on your machine (MacOS or Linux) as mentioned in the AWS getting started guide or you can launch a dedicated Linux VM instance in your cluster VPC and allow SSH access to this instance from your public IP. This is required if you want to build your own Intrexx container images instead of using the prebuilt images from United Planet. All further CLI commands will be executed from this machine.
+
+Instance details:
+
+* OS: Ubuntu 18.04 LTS
+* AWS Instance: t2.small (at least 1 CPU und 2 GB RAM required for building Docker images)
+* Public IP assigned
+* VPC: same as the EKS VPS
+* Subnet: Choose the first created subnet from the output of the EKS stack
+
+When the instance is up and running, connect via SSH and user ubuntu and execute the following commands:
+
+```bash
+sudo apt-get update
+sudo apt-get upgrade -y
+sudo apt-get install python3 python-pip git -y
+sudo apt-get install nfs-common -y
+sudo apt-get install postgresql-client -y
+```
+
+### Install and Configure kubectl and AWS CLI for Amazon EKS 
+
+On the Linux VM, proceed with the installation of AWS CLI, kubectl and aws-iam-authenticator for EKS as described in the getting started guide.
+
+```bash
+curl -o kubectl https://amazon-eks.s3-us-west-2.amazonaws.com/1.10.3/2018-07-26/bin/linux/amd64/kubectl
+chmod +x ./kubectl
+mkdir $HOME/bin && cp ./kubectl $HOME/bin/kubectl && export PATH=$HOME/bin:$PATH
+echo 'export PATH=$HOME/bin:$PATH' >> ~/.bashrc
+source ~/.bash_profile
+kubectl version --short --client
+
+curl -o aws-iam-authenticator https://amazon-eks.s3-us-west-2.amazonaws.com/1.10.3/2018-07-26/bin/linux/amd64/aws-iam-authenticator
+chmod +x ./aws-iam-authenticator
+cp ./aws-iam-authenticator $HOME/bin/aws-iam-authenticator && export PATH=$HOME/bin:$PATH
+echo 'export PATH=$HOME/bin:$PATH' >> ~/.bashrc
+source ~/.bash_profile
+aws-iam-authenticator help
+
+pip install awscli --upgrade --user
+echo 'export PATH=~/.local/bin:$PATH' >> ~/.bashrc
+source ~/.bash_profile
+aws --version
+```
+
+### Clone the United Planet cloud-playbooks repository
+
+Our cloud-playbooks repository on GitHub contains the latest configuration and deplyoment files for creating the Docker images and deploying Intrexx on Kubernetes.
+
+```bash
+git clone https://github.com/UnitedPlanet/intrexx-cloud-playbooks/
+
+cd intrexx-cloud-playbooks/kubernetes/linux/kubernetes/aws_eks
+```
+
+### Create EKS worker nodes cluster
+
+Now proceed with "Step 1: Create Your Amazon EKS Cluster" in the AWS EKS getting started guide, then "Step 2: Configure kubectl for Amazon EKS" followed by "Step 3: Launch and Configure Amazon EKS Worker Nodes". Remember that all CLI commands have to be executed on the Linux jump host VM. At the end of step 3 you should see the Kubernetes worker nodes when executing the command:
+
+```bash
+kubectl get nodes
+```
+
+### Create AWS RDS Postgresql instance
+
+For the portal server database a RDS Postgresql instance is required. Follow these steps to create one:
+
+* Open the RDS console in the AWS web console.
+* Click on "Create database" and select Postgresql engine.
+* Choose an instance specification according to your requirements (db.t2.micro is enough for testing/demo purposes)
+* Choose an unique db instance name and an user/password for the Intrexx database.
+* In the next step, select the same VPC/subnet group as your EKS cluster. Uncheck public availability, choose create a new security group.
+* Unter database name, enter 'ixcloud' as name.
+* Leave all other options as is and create the database instance.
+* After the database has been created, check the newly created security group for the database and add the following inbound rule to allow access from your Kubernetes cluster (we assume that 192.168.0.0 is the EKS cluster subnet IP range):
+
+```text
+PostgreSQL
+TCP
+5432
+192.168.0.0/16
+```
+
+### Create AWS EFS filesystem instance
+
+Every portal service instance in the cluster needs access to the shared portal folder filesystem. We recommend using AWS Elastic file system for this. Follow these steps to create one:
+
+* Open the EFS console in the AWS web console.
+* Create a new filesystem and choose the EKS VPC and the assign the three Subnet IDs from the EKS VPC. Remember the chosen security group.
+* Leave all other options as recommended by AWS and create the filesystem.
+
+
+### Check RDS and EFS connections
+
+Back on the Linux VM shell, you should check now that connections from the EKS subnets to the database and filesystem are working.
+
+* Mount the portal folder share (replace the EFS endpoint URL in the example with your one):
+
+```bash
+sudo mkdir /share
+sudo mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport fs-xxxxx.efs.eu-west-1.amazonaws.com:/ /share/
+```
+
+Verify that the filesystem is correctly mounted to `/share`.
+
+* Connect to the database (replace the RDS database URL in the example with your one):
+
+```bash
+ psql -h ixekstestdb.xxxxxxxx.eu-west-1.rds.amazonaws.com -U ixadmin -d ixcloud
+```
+
+You should be able to connect and see a list of the existing databases with command `\l`. Now exit the Postgresql client with `\q`.
+
+### Deploy Intrexx containers
+
+#### Option 1) Using pre-built Intrexx container images
+
+United Planet provides pre-built Intrexx container images for demo and test installations. Currently these are publicly available in an AWS container registry and can be pulled into a local registry with these URLs:
+
+- Appserver: `597133746263.dkr.ecr.eu-west-1.amazonaws.com/ixcloud:latest`
+- Solr server: `597133746263.dkr.ecr.eu-west-1.amazonaws.com/ixcloudsolr:latest`
+
+Along with these images comes a portal folder and database export. Both must be imported into the RDS instances and EFS instance respectively. Download the packages from (TBD).
+
+- Portal folder: 
+- Portal database: 
+
+Then extract the portal folder export to the mounted /share folder
+
+```bash
+ cp portal.tar.gz /share
+ cd /share
+ tar xvfz portal.tar.gz
+ ```
+
+ and import the database into your RDS instance:
+
+```bash
+ psql -h ixekstestdb.xxxxxxxx.eu-west-1.rds.amazonaws.com -U ixadmin -d ixcloud < ixcloudapp.sql
+```
+
+TBD
+
+#### Option 2) Creating custom Intrexx container images
+
+TBD
 
 ## Cluster operations
 
