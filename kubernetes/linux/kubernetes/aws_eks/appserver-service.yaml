@@ -1,0 +1,13 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: ixcloudservice
+#  namespace: ixcloud
+spec:
+  selector:
+    app: ixcloudapp
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      targetPort: 1337
+      port: 80
