@@ -35,6 +35,7 @@ ix_home: /opt/intrexx
 ix_portal_name: test
 ix_portal_path: /share/test
 ix_portal_logpath: /var/log/intrexx
+ix_portal_template_path: /opt/intrexx/orgtempl/blank
 
 #
 # Database configuration

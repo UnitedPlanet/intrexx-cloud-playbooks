@@ -73,10 +73,10 @@ Generell sind die Variablen in *`variables.sh`* unterteilt in basic und advanced
 4. DATA_DIR
   Verzeichnis, in dem das Intrexx-Installationspaket gespeichert ist.
 5. INTREXX_ZIP
-  * Dateiname der Intrexx-Installationspaket-Zipdatei.
-  * Intrexx Download: `wget https://download.unitedplanet.com/intrexx/90000/intrexx-18.09.1-linux-x86_64.tar.gz`
-  * Download entpacken und den Ordner `IX_18.09` nach `./professional` umbenennen.
-  * Den Ordner des aktuellen Intrexx Setups muss gezippt werden zu `professional.zip`.
+* Dateiname der Intrexx-Installationspaket-Zipdatei.
+* Intrexx Download: `wget https://download.unitedplanet.com/intrexx/90000/intrexx-18.09.1-linux-x86_64.tar.gz`
+* Download entpacken und den Ordner `IX_18.09` nach `./professional` umbenennen.
+* Den Ordner des aktuellen Intrexx Setups muss gezippt werden zu `professional.zip`.
 
 Zusätzlich interessante Variablen:
 
@@ -129,9 +129,10 @@ Der Ablauf der Skripte unterscheidet sich nur unwesentlich bei AWS und Azure. Be
 8. Installation von Intrexx über die Provisioning-Instanz.
    Die Installation von Intrexx (Dateisystem und SOLR auf der IxServices-Instanz, sowie Intrexx auf der IxAppServer-Instanz) muss manuell gestartet werden, da vereinzelt Benutzereingaben nötig sein können.
 
-  - Installation Fileserver (nur Azure) -> `ansible-playbook -v -i hosts_azure fileserver.yml`
-  - Installation services (Solr, NFS) node -> `ansible-playbook -v -i hosts_azure appserver_services.yml`
-  - Installation portal server -> `ansible-playbook -v -i hosts_azure appserver_portal.yml`
+* Anpassen der hosts.yml und vars.yml Dateien.
+* Installation Fileserver (nur Azure) -> `ansible-playbook -v -i hosts_azure fileserver.yml`
+* Installation services (Solr, NFS) node -> `ansible-playbook -v -i hosts_azure appserver_services.yml`
+* Installation portal server -> `ansible-playbook -v -i hosts_azure appserver_portal.yml`
 
 ### Erzeugung der Autoscalegruppe
 
