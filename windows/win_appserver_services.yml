@@ -12,8 +12,8 @@
 
   - name: copy 7zip
     win_copy:
-      src: files/7z1700-x64.msi
-      dest: C:\install\7z1700-x64.msi
+      src: files/7z-x64.msi
+      dest: C:\install\7z-x64.msi
 
   - name: copy install.cmd for 7zip
     win_copy:
@@ -28,10 +28,10 @@
       
   - name: copy setup
     win_copy: 
-      src: files/professional.zip 
-      dest: C:\install\professional.zip
+      src: files/intrexx-18.09.1-windows-x86_64.zip
+      dest: C:\install\intrexx-18.09.1-windows-x86_64.zip
     args:
-      creates: C:\install\professional.zip
+      creates: C:\install\intrexx-18.09.1-windows-x86_64.zip
 
   - name: copy setup cfg
     win_template: 
@@ -44,9 +44,9 @@
       dest: C:\install\portal_config.xml
 
   - name: unzip intrexx
-    win_command: '"C:\Program Files\7-Zip\7z.exe" x C:\install\professional.zip -oC:\install'
+    win_command: '"C:\Program Files\7-Zip\7z.exe" x C:\install\intrexx-18.09.1-windows-x86_64.zip -oC:\install'
     args:
-      creates: C:\install\professional
+      creates: C:\install\IX_18.09.1
       
   - name: Disable all firewalls
     win_firewall:
@@ -58,7 +58,7 @@
     tags: disable_firewall
 
   - name: install intrexx
-    win_command: C:\install\professional\setup.bat -t --configFile=C:\install\configuration.properties
+    win_command: C:\install\IX_18.09.1\setup.bat -t --configFile=C:\install\configuration.properties
     args:
       creates: C:\intrexx\bin\windows\portal.bat
 

@@ -12,7 +12,7 @@ echo "$LOG_PREFIX Converting machine $APPSERVER_NAME to scale set $SCALE_SET_NAM
 case "$CLOUD_PROVIDER" in
     "azure")
         if    [ $OPERATING_SYSTEM == "win" ]; then
-            read -p "$LOG_PREFIX Make sure the AppServer VM has been generalized via the ansible script, otherwise Azure won't be able to create an image [ENTER]."
+            read -p "$LOG_PREFIX Make sure that you have generalized the AppServer VM before, otherwise Azure won't be able to create an image [ENTER]."
         fi
         checkAndRun "/tasks/azure/captureImage.sh"
         checkAndRun "/tasks/azure/createScaleSet.sh"

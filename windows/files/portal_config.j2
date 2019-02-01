@@ -1,27 +1,28 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <portal xmlns="http://schemas.unitedplanet.de/intrexx/2012/portal/builder" path="{{ ix_portal_path }}" name="{{ ix_portal_name }}">
-	<template path="{{ ix_home }}\orgtempl\blank"/>
-	<database type="{{ ix_db_type }}" timezone="UTC" hostName="{{ ix_db_hostname }}" port="{{ ix_db_port }}" 
-		databaseName="{{ ix_db_database_name }}" adminLogin="{{ ix_db_admin_login }}" adminPassword="{{ ix_db_admin_password }}" 
-		create="{{ ix_db_create }}" userLogin="{{ ix_db_user_login }}" userPassword="{{ ix_db_user_password }}" characterSet="UTF8" driverIndex="0"/>
-	<connectorSoap bindAddress="0.0.0.0" port="8101"/>
-	<connectorWeb  hostName="0.0.0.0" port="1337"/>
-	<search class="de.uplanet.lucy.search.solr.SolrPortalManagerConfiguration">
-			<property name="de.uplanet.lucy.solr.authenticationType" value="none">
-		</property>
+        <template path="{{ ix_home }}\orgtempl\blank"/>
+        <database type="{{ ix_db_type }}" timezone="UTC" hostName="{{ ix_db_hostname }}" port="{{ ix_db_port }}" 
+                databaseName="{{ ix_db_database_name }}" adminLogin="{{ ix_db_admin_login }}" adminPassword="{{ ix_db_admin_password }}" 
+                create="{{ ix_db_create }}" userLogin="{{ ix_db_user_login }}" userPassword="{{ ix_db_user_password }}" characterSet="UTF8" driverIndex="0"/>
+        <connectorSoap bindAddress="0.0.0.0" port="8101"/>
+        <connectorWeb  hostName="0.0.0.0" port="1337"/>
+        <search class="de.uplanet.lucy.search.solr.SolrPortalManagerConfiguration">
+                        <property name="de.uplanet.lucy.solr.authenticationType" value="none">
+                </property>
 
-			<property name="de.uplanet.lucy.solr.serverType" value="http">
-		</property>
+                        <property name="de.uplanet.lucy.solr.serverType" value="http">
+                </property>
 
-			<property name="de.uplanet.lucy.solr.configurationBaseDirectory" value="{{ ix_solr_cfg_base_dir }}">
-		</property>
+                        <property name="de.uplanet.lucy.solr.configurationBaseDirectory" value="{{ ix_solr_cfg_base_dir }}">
+                </property>
 
-			<property name="de.uplanet.lucy.solr.url" value="{{ ix_solr_url }}">
-		</property>
-	</search>
+                        <property name="de.uplanet.lucy.solr.url" value="{{ ix_solr_url }}">
+                </property>
+        </search>
 
-	<property name="de.uplanet.lucy.server.distributed.ipfinder" value="{{ ix_cluster_ipfinder_mode }}" />
-	<property name="de.uplanet.lucy.server.distributed.ipfinder.static.addresses" value="{{ ix_cluster_static_addresses }}"/>
-	<property name="de.uplanet.lucy.server.portal.logpath" value="{{ ix_portal_logpath }}"/>
-	<property name="de.uplanet.lucy.server.shutdown.delaySeconds" value="60" />
+        <property name="de.uplanet.lucy.server.distributed.ipfinder" value="{{ ix_cluster_ipfinder_mode }}" />
+        <property name="de.uplanet.lucy.server.distributed.ipfinder.static.addresses" value="{{ ix_cluster_static_addresses }}"/>
+        <property name="de.uplanet.lucy.server.distributed.ipfinder.sharedfs.path" value="{{ ix_cluster_ipfinder_sharedfs }}"/>
+        <property name="de.uplanet.lucy.server.portal.logpath" value="{{ ix_portal_logpath }}"/>
+        <property name="de.uplanet.lucy.server.shutdown.delaySeconds" value="60" />
 </portal>

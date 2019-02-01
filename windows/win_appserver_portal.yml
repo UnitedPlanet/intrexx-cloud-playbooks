@@ -12,8 +12,8 @@
 
   - name: Copy 7zip
     win_copy:
-      src: files/7z1700-x64.msi
-      dest: C:\install\7z1700-x64.msi
+      src: files/7z1806-x64.msi
+      dest: C:\install\7z1806-x64.msi
 
   - name: Copy install.cmd for 7zip
     win_copy:
@@ -27,22 +27,22 @@
     win_command: C:\install\install.cmd
 
   - name: Copy setup
-    win_copy: 
-      src: files/professional.zip 
-      dest: C:\install\professional.zip
+    win_copy:
+      src: files/intrexx-18.09.1-windows-x86_64.zip
+      dest: C:\install\intrexx-18.09.1-windows-x86_64.zip
     args:
-      creates: C:\install\professional.zip
+      creates: C:\install\intrexx-18.09.1-windows-x86_64.zip
 
   - name: Copy setup cfg
-    win_template: 
+    win_template:
       src: files/configuration.j2
       dest: C:\install\configuration.properties
 
   - name: Unzip setup
-    win_command: '"C:\Program Files\7-Zip\7z.exe" x C:\install\professional.zip -oC:\install'    
+    win_command: '"C:\Program Files\7-Zip\7z.exe" x C:\install\intrexx-18.09.1-windows-x86_64.zip -oC:\install'
     args:
-      creates: C:\install\professional
-      
+      creates: C:\install\IX_18.09.1
+
   - name: Disable all firewalls
     win_firewall:
       state: disabled
@@ -53,7 +53,7 @@
     tags: disable_firewall
 
   - name: Install intrexx
-    win_command: C:\install\professional\setup.bat -t --configFile=C:\install\configuration.properties
+    win_command: C:\install\IX_18.09.1\setup.bat -t --configFile=C:\install\configuration.properties
     args:
       creates: C:\intrexx\bin\windows\portal.bat
     
