@@ -12,8 +12,10 @@ PORTAL_NAME=test
 
 # Dir which contains the intrexx related data (e.g. the trunk zip) 
 DATA_DIR=./awsDeploy/data
-# Name of the intrexx trunk zip (without the path; the dir path should be set in 'DATA_DIR')
-INTREXX_ZIP=professional.zip
+# Name of the intrexx linux setup tarball (without the path; the dir path should be set in 'DATA_DIR')
+INTREXX_ZIP=intrexx-18.09.1-linux-x86_64.tar.gz
+# Name of the intrexx windows setup tarball (without the path; the dir path should be set in 'DATA_DIR')
+#INTREXX_ZIP=intrexx-18.09.1-windows-x86_64.tar.gz
 
 ##################################################################################
 #################################### ADVANCED ####################################
@@ -88,12 +90,12 @@ AZ_DISK_SIZE_LINUX=12
 ## General user ##
 # NOTE: Keep in mind, that the user is also used in the ansible scripts! Needs to be changed there as well!
 AWS_ADMIN_USER_WIN=ixadmin
-AWS_ADMIN_PW_WIN='awsWin2017pw!!'
+AWS_ADMIN_PW_WIN='awsWin2019pw!!'
 AWS_ADMIN_USER_LINUX=ubuntu
 # linux login via ssh
 # AZ does not allow 'administrator' or 'admin'
 AZ_ADMIN_USER_WIN=ixadmin
-AZ_ADMIN_PW_WIN='awsWin2017pw!!'
+AZ_ADMIN_PW_WIN='awsWin2019pw!!'
 AZ_ADMIN_USER_LINUX=ubuntu
 # linux login via ssh
 ########################

@@ -2,8 +2,6 @@
 .vagrant
 *.log
 authorized_keys
-trunk-professional.zip
-professional.zip
 *.pdf
 *.pem
 kubernetes/linux/professional/*
@@ -11,3 +9,10 @@ kubernetes/linux/share/*
 *.tar.gz
 kubectl
 aws-iam-authenticator
+work/
+work_az/
+execConfigurations/
+*.zip
+*.msi
+*.exe
+id_rsa*
