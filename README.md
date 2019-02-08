@@ -49,14 +49,6 @@ Configure your virtual private cloud security group to allow internal traffic on
 
 CLI scripts and documentation for provisioning the required infrastructure on Microsoft Azure, Amanzon Web Services and Vagrant.
 
-#### cloud-provider/aws
-
-Step by step guide for installing Intrexx on Amazon Web Services.
-
-#### cloud-provider/azure
-
-Step by step guide for installing Intrexx on Microsoft Azure.
-
 #### cloud-provider/installer
 
 Contains the default CLI install scripts for Azure/AWS on Linux and Windows. Can be used for both providers and OSes and will support further cloud providers in the future. At the moment, it requires to start the Ansible provisioning scripts manually.
@@ -91,8 +83,8 @@ See [cloud-provider/vagrant/README.md](cloud-provider/vagrant/README.md)
 
 Setup a full stack Intrexx Cloud deployment on Microsoft Azure with Linux or Windows instances.
 
-- Manual setup: [cloud-provider/azure/README.md](cloud-provider/azure/README.md)
 - Script installer: [cloud-provider/installer/docs/README.md](cloud-provider/installer/docs/README.md)
+- Manual setup (outdated and not recommended): [cloud-provider/azure/README.md](cloud-provider/azure/README.md)
 - Collect log files with Logstash/Filebeat: [cloud-provider/azure/docs/Logstash.md](cloud-provider/azure/docs/Logstash.md)
 
 After VM provisioning, Intrexx must be installed with the Ansible playbooks found under `/linux` or `/windows`.
@@ -101,11 +93,11 @@ After VM provisioning, Intrexx must be installed with the Ansible playbooks foun
 
 Setup a full stack Intrexx Cloud deployment on Amazon Web Services with Linux or Windows instances.
 
-- Manual setup: [cloud-provider/aws/README.md](cloud-provider/aws/README.md)
 - Script installer: [cloud-provider/installer/docs/README.md](cloud-provider/installer/docs/README.md)
+- Manual setup (outdated and not recommended): [cloud-provider/aws/README.md](cloud-provider/aws/README.md)
 - Collect log files with Logstash/Filebeat: [cloud-provider/azure/docs/Logstash.md](cloud-provider/azure/docs/Logstash.md)
 
-After VM provisioning, Intrexx must be installed with the Ansible playbooks found under `/linux` or `/windows`.
+After infrastructure provisioning, Intrexx must be installed with the Ansible playbooks in `/linux` or `/windows`.
 
 ### Kubernetes
 
