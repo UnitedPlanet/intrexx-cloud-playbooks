@@ -4,7 +4,9 @@
 
 1. [Infrastructure provisioning](#1)
 2. [Intrexx cluster installation](#2)
-3. [Intrexx cluster operation](#3)
+3. [Creating the auto scaling group](#3)
+4. [Intrexx cluster operation](#4)
+5. [Description of Ansible playbooks and resources](#5)
 
 ## Infrastructure provisioning
 
@@ -157,7 +159,7 @@ The script executes the following steps, which differ only in some aspects betwe
 7. Restarts all created instances.
 8. Prepares installation of Intrexx via the provisioning instance.
     
-### Installing Intrexx cluster
+## Intrexx cluster installation
 
 When the infrastructure scripts finished successfully, it prints the ssh command to connect to the provisioning VM on the console. Use that to connect to the VM and start the Intrexx installation. Intrexx and its services (shared file system and SOLR on the IxServices instance as well as the portal server on the IxAppServer instance) need to be installed by starting Ansible playbooks on the provisioning VM.
 
@@ -170,13 +172,13 @@ Follow these steps to install Intrexx:
 
 After all steps have been executed successfully, you can exit the provisioning VM and go back to your local script folder.
 
-### Creating the autoscale set
+## Creating the auto scaling group
 
 To create the auto scale set and load balancer, you can execute `bash createScaleSet.sh` on your local command line.
 
 *ATTENTION:* When using Windows Server as OS for your cluster instances on Azure, you have to generalize the IxAppServer VM before calling this script. You can do that by connecting to the IxAppServer instance with RDP (get the public IP from the Azure portal) and follow the guide here:(https://docs.microsoft.com/de-de/azure/virtual-machines/windows/capture-image-resource). Before starting the generalization, check that the local Windows firewall is disabled for all profiles. Otherwise the load balancer cannot reach the portal server instances and you have to create a new IxAppServer instance and image.
 
-#### Execution steps
+### Execution steps
 
 The script executes the following steps, which differ only in some aspects between Azure and AWS:
 
@@ -184,7 +186,7 @@ The script executes the following steps, which differ only in some aspects betwe
 2. Creates the autoscale set/group. This will create and remove portal server instances automatically based on rules defined in the scaling configuration. These rules must be defined manually. At the beginning the script creates a rule to start one instance.
 3. Creates the load balancer and connects it with the scale set.
 
-#### Auto scale set settings
+### Auto scale set settings
 If you want your auto scale set react dynamically on the CPU consumption in your cluster, you have to define a policy. Use the CLI or the web console of your cloud provider to define rules and policies. Here is an example for AWS:
 
 ![alt text](images/aws/01.01.png)
