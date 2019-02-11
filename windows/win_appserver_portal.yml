@@ -92,7 +92,7 @@
     win_service:
       name: upixsupervisor
       state: stopped
-      start_mode: manual
+      start_mode: disabled
       username: "{{ aws_username }}"
       password: "{{ aws_portal_pw }}"
 
@@ -100,4 +100,4 @@
     win_service:
       name: upixsolr
       state: stopped
-      start_mode: manual
+      start_mode: disabled
