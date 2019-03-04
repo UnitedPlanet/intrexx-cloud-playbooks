@@ -67,5 +67,5 @@ az network lb rule create \
 echo "[SCALE_SET] - Executing extension"
 if      [ $OPERATING_SYSTEM == "win" ]; then 
     echo "[SCALE_SET] - Executing extension"
-    #az vmss extension set --resource-group $RESOURCE_GROUP_NAME --vmss-name $SCALE_SET_NAME --name CustomScriptextension --publisher Microsoft.Compute --settings $SCRIPT_BASE_PATH/tasks/initScripts/scaleSetExtension.json  >> $OUTPUT_FILE
+    az vmss extension set --publisher Microsoft.Azure.Extensions --version 2.0 --name CustomScript --resource-group $RESOURCE_GROUP_NAME --vmss-name $SCALE_SET_NAME --settings @$SCRIPT_BASE_PATH/tasks/initScripts/scaleSetExtension.json  >> $OUTPUT_FILE
 fi
