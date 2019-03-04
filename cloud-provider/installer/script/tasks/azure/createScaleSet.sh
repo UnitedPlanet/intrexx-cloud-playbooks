@@ -19,7 +19,7 @@ if      [ $OPERATING_SYSTEM == "win" ]; then
         --location $AZ_AVAILABILITY_ZONE            \
         --public-ip-address lbPublicIp              \
         --public-ip-address-allocation static       \
-        --vm-sku $AZ_INSTANCE_TYPE_APPSERVER_WIN        \
+        --vm-sku $AZ_INSTANCE_TYPE_APPSERVER_WIN    \
         --output $AZ_OUTPUT_FORMAT >> $OUTPUT_FILE
 elif    [ $OPERATING_SYSTEM == "linux" ]; then
     az vmss create                                  \
@@ -34,7 +34,7 @@ elif    [ $OPERATING_SYSTEM == "linux" ]; then
         --location $AZ_AVAILABILITY_ZONE            \
         --public-ip-address lbPublicIp              \
         --public-ip-address-allocation static       \
-        --vm-sku $AZ_INSTANCE_TYPE_APPSERVER_LINUX      \
+        --vm-sku $AZ_INSTANCE_TYPE_APPSERVER_LINUX  \
         --ssh-key-value $WORK_DIR/id_rsa.pub        \
         --output $AZ_OUTPUT_FORMAT >> $OUTPUT_FILE
 fi
@@ -61,7 +61,7 @@ az network lb rule create \
   --backend-port $INTREXX_WEB_BACKEND_PORT \
   --frontend-ip-name loadBalancerFrontEnd \
   --backend-pool-name $LOAD_BALANCER_NAME"BEPool" \
-  --probe-name $HEALTH_PROBE_NAME
+  --probe-name $HEALTH_PROBE_NAME \
   --output $AZ_OUTPUT_FORMAT >> $OUTPUT_FILE
 
 echo "[SCALE_SET] - Executing extension"
