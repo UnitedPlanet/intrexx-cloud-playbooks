@@ -12,10 +12,10 @@ PORTAL_NAME=test
 
 # Dir which contains the intrexx related data (e.g. the trunk zip) 
 DATA_DIR=./awsDeploy/data
-# Name of the intrexx linux setup tarball (without the path; the dir path should be set in 'DATA_DIR')
-INTREXX_ZIP=intrexx-18.09.1-linux-x86_64.tar.gz
-# Name of the intrexx windows setup tarball (without the path; the dir path should be set in 'DATA_DIR')
-#INTREXX_ZIP=intrexx-18.09.1-windows-x86_64.tar.gz
+# URL of the intrexx linux setup tarball
+INTREXX_ZIP=https://download.unitedplanet.com/intrexx/90000/intrexx-18.09.1-linux-x86_64.tar.gz
+# URL of the intrexx windows setup zip
+#INTREXX_ZIP=https://download.unitedplanet.com/intrexx/90000/intrexx-18.09.1-windows-x86_64.zip
 
 ##################################################################################
 #################################### ADVANCED ####################################
@@ -106,9 +106,9 @@ AWS_DATABASE_VERSION=9.6.5
 AWS_DATABASE_TYPE=db.t2.micro 
 AWS_DATABASE_PORT=5432
 
-AZ_DATABASE_DRIVER=mssql
+AZ_DATABASE_DRIVER=mssql # mssql | postgres
 AZ_DATABASE_TYPE=S0
-AZ_DATABASE_PORT=1433
+AZ_DATABASE_PORT=1433 # 1433 | 5432
 ########################
 
 ## AWS EFS related ##

@@ -75,8 +75,7 @@ Generell sind die Variablen in *`variables.sh`* unterteilt in basic und advanced
 5. INTREXX_ZIP
 * Dateiname der Intrexx-Installationspaket-Zipdatei.
 * Intrexx Download: `wget https://download.unitedplanet.com/intrexx/90000/intrexx-18.09.1-linux-x86_64.tar.gz`
-* Download entpacken und den Ordner `IX_18.09` nach `./professional` umbenennen.
-* Den Ordner des aktuellen Intrexx Setups muss gezippt werden zu `professional.zip`.
+
 
 Zusätzlich interessante Variablen:
 
@@ -87,6 +86,8 @@ Zusätzlich interessante Variablen:
   Note: Zu beachten insbesondere bei Windows ist die verwendete Sprache (default englisch). Bei einer anderen Sprache müssen die Ansible Scripte teilweise angepasst werden. Beim erstellen der Services müssen die Benutzer von *EVERYONE* zu dem gleichwertigen in der jeweiligen Sprache verändert werden (z.B. für deutsch: *JEDER*)
 3. [AWS|AZ]_ADMIN_PW_WIN
   Hier kann das Windows Passwort angegeben werden.
+4. [AWS|AZ]_DATABASE_DRIVER
+  Der Datenbanktyp: `postgres` (AWS/Azure) oder `mssql` (Azure).
 
 ### Beschreibung der Skript-Struktur
 
@@ -111,6 +112,12 @@ Die Basisscripte sind im Hauptordner zu finden, die Aufgaben dieser sind wie fol
 ### Start der Installation *`createInfrastructure.sh`*
 
 Das Skript wird gestartet in dem die Datei *`createInfrastructure.sh`* mit dem Befehl *`bash createInfrastructure.sh`* in der Konsole ausgeführt wird.
+
+```bash
+git clone https://github.com/UnitedPlanet/intrexx-cloud-playbooks.git
+cd intrexx-cloud-playbooks/cloud-provider/installer/script/
+bash createInfrastructure.sh
+```
 
 ### Ablauf des Skripts
 

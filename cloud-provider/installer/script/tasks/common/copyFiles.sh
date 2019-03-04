@@ -26,13 +26,15 @@ if      [ $OPERATING_SYSTEM == "linux" ]; then
     scp -C -r -o "StrictHostKeyChecking no" -i $SSH_KEY ../../../linux/* $AWS_ADMIN_USER_LINUX@$PROVISIONING_PUBLIC_IP:~/cloud-playbooks/ 
     #Add the hostname of the db to the hosts file
     ssh -o "StrictHostKeyChecking no" -i $SSH_KEY $AWS_ADMIN_USER_LINUX@$PROVISIONING_PUBLIC_IP "echo '[dbserver]' > $TEMP_HOSTS_FILE && echo $DB_DNS_ADDRESS >> $TEMP_HOSTS_FILE && echo "" >> $TEMP_HOSTS_FILE && cat ~/cloud-playbooks/hosts_azure >> $TEMP_HOSTS_FILE"
-    ssh -o "StrictHostKeyChecking no" -i $SSH_KEY $AWS_ADMIN_USER_LINUX@$PROVISIONING_PUBLIC_IP "mv $TEMP_HOSTS_FILE ~/cloud-playbooks/hosts_azure"
+    ssh -o "StrictHostKeyChecking no" -i $SSH_KEY $AWS_ADMIN_USER_LINUX@$PROVISIONING_PUBLIC_IP "mv $TEMP_HOSTS_FILE ~/cloud-playbooks/hosts_$CLOUD_PROVIDER"
+    ssh -o "StrictHostKeyChecking no" -i $SSH_KEY $AWS_ADMIN_USER_LINUX@$PROVISIONING_PUBLIC_IP "wget $INTREXX_ZIP ~/cloud-playbooks/files/"
 elif    [ $OPERATING_SYSTEM == "win" ]; then
     echo "[PROVISIONING_MACHINE] - Copying files for the ansible windows installation"
     scp -C -r -o "StrictHostKeyChecking no" -i $SSH_KEY ../../../windows/* $AWS_ADMIN_USER_LINUX@$PROVISIONING_PUBLIC_IP:~/cloud-playbooks/ 
     #Add the hostname of the db to the hosts file
     ssh -o "StrictHostKeyChecking no" -i $SSH_KEY $AWS_ADMIN_USER_LINUX@$PROVISIONING_PUBLIC_IP "echo '[dbserver]' > $TEMP_HOSTS_FILE && echo $DB_DNS_ADDRESS >> $TEMP_HOSTS_FILE && echo "" >> $TEMP_HOSTS_FILE && cat ~/cloud-playbooks/hosts >> $TEMP_HOSTS_FILE"
-    ssh -o "StrictHostKeyChecking no" -i $SSH_KEY $AWS_ADMIN_USER_LINUX@$PROVISIONING_PUBLIC_IP "mv $TEMP_HOSTS_FILE ~/cloud-playbooks/hosts"
+    ssh -o "StrictHostKeyChecking no" -i $SSH_KEY $AWS_ADMIN_USER_LINUX@$PROVISIONING_PUBLIC_IP "mv $TEMP_HOSTS_FILE ~/cloud-playbooks/hosts_$CLOUD_PROVIDER"
+    ssh -o "StrictHostKeyChecking no" -i $SSH_KEY $AWS_ADMIN_USER_LINUX@$PROVISIONING_PUBLIC_IP "wget $INTREXX_ZIP ~/cloud-playbooks/files/"
 fi
 
 #create db config file and send to provisioning instance
@@ -63,14 +65,6 @@ echo "ix_efs_dns_address: $EFS_DNS_ADDRESS" >> $TEMP_DB_CONFIG_FILE
 
 scp -C -o "StrictHostKeyChecking no" -i $SSH_KEY $TEMP_DB_CONFIG_FILE $AWS_ADMIN_USER_LINUX@$PROVISIONING_PUBLIC_IP:~/cloud-playbooks/dbVars.yml 
 rm $TEMP_DB_CONFIG_FILE
-
-ZIP=$DATA_DIR/$INTREXX_ZIP
-
-while [ ! -f $ZIP ]; do
-   read -p "A file containing intrexx was not found In $ZIP. Please zip intrexx and retry"
-done
-
-scp -r -o "StrictHostKeyChecking no" -i $SSH_KEY $ZIP $AWS_ADMIN_USER_LINUX@$PROVISIONING_PUBLIC_IP:~/cloud-playbooks/files/professional.zip
 
 echo "[PROVISIONING_MACHINE] - Copying keys to $PROVISIONING_PUBLIC_IP"
 scp -o "StrictHostKeyChecking no" -i $SSH_KEY $WORK_DIR/id_rsa* $AWS_ADMIN_USER_LINUX@$PROVISIONING_PUBLIC_IP:~/.ssh/           

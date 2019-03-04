@@ -18,6 +18,7 @@ United Planet provides CLI scripts to setup an Intrexx cluster on Amazon AWS or 
 
 - Linux machine with Azure CLI or AWS CLI installed.
 - Windows 10 machine with Linux subsystem enabled and Azure/AWS CLI installed on the Linux subsystem.
+- A local copy of the Intrexx Cloud GitHub repository.
 
 #### Azure CLI
 
@@ -37,6 +38,15 @@ AWS Access Key ID [None]: ...
 AWS Secret Access Key [None]: ...
 Default region name [None]: ...
 Default output format [None]: json
+```
+
+#### Clone Intrexx Cloud Git repository
+
+After the CLI tools for your cloud provider are installed, you need to clone this repository on your machine. It is important to keep the directory structure of the repository because the scripts rely on it.
+
+```bash
+git clone https://github.com/UnitedPlanet/intrexx-cloud-playbooks.git
+cd intrexx-cloud-playbooks/cloud-provider/installer/script/
 ```
 
 ### Cluster architecture
@@ -105,10 +115,9 @@ Generally, the parameters in `variables.sh` are divided in basic and advanced se
 4. DATA_DIR
   Folder of the Intrexx setup package.
 5. INTREXX_ZIP
-* Name of the Intrexx setup zip.
-* Intrexx download Linux: `wget https://download.unitedplanet.com/intrexx/90000/intrexx-18.09.1-linux-x86_64.tar.gz`
-* Intrexx download Windows: `wget https://download.unitedplanet.com/intrexx/90000/intrexx-18.09.1-windows-x86_64.zip`
-* Copy the file to awsDeploy/data.
+* Name of the Intrexx setup package.
+* Intrexx download Linux: `https://download.unitedplanet.com/intrexx/90000/intrexx-18.09.1-linux-x86_64.tar.gz`
+* Intrexx download Windows: `https://download.unitedplanet.com/intrexx/90000/intrexx-18.09.1-windows-x86_64.zip`
 
 Additional settings:
 
@@ -117,11 +126,12 @@ Additional settings:
 2. [AWS|AZ]_OS_TYPE_*
   Operating system for the instances.
   Note: For Windows setups the chosen OS language should be English. Otherwise, the Ansible scripts must be adapted (check the Windows group name when creating the Windows services).
-
 3. [AWS|AZ]_ADMIN_PW_WIN
   The Windows administrator user password.
+4. [AWS|AZ]_DATABASE_DRIVER
+  The database type. Currently `postgres` (AWS/Azure) or `mssql` (Azure).
 
-### Infrastructure scripts
+### Infrastructure script execution
 
 The tasks of the scripts in the script folder are:
 
