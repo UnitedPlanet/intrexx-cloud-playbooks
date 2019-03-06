@@ -17,12 +17,12 @@
       dest: C:\install\7z-x64.msi
       creates: C:\install\7z-x64.msi
 
-  - name: copy install.cmd for 7zip
+  - name: Copy install.cmd for 7zip
     win_copy:
       src: files/install.cmd
       dest: C:\install\install.cmd
 
-  - name: install 7zip
+  - name: Install 7zip
     args:
       creates: 'C:\Program Files\7-Zip'
       chdir: C:\install\
@@ -35,24 +35,24 @@
       dest: C:\install\
       creates: C:\install\intrexx-18.09.1-windows-x86_64.zip
       
-  - name: copy setup
-    win_copy: 
-      src: files/intrexx-18.09.1-windows-x86_64.zip
-      dest: C:\install\intrexx-18.09.1-windows-x86_64.zip
-    args:
-      creates: C:\install\intrexx-18.09.1-windows-x86_64.zip
+  #- name: Copy setup
+  #  win_copy:
+  #    src: files/intrexx-18.09.1-windows-x86_64.zip
+  #    dest: C:\install\intrexx-18.09.1-windows-x86_64.zip
+  #  args:
+  #    creates: C:\install\intrexx-18.09.1-windows-x86_64.zip
 
-  - name: copy setup cfg
+  - name: Copy setup cfg
     win_template: 
       src: files/configuration.j2
       dest: C:\install\configuration.properties
 
-  - name: update portal config
+  - name: Update portal config
     win_template: 
       src: files/portal_config.j2 
       dest: C:\install\portal_config.xml
 
-  - name: unzip intrexx
+  - name: Unzip intrexx
     win_command: '"C:\Program Files\7-Zip\7z.exe" x C:\install\intrexx-18.09.1-windows-x86_64.zip -oC:\install'
     args:
       creates: C:\install\IX_18.09.1
@@ -66,25 +66,33 @@
       - Private
     tags: disable_firewall
 
-  - name: install intrexx
+  - name: Install intrexx
     win_command: C:\install\IX_18.09.1\setup.bat -t --configFile=C:\install\configuration.properties
     args:
       creates: C:\intrexx\bin\windows\portal.bat
 
-  - name: install Portal
+  - name: Install Portal
     win_command: C:\intrexx\bin\windows\buildportal.bat -t --configFile=C:\install\portal_config.xml
     args:
       creates: C:\share\{{ ix_portal_name }}\internal\cfg\portal.wcf
     
-  - name: copy logon script 
+  - name: Copy logon script 
     win_template: src=files/LogonServices.j2 dest=C:\install\LogonServices.ps1
 
-  - name: enable logon
+  - name: Enable logon
     win_shell: C:\install\LogonServices.ps1 "{{ aws_services_hostname }}\\{{ aws_username }}"
    
-  - name: stop Portal
+  - name: Stop Portal
     win_service:
       name: upixp_{{ ix_portal_name }}
+      state: stopped
+      start_mode: manual
+      username: "{{ aws_username }}"
+      password: "{{ aws_services_pw }}"
+
+  - name: Stop Solr
+    win_service:
+      name: upix_solr
       state: stopped
       start_mode: auto
       username: "{{ aws_username }}"
@@ -95,25 +103,35 @@
     args:
       creates: C:\share\cfg\initial.cfg
 
-  - name: mount cfg
+  - name: Mount cfg
     win_command: cmd /c mklink /D C:\intrexx\cfg C:\share\cfg
     args:
       creates: C:\intrexx\cfg\initial.cfg
+
+  - name: Move solr folder
+    win_command: cmd /c move C:\intrexx\solr\server\solr C:\share\
+    args:
+      creates: C:\share\solr\solr.xml
+
+  - name: Mount solr
+    win_command: cmd /c mklink /D C:\intrexx\solr\server\solr C:\share\solr
+    args:
+      creates: C:\share\solr\solr.xml
       
-  - name: share Portal
+  - name: Share portal folder
     win_share:
       name: share
       path: C:\share
       list: 'yes'
       full: Everyone
 
-  - name: start Solr Service automatic
+  - name: Start Solr service automatically
     win_service:
       name: upixsolr
       state: restarted
       start_mode: auto
 
-  - name: stop Portal Service 
+  - name: Stop portal service 
     win_service:
       name: upixp_{{ ix_portal_name }}
       state: stopped
@@ -121,7 +139,7 @@
       username: "{{ aws_username }}"
       password: "{{ aws_services_pw }}"
 
-  - name: stop Supervisor service
+  - name: Stop supervisor service
     win_service:
       name: upixsupervisor
       state: stopped

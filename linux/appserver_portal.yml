@@ -13,6 +13,7 @@
     - include: tasks/setup_intrexx.yml
     - include: tasks/stop_services.yml
     - include: tasks/link_cfg_folder.yml
+    - include: tasks/link_solr_folder.yml
     - include: tasks/copy_service_files.yml
 
     # copy files from services

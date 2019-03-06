@@ -128,7 +128,7 @@ checkAndRun "$FILE_DIR_COMMON/copyFiles.sh"
 ## Reboot all instances ##
 case "$CLOUD_PROVIDER" in
     "azure")
-         checkAndRunRenaming "$FILE_DIR_COMMON/reboot.sh" "APPSERVER"  $APPSERVER_NAME
+        checkAndRunRenaming "$FILE_DIR_COMMON/reboot.sh" "APPSERVER"  $APPSERVER_NAME
         checkAndRunRenaming "$FILE_DIR_COMMON/reboot.sh" "SERVICES"  $SERVICES_NAME 
         checkAndRunRenaming "$FILE_DIR_COMMON/reboot.sh" "PROVISIONING"  $PROVISIONING_NAME       
         ;;

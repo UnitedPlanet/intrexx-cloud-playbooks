@@ -30,6 +30,13 @@
         creates: "{{ ix_shared_folder }}/cfg/service.cfg"
     - include: tasks/link_cfg_folder.yml
 
+    # copy and link solr folder to share
+    - name: copy /opt/intrexx/solr/server/solr -> "{{ ix_shared_folder }}/solr"
+      command: cp -R /opt/intrexx/solr/server/solr "{{ ix_shared_folder }}/solr"
+      args:
+        creates: "{{ ix_shared_folder }}/cfg/service.cfg"
+    - include: tasks/link_solr_folder.yml
+
     # fetch service files
     - name: fetch portal script
       fetch: src="/opt/intrexx/bin/linux/upixp_{{ ix_portal_name }}" dest=files/ flat=yes force=yes

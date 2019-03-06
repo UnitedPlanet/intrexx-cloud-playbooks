@@ -35,12 +35,12 @@
       dest: C:\install\
       creates: C:\install\intrexx-18.09.1-windows-x86_64.zip
   
-  - name: Copy setup
-    win_copy:
-      src: files/intrexx-18.09.1-windows-x86_64.zip
-      dest: C:\install\intrexx-18.09.1-windows-x86_64.zip
-    args:
-      creates: C:\install\intrexx-18.09.1-windows-x86_64.zip
+  #- name: Copy setup
+  #  win_copy:
+  #    src: files/intrexx-18.09.1-windows-x86_64.zip
+  #    dest: C:\install\intrexx-18.09.1-windows-x86_64.zip
+  #  args:
+  #    creates: C:\install\intrexx-18.09.1-windows-x86_64.zip
 
   - name: Copy setup cfg
     win_template:
@@ -115,7 +115,7 @@
       username: "{{ aws_username }}"
       password: "{{ aws_portal_pw }}"
 
-  - name: create task to start the portal service for the first time on boot
+  - name: Create task to start the portal service for the first time on boot
     win_scheduled_task:
       name: Intrexx portal service start
       description: Starts Intrexx for the first time on boot
