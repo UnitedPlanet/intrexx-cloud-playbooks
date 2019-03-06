@@ -26,6 +26,13 @@
       chdir: C:\install\
     win_command: C:\install\install.cmd
       
+  - name: Download Intrexx setup
+    win_uri:
+      url: https://download.unitedplanet.com/intrexx/90000/intrexx-18.09.1-windows-x86_64.zip
+      method: GET
+      dest: C:\install\
+      creates: C:\install\intrexx-18.09.1-windows-x86_64.zip
+      
   - name: copy setup
     win_copy: 
       src: files/intrexx-18.09.1-windows-x86_64.zip

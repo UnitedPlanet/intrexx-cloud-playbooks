@@ -26,6 +26,13 @@
       chdir: C:\install\
     win_command: C:\install\install.cmd
 
+  - name: Download Intrexx setup
+    win_uri:
+      url: https://download.unitedplanet.com/intrexx/90000/intrexx-18.09.1-windows-x86_64.zip
+      method: GET
+      dest: C:\install\
+      creates: C:\install\intrexx-18.09.1-windows-x86_64.zip
+  
   - name: Copy setup
     win_copy:
       src: files/intrexx-18.09.1-windows-x86_64.zip
@@ -42,6 +49,16 @@
     win_command: '"C:\Program Files\7-Zip\7z.exe" x C:\install\intrexx-18.09.1-windows-x86_64.zip -oC:\install'
     args:
       creates: C:\install\IX_18.09.1
+
+  - name: Firewall rule to allow Intrexx on TCP port 1337
+    win_firewall_rule:
+      name: IntrexxHTTP
+      localport: 1337
+      action: allow
+      direction: in
+      protocol: tcp
+      state: present
+      enabled: yes
 
   - name: Disable all firewalls
     win_firewall:
@@ -101,3 +118,15 @@
       name: upixsolr
       state: stopped
       start_mode: disabled
+
+  - name: create task to start the portal service for the first time on boot
+    win_scheduled_task:
+      name: Intrexx portal service start
+      description: Starts Intrexx for the first time on boot
+      actions:
+      - path: C:\Windows\System32\net.exe
+        arguments: start upixp_{{ ix_portal_name }}
+      triggers:
+      - type: boot
+      username: SYSTEM
+      run_level: highest
