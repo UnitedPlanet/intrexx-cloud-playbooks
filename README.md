@@ -47,13 +47,13 @@ Configure your virtual private cloud security group to allow internal traffic on
 
 ### cloud-provider
 
-CLI scripts and documentation for provisioning the required infrastructure on Microsoft Azure, Amanzon Web Services and Vagrant.
+CLI scripts and documentation for provisioning of the required infrastructure on Microsoft Azure, Amazon Web Services and Vagrant.
 
 #### cloud-provider/installer
 
-Contains the default CLI install scripts for Azure/AWS on Linux and Windows. Can be used for both providers and OSes and will support further cloud providers in the future. At the moment, it requires to start the Ansible provisioning scripts manually.
+Contains the default CLI install scripts for Azure/AWS on Linux and Windows. Can be used for both providers and OSes and will support further cloud providers in the future. At the moment, it requires to start the Ansible provisioning scripts manually on the provisioning instance.
 
-Consider these scripts as a reference for creating an automatically scaling Intrexx cluster setup.
+Consider these scripts as a template for creating your own automatically scaling Intrexx cluster setup.
 
 #### cloud-provider/vagrant
 

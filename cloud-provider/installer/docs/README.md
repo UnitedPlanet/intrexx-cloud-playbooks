@@ -114,7 +114,7 @@ Generally, the parameters in `variables.sh` are divided in basic and advanced se
   Name of the portal to be created.
 4. DATA_DIR
   Folder of the Intrexx setup package.
-5. INTREXX_SETUP_LINUX / INTREXX_SETUP_WINDOWS
+5. INTREXX_SETUP_LINUX / INTREXX_SETUP_WIN
 * Name of the Intrexx setup package.
 * Intrexx download Linux: `https://download.unitedplanet.com/intrexx/90000/intrexx-18.09.1-linux-x86_64.tar.gz`
 * Intrexx download Windows: `https://download.unitedplanet.com/intrexx/90000/intrexx-18.09.1-windows-x86_64.zip`
@@ -129,7 +129,9 @@ Additional settings:
 3. [AWS|AZ]_ADMIN_PW_WIN
   The Windows administrator user password.
 4. [AWS|AZ]_DATABASE_DRIVER
-  The database type. Currently `postgres` (AWS/Azure) or `mssql` (Azure).
+  The database JDBC driver type. Currently `postgres` (AWS/Azure) or `mssql` (Azure).
+5. AZ_DATABASE_TYPE
+  The database type. Currently `postgres` (AWS/Azure) or `sql` (Azure SQLServer).
 
 ### Infrastructure script execution
 

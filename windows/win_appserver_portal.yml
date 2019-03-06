@@ -12,8 +12,8 @@
 
   - name: Copy 7zip
     win_copy:
-      src: files/7z1806-x64.msi
-      dest: C:\install\7z1806-x64.msi
+      src: files/7z-x64.msi
+      dest: C:\install\7z-x64.msi
 
   - name: Copy install.cmd for 7zip
     win_copy:
