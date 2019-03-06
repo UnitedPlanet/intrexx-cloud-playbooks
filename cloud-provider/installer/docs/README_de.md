@@ -72,9 +72,12 @@ Generell sind die Variablen in *`variables.sh`* unterteilt in basic und advanced
   Name des Portals, das installiert wird, dies ist insbesondere wichtig für die Health Pings des Load Balancers.
 4. DATA_DIR
   Verzeichnis, in dem das Intrexx-Installationspaket gespeichert ist.
-5. INTREXX_ZIP
-* Dateiname der Intrexx-Installationspaket-Zipdatei.
+5. INTREXX_SETUP_LINUX
+* Dateiname der Linux Intrexx-Installationspaket-Zipdatei.
 * Intrexx Download: `wget https://download.unitedplanet.com/intrexx/90000/intrexx-18.09.1-linux-x86_64.tar.gz`
+6. INTREXX_SETUP_WINDOWS
+* Dateiname der Windows Intrexx-Installationspaket-Zipdatei.
+* Intrexx Download: `wget https://download.unitedplanet.com/intrexx/90000/intrexx-18.09.1-windows-x86_64.zip`
 
 
 Zusätzlich interessante Variablen:

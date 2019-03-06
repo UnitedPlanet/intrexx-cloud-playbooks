@@ -8,14 +8,14 @@ CLOUD_PROVIDER=aws
 OPERATING_SYSTEM=linux
 
 # name of the portal, which is going to be deployed
-PORTAL_NAME=test
+PORTAL_NAME=intrexx
 
 # Dir which contains the intrexx related data (e.g. the trunk zip) 
 DATA_DIR=./awsDeploy/data
-# URL of the intrexx linux setup tarball
-INTREXX_ZIP=https://download.unitedplanet.com/intrexx/90000/intrexx-18.09.1-linux-x86_64.tar.gz
-# URL of the intrexx windows setup zip
-#INTREXX_ZIP=https://download.unitedplanet.com/intrexx/90000/intrexx-18.09.1-windows-x86_64.zip
+# Name of the intrexx linux setup tarball (without the path; the dir path should be set in 'DATA_DIR')
+INTREXX_SETUP_LINUX=intrexx-18.09.1-linux-x86_64.tar.gz
+# Name of the intrexx windows setup tarball (without the path; the dir path should be set in 'DATA_DIR')
+INTREXX_SETUP_WIN=intrexx-18.09.1-windows-x86_64.zip
 
 ##################################################################################
 #################################### ADVANCED ####################################
@@ -100,13 +100,25 @@ AZ_ADMIN_USER_LINUX=ubuntu
 # linux login via ssh
 ########################
 
+## DATABASE ##
+DB_SERVER_NAME=ixcloudvmtestsqldb   #Please specify a value only in lowercases
+DB_SERVER_ADMIN_USER=intrexx
+DB_SERVER_ADMIN_PASSWD='1MyIxCloud!'
+DB_NAME=ixintrexx
+DB_IDENTIFIER=POSTGRESDBINTREXX
+DB_SUBNET_GROUP=$DB_SERVER_NAME"_SUBNET"
+DB_SUBNET_GROUP_DESC=$DB_SERVER_NAME"_SUBNET_DESC"
+########################
+
 ## Database cloud provider related ##
 AWS_DATABASE_DRIVER=postgresql
 AWS_DATABASE_VERSION=9.6.5
 AWS_DATABASE_TYPE=db.t2.micro 
 AWS_DATABASE_PORT=5432
 
-AZ_DATABASE_DRIVER=mssql # mssql | postgres
+# 'sql' for Azure MS SQLServer or 'postgres' for Azure Postgresql as a service
+AZ_DATABASE_TYPE=sql # sql | postgres
+AZ_DATABASE_DRIVER=mssql # mssql | postgresql
 AZ_DATABASE_TYPE=S0
 AZ_DATABASE_PORT=1433 # 1433 | 5432
 ########################
@@ -180,17 +192,6 @@ INTREXX_HTTPS_CERTIFICATE_CHAIN_PEM=
 INTREXX_HTTPS_CERTIFICATE_PRIVATE_KEY_PEM=
 INTREXX_HTTPS_CERTIFICATE_SECURITY_POLICY=
 ########################
-
-## DATABASE ##
-DB_SERVER_NAME=ixcloudvmtestsqldb   #Please specify a value only in lowercases
-DB_SERVER_ADMIN_USER=intrexx
-DB_SERVER_ADMIN_PASSWD='1MyIxCloud!'
-DB_NAME=ixtest
-DB_IDENTIFIER=POSTGRESDBINTREXX
-DB_SUBNET_GROUP=$DB_SERVER_NAME"_SUBNET"
-DB_SUBNET_GROUP_DESC=$DB_SERVER_NAME"_SUBNET_DESC"
-########################
-
 
 # Options to be loaded in all scripts
 # -e: immediately exit if any command has a non-zero exit status

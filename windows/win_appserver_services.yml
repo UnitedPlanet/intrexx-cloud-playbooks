@@ -111,11 +111,11 @@
       state: restarted
       start_mode: auto
 
-  - name: start Portal Service 
+  - name: stop Portal Service 
     win_service:
       name: upixp_{{ ix_portal_name }}
-      state: started
-      start_mode: auto
+      state: stopped
+      start_mode: manual
       username: "{{ aws_username }}"
       password: "{{ aws_services_pw }}"
 
