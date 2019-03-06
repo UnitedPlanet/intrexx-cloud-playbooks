@@ -19,7 +19,7 @@ apt-get --yes update >> aptgetoutput.log && apt-get --yes upgrade >> aptgetoutpu
 echo "[PROVISIONING_VM] - Installing needed packages" >> aptgetoutput.log
 apt-get --yes install python-pip p7zip-full unzip >> aptgetoutput.log
 #pip install --upgrade pip >> aptgetoutput.log
-#pip install pywinrm >> aptgetoutput.log
+pip install pywinrm >> aptgetoutput.log
 
 echo "[PROVISIONING_VM] - Installing ansible" >> aptgetoutput.log
 apt-get --yes install software-properties-common  >> aptgetoutput.log

@@ -27,14 +27,14 @@ if      [ $OPERATING_SYSTEM == "linux" ]; then
     #Add the hostname of the db to the hosts file
     ssh -o "StrictHostKeyChecking no" -i $SSH_KEY $AWS_ADMIN_USER_LINUX@$PROVISIONING_PUBLIC_IP "echo '[dbserver]' > $TEMP_HOSTS_FILE && echo $DB_DNS_ADDRESS >> $TEMP_HOSTS_FILE && echo "" >> $TEMP_HOSTS_FILE && cat ~/cloud-playbooks/hosts_azure >> $TEMP_HOSTS_FILE"
     ssh -o "StrictHostKeyChecking no" -i $SSH_KEY $AWS_ADMIN_USER_LINUX@$PROVISIONING_PUBLIC_IP "mv $TEMP_HOSTS_FILE ~/cloud-playbooks/hosts_$CLOUD_PROVIDER"
-    ssh -o "StrictHostKeyChecking no" -i $SSH_KEY $AWS_ADMIN_USER_LINUX@$PROVISIONING_PUBLIC_IP "wget $INTREXX_ZIP ~/cloud-playbooks/files/"
+    ssh -o "StrictHostKeyChecking no" -i $SSH_KEY $AWS_ADMIN_USER_LINUX@$PROVISIONING_PUBLIC_IP "wget -O ~/cloud-playbooks/cloud-playbooks/files/$INTREXX_ZIP.tar.gz https://download.unitedplanet.com/intrexx/90000/$INTREXX_ZIP.tar.gz"
 elif    [ $OPERATING_SYSTEM == "win" ]; then
     echo "[PROVISIONING_MACHINE] - Copying files for the ansible windows installation"
     scp -C -r -o "StrictHostKeyChecking no" -i $SSH_KEY ../../../windows/* $AWS_ADMIN_USER_LINUX@$PROVISIONING_PUBLIC_IP:~/cloud-playbooks/ 
     #Add the hostname of the db to the hosts file
     ssh -o "StrictHostKeyChecking no" -i $SSH_KEY $AWS_ADMIN_USER_LINUX@$PROVISIONING_PUBLIC_IP "echo '[dbserver]' > $TEMP_HOSTS_FILE && echo $DB_DNS_ADDRESS >> $TEMP_HOSTS_FILE && echo "" >> $TEMP_HOSTS_FILE && cat ~/cloud-playbooks/hosts >> $TEMP_HOSTS_FILE"
     ssh -o "StrictHostKeyChecking no" -i $SSH_KEY $AWS_ADMIN_USER_LINUX@$PROVISIONING_PUBLIC_IP "mv $TEMP_HOSTS_FILE ~/cloud-playbooks/hosts_$CLOUD_PROVIDER"
-    ssh -o "StrictHostKeyChecking no" -i $SSH_KEY $AWS_ADMIN_USER_LINUX@$PROVISIONING_PUBLIC_IP "wget $INTREXX_ZIP ~/cloud-playbooks/files/"
+    ssh -o "StrictHostKeyChecking no" -i $SSH_KEY $AWS_ADMIN_USER_LINUX@$PROVISIONING_PUBLIC_IP "wget -O ~/cloud-playbooks/files/$INTREXX_ZIP.zip https://download.unitedplanet.com/intrexx/90000/$INTREXX_ZIP.zip"
 fi
 
 #create db config file and send to provisioning instance
