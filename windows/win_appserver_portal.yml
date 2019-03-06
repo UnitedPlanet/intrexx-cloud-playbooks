@@ -42,7 +42,7 @@
 
   - name: Copy setup cfg
     win_template:
-      src: files/configuration.j2
+      src: files/configuration_portal.j2
       dest: C:\install\configuration.properties
 
   - name: Unzip setup
@@ -112,12 +112,6 @@
       start_mode: disabled
       username: "{{ aws_username }}"
       password: "{{ aws_portal_pw }}"
-
-  - name: Stop Solr service
-    win_service:
-      name: upixsolr
-      state: stopped
-      start_mode: disabled
 
   - name: create task to start the portal service for the first time on boot
     win_scheduled_task:
