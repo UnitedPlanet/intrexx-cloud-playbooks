@@ -10,10 +10,12 @@
       path: C:\install
       state: directory
 
-  - name: copy 7zip
-    win_copy:
-      src: files/7z-x64.msi
+  - name: Download 7zip setup
+    win_uri:
+      url: https://www.7-zip.org/a/7z1900-x64.msi
+      method: GET
       dest: C:\install\7z-x64.msi
+      creates: C:\install\7z-x64.msi
 
   - name: copy install.cmd for 7zip
     win_copy:
