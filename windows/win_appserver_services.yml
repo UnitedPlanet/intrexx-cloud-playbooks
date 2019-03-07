@@ -92,7 +92,7 @@
 
   - name: Stop Solr
     win_service:
-      name: upix_solr
+      name: upixsolr
       state: stopped
       start_mode: auto
       username: "{{ aws_username }}"
