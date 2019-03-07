@@ -131,14 +131,6 @@
       state: restarted
       start_mode: auto
 
-  - name: Stop portal service 
-    win_service:
-      name: upixp_{{ ix_portal_name }}
-      state: stopped
-      start_mode: manual
-      username: "{{ aws_username }}"
-      password: "{{ aws_services_pw }}"
-
   - name: Stop supervisor service
     win_service:
       name: upixsupervisor
