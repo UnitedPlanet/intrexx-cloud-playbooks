@@ -32,8 +32,8 @@ ix_remote_home: /home/ubuntu
 # Portal configuration
 #
 ix_home: /opt/intrexx
-ix_portal_name: test
-ix_portal_path: /share/test
+ix_portal_name: intrexx
+ix_portal_path: /share/intrexx
 ix_portal_logpath: /var/log/intrexx
 ix_portal_template_path: /opt/intrexx/orgtempl/blank
 
@@ -46,7 +46,7 @@ ix_portal_template_path: /opt/intrexx/orgtempl/blank
 #ix_db_create: true
 #ix_db_hostname: 10.0.0.5
 #ix_db_port: 5432
-#ix_db_database_name: ixtest
+#ix_db_database_name: ixintrexx
 #ix_db_admin_login: intrexx
 #ix_db_admin_password: 1MyIxCloud!
 #ix_db_user_login: intrexx
@@ -57,7 +57,7 @@ ix_portal_template_path: /opt/intrexx/orgtempl/blank
 #ix_db_create: true
 #ix_db_hostname: ixcloudvmtestsql123.database.windows.net
 #ix_db_port: 1433
-#ix_db_database_name: ixtest
+#ix_db_database_name: ixintrexx
 #ix_db_admin_login: intrexx
 #ix_db_admin_password: 1MyIxCloud!
 #ix_db_user_login: intrexx
@@ -68,7 +68,7 @@ ix_portal_template_path: /opt/intrexx/orgtempl/blank
 #ix_db_create: true
 #ix_db_hostname: 192.168.55.11
 #ix_db_port: 5432
-#ix_db_database_name: ixtest
+#ix_db_database_name: ixintrexx
 #ix_db_admin_login: intrexx
 #ix_db_admin_password: 1MyIxCloud!
 #ix_db_user_login: intrexx
@@ -77,7 +77,7 @@ ix_portal_template_path: /opt/intrexx/orgtempl/blank
 #
 # Tomcat configuration
 #
-ix_tomcat_context: test
+ix_tomcat_context: intrexx
 ix_tomcat_http_port: 1337
 ix_tomcat_https_port: 8443
 
@@ -93,14 +93,14 @@ ix_solr_cfg_base_dir: /solr
 #
 
 # IP finder mode: static|multicast|sharedfs
-ix_cluster_ipfinder_mode: static
+ix_cluster_ipfinder_mode: sharedfs
 
 # List of IP addresses of the cluster instances
 #ix_cluster_static_addresses: 192.168.55.12,192.168.55.13,192.168.55.14
-ix_cluster_static_addresses: 10.0.0.5,10.0.0.6,10.0.0.7,10.0.0.8,10.0.0.9,10.0.0.10
-#ix_cluster_ipfinder_sharedfs: "/share/cluster/addresses"
+#ix_cluster_static_addresses: 10.0.0.5,10.0.0.6,10.0.0.7,10.0.0.8,10.0.0.9,10.0.0.10
+ix_cluster_ipfinder_sharedfs: "/share/cluster/addresses"
 
-#()
+#
 # postgresql
 #
 postgresql_global_config_options:

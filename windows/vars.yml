@@ -9,7 +9,7 @@ aws_appserver_hostname: IxAppServer
 ix_db_hostname: ixcloudvmtestsqldb.database.windows.net
 ix_db_port: 1433
 ix_db_type: mssql
-ix_db_database_name: ixtest
+ix_db_database_name: ixintrexx
 ix_db_create: true
 ix_db_admin_login: intrexx
 ix_db_admin_password: 1MyIxCloud!
@@ -17,12 +17,12 @@ ix_db_user_login: intrexx
 ix_db_user_password: 1MyIxCloud!
 
 ix_home: C:\intrexx
-ix_portal_name: test
-ix_portal_path: C:\share\test
+ix_portal_name: intrexx
+ix_portal_path: C:\share\intrexx
 ix_portal_logpath: C:\intrexx\log\portal
 ix_share_unc_path: \\10.0.0.5\share
 
-ix_tomcat_context: test
+ix_tomcat_context: intrexx
 ix_tomcat_http_port: 1337
 ix_tomcat_https_port: 8443
 
