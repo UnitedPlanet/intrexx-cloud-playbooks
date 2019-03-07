@@ -119,7 +119,6 @@ AWS_DATABASE_PORT=5432
 # 'sql' for Azure MS SQLServer or 'postgres' for Azure Postgresql as a service
 AZ_DATABASE_TYPE=sql # sql | postgres
 AZ_DATABASE_DRIVER=mssql # mssql | postgresql
-AZ_DATABASE_TYPE=S0
 AZ_DATABASE_PORT=1433 # 1433 | 5432
 ########################
 

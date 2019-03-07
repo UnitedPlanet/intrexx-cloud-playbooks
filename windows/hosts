@@ -1,9 +1,5 @@
 [appserver_services]
-10.0.0.6 hostname=IxWinVMTestApp1 ipaddr=10.0.0.6
+10.0.0.5 hostname=IxServices
 
 [appserver_portal]
-10.0.0.7 hostname=IxWinVMTestApp2 ipaddr=10.0.0.7
-10.0.0.8 hostname=IxWinVMTestApp3 ipaddr=10.0.0.8
-
-[loadbalancer]
-10.0.0.6 hostname=IxWinVMTestApp1 ipaddr=10.0.0.6
+10.0.0.6 hostname=IxAppServer
