@@ -66,12 +66,12 @@
       - Private
     tags: disable_firewall
 
-  - name: Install intrexx
+  - name: Install Intrexx
     win_command: C:\install\IX_18.09.1\setup.bat -t --configFile=C:\install\configuration.properties
     args:
       creates: C:\intrexx\bin\windows\portal.bat
 
-  - name: Install Portal
+  - name: Crate portal
     win_command: C:\intrexx\bin\windows\buildportal.bat -t --configFile=C:\install\portal_config.xml
     args:
       creates: C:\share\{{ ix_portal_name }}\internal\cfg\portal.wcf
@@ -82,7 +82,7 @@
   - name: Enable logon
     win_shell: C:\install\LogonServices.ps1 "{{ aws_services_hostname }}\\{{ aws_username }}"
    
-  - name: Stop Portal
+  - name: Stop portal
     win_service:
       name: upixp_{{ ix_portal_name }}
       state: stopped
@@ -103,20 +103,20 @@
     args:
       creates: C:\share\cfg\initial.cfg
 
-  - name: Mount cfg
+  - name: Link cfg folder
     win_command: cmd /c mklink /D C:\intrexx\cfg C:\share\cfg
     args:
       creates: C:\intrexx\cfg\initial.cfg
 
-  - name: Move solr folder
+  - name: Move Solr folder
     win_command: cmd /c move C:\intrexx\solr\server\solr C:\share\
     args:
       creates: C:\share\solr\solr.xml
 
-  - name: Mount solr
+  - name: Link Solr folder
     win_command: cmd /c mklink /D C:\intrexx\solr\server\solr C:\share\solr
     args:
-      creates: C:\share\solr\solr.xml
+      creates: C:\intrexx\solr\server\solr\solr.xml
       
   - name: Share portal folder
     win_share:

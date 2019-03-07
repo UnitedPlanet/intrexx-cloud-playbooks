@@ -79,23 +79,28 @@
   - name: Copy logon script 
     win_template: src=files/LogonServices.j2 dest=C:\install\LogonServices.ps1
 
-  - name: Enable logon
+  - name: Enable service logon
     win_shell: C:\install\LogonServices.ps1 "{{ aws_appserver_hostname }}\\{{ aws_username }}"
 
-  - name: Remove cfg
+  - name: Remove cfg folder
     win_file:
       path: C:\intrexx\cfg
       state: absent
 
-  - name: Mount share
+  - name: Mount share folder
     win_command: cmd /c mklink /D C:\share {{ ix_share_unc_path }}    
     args:
       creates: C:\share
     
-  - name: Mount cfg
+  - name: Mount cfg folder
     win_command: cmd /c mklink /D C:\intrexx\cfg C:\share\cfg    
     args:
       creates: C:\intrexx\cfg\initial.cfg
+
+  - name: Mount Solr folder
+    win_command: cmd /c mklink /D C:\intrexx\solr\server\solr C:\share\solr
+    args:
+      creates: C:\intrexx\solr\server\solr\solr.xml
     
   - name: Create and start portal service
     win_service:
