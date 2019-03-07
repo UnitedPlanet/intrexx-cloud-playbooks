@@ -97,6 +97,12 @@
     args:
       creates: C:\intrexx\cfg\initial.cfg
 
+  - name: Create Solr directory structure
+    win_file:
+      path: C:\intrexx\solr\server\
+      state: directory
+      creates: C:\intrexx\solr\server\
+
   - name: Mount Solr folder
     win_command: cmd /c mklink /D C:\intrexx\solr\server\solr C:\share\solr
     args:
