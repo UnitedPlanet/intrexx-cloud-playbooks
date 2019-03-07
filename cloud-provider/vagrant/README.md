@@ -16,19 +16,9 @@ Furthermore, a nginx load balancer service is running on the db server distribut
 
 - Copy `../../../linux` folder into local folder.
 
-- Download Intrexx: `wget https://download.unitedplanet.com/intrexx/90000/intrexx-18.09.1-linux-x86_64.tar.gz`
-
-- Unzip and rename `IX_18.09` folder to `./professional`
-
-- Create a new zip file `professional.zip`
-
-- Copy Intrexx setup package `professional.zip` into local folder (`clould-provider/vagrant/ixcloud`).
-
 - After box is up -> `vagrant ssh provision`
 
 - From within the VM, copy `/vagrant/linux` folder to home folder.
-
-- Copy `/vagrant/professional.zip` to linux/files folder.
 
 - CD into linux folder. Edit variables in `vars.yml` to match your environment. Change `ix_remote_user` and `ix_remote_home` to root. Check IP adresses in hosts_vagrant and vars.yml and modify them to match your Vagrant network.
 

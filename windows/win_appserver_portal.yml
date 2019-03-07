@@ -32,7 +32,7 @@
     win_uri:
       url: https://download.unitedplanet.com/intrexx/90000/intrexx-18.09.1-windows-x86_64.zip
       method: GET
-      dest: C:\install\
+      dest: C:\install\intrexx-18.09.1-windows-x86_64.zip
       creates: C:\install\intrexx-18.09.1-windows-x86_64.zip
   
   #- name: Copy setup

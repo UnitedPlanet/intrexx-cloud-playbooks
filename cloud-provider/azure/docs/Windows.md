@@ -87,16 +87,8 @@ ansible-galaxy install geerlingguy.nginx
 
 ### Cloud-playbooks & Intrexx auf die Provisioning Maschine 체bertragen
 
-* Intrexx Download: `wget https://download.unitedplanet.com/intrexx/90000/intrexx-18.09.1-windows-x86_64.zip`
-* Download entpacken und Ordner `IX_18.09` nach `./professional` umbenennen.
-* Den Ordner des aktuellen Intrexx Setups muss gezippt werden zu `professional.zip`.
-
 ```bash
 scp cloud-playbooks.zip ubuntu@provisioningIp:
-```
-
-```bash
-scp professional.zip ubuntu@provisioningIp:
 ```
 
 ## 4 Installation Azure Windows Server Instanzen
@@ -144,8 +136,6 @@ OK
 ![alt text](images/win_07.png)
 
 ## 5 Instanzen aktualisieren und installieren
-
-Zun채chst in Azure ein Fileshare f체r das Intrexx Setup anlegen. Auf dieses das `professional.zip` kopieren.
 
 Via RDP mit den Windows Instanzen verbinden. Windows Updates installieren.
 
@@ -209,23 +199,11 @@ Tipp: Deaktivieren sie die  Internet Explorer Enhanced Security Configuration f�
 unzip cloud-playbooks.zip
 ```
 
-2. Verschieben von professional.zip nach cloud-playbooks/files
+2. Einstellungen in vars.yml anpassen
 
-```bash
-mv professional.zip cloud-playbooks/files/
-```
+3. UNC Pfade in win_appserver_services & win_appserver_portal anpassen.
 
-3. Kopieren von 7z1700-x64.msi nach cloud-playbooks/files
-
-```bash
-mv 7z1700-x64.msi cloud-playbooks/files/
-```
-
-4. Einstellungen in vars.yml anpassen
-
-5. UNC Pfade in win_appserver_services & win_appserver_portal anpassen.
-
-6. Ansible scripts ausf체hren
+4. Ansible scripts ausf체hren
 
 ```bash
 ansible-playbook -v -i hosts win_appserver_services.yml

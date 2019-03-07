@@ -6,15 +6,31 @@ Für eine vollautomatisierte Installation auf AWS und Azure gibt es eine CLI Ins
 
 ## Inhalt
 
-1. [Resourcen Gruppe erstellen](#ressourcen-gruppe-erstellen)
-2. [Provisoning Instanz](#provisoning-instanz)
-3. [Programme aktualisieren und installieren](#programme-aktualisieren-und-installieren)
-4. [Datenbankserver Instanz](#datenbankserver-instanz)
-5. [Dateiserver Instanz](#dateiserver-instanz)
-6. [Portalserver Instanz](#portalserver-instanz)
-7. [Installation der Playbooks](#installation-der-playbooks)
-8. [Test](#test)
-9. [Beschreibung der Playbooks und Ansible Konfigurations Dateien](#beschreibung-der-playbooks-und-ansible-konfigurations-dateien)
+- [Intrexx Cloud Installation Guide für Microsoft Azure (Ubuntu Linux Virtual Machines)](#intrexx-cloud-installation-guide-f%C3%BCr-microsoft-azure-ubuntu-linux-virtual-machines)
+  - [Inhalt](#inhalt)
+  - [Ressourcen Gruppe erstellen](#ressourcen-gruppe-erstellen)
+  - [Provisoning Instanz](#provisoning-instanz)
+    - [Installation Azure](#installation-azure)
+    - [Programme aktualisieren und installieren](#programme-aktualisieren-und-installieren)
+    - [Setup & cloud-playbooks übertragen](#setup--cloud-playbooks-%C3%BCbertragen)
+  - [Datenbank Instanz](#datenbank-instanz)
+  - [AppServer Instanz](#appserver-instanz)
+    - [Installation im Azure](#installation-im-azure)
+    - [System aktualisieren](#system-aktualisieren)
+  - [SecurityGroup Einstellungen](#securitygroup-einstellungen)
+    - [Freizugebene Ports](#freizugebene-ports)
+  - [Installation der Playbooks](#installation-der-playbooks)
+    - [AppServer SERVICES](#appserver-services)
+    - [AppServer 1-2 Portal](#appserver-1-2-portal)
+    - [NginX](#nginx)
+  - [Test](#test)
+  - [9. Beschreibung der Playbooks und Ansible Konfigurations Dateien](#9-beschreibung-der-playbooks-und-ansible-konfigurations-dateien)
+    - [Verzeichnissstrucktur "cloud-playbooks"](#verzeichnissstrucktur-%22cloud-playbooks%22)
+    - [vars.yml](#varsyml)
+    - [appserver_services.yml](#appserverservicesyml)
+    - [appserver_portal.yml](#appserverportalyml)
+    - [hosts](#hosts)
+  - [Automatische Installation](#automatische-installation)
 
 ## Ressourcen Gruppe erstellen
 
@@ -121,27 +137,11 @@ sudo reboot
 
 **Im Terminal ausführen:**
 
-  * Intrexx Download: `wget https://download.unitedplanet.com/intrexx/90000/intrexx-18.09.1-linux-x86_64.tar.gz`
-  * Download entpacken und den Ordner `IX_18.09` nach `./professional` umbenennen.
-  * Den Ordner des aktuellen Intrexx Setups muss gezippt werden zu `professional.zip`.
-  * Per scp professional.zip und cloud-playbooks.zip übertragen
-
-```bash
-scp professional.zip ubuntu@publicIPAdress:
-scp cloud-playbooks.zip ubuntu@publicIPAdress:
-```
-
 * Playbooks entzippen
 
 ```bash
 ssh ubuntu@publicIPAdress
 unzip cloud-playbooks.zip
-```
-
-* professional.zip nach cloud-playbooks/linux/files verschieben
-
-```bash
-mv professional.zip cloud-playbooks/linux/files/
 ```
 
 ## Datenbank Instanz
@@ -321,7 +321,7 @@ Playbook Ablauf:
 
 1. Änderung der /etc/host
 2. Installation und Anlegen der NFS-Partition unter dem Pfad /share (Geteiltes Dateisystem)
-3. Kopieren und Entpacken des Setups aus ./cloud-playbooks/files/professional.zip
+3. Kopieren und Entpacken des Setups.
 4. Intrexx installation
 5. Portal installation auf dem /share Verzeichniss
 6. Stop der Intrexx-Dienste
@@ -337,7 +337,7 @@ Playbook Ablauf:
 
 1. Änderung der /etc/host
 2. Installation des NFS Dienstes und mounten der NFS-Partition unter dem Pfad /share
-3. Kopieren und Entpacken des Setups aus ./cloud-playbooks/files/professional.zip
+3. Kopieren und Entpacken des Setups.
 4. Intrexx Installation
 5. Stop der Intrexx-Dienste
 6. Löscht /opt/intrexx/cfg

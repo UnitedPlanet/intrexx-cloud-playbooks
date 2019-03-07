@@ -32,7 +32,7 @@
     win_uri:
       url: https://download.unitedplanet.com/intrexx/90000/intrexx-18.09.1-windows-x86_64.zip
       method: GET
-      dest: C:\install\
+      dest: C:\install\intrexx-18.09.1-windows-x86_64.zip
       creates: C:\install\intrexx-18.09.1-windows-x86_64.zip
       
   #- name: Copy setup
@@ -71,7 +71,7 @@
     args:
       creates: C:\intrexx\bin\windows\portal.bat
 
-  - name: Crate portal
+  - name: Create portal
     win_command: C:\intrexx\bin\windows\buildportal.bat -t --configFile=C:\install\portal_config.xml
     args:
       creates: C:\share\{{ ix_portal_name }}\internal\cfg\portal.wcf

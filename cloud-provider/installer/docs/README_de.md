@@ -191,7 +191,7 @@ Playbook Ablauf:
 
 1. Änderung der /etc/host
 2. Installation und Anlegen der NFS-Pattion unter dem Pfad /share (Verteilte Festplatte)
-3. Kopieren und Entpacken des Setups aus ./cloud-playbooks/files/professional.zip
+3. Kopieren und Entpacken des Setups.
 4. Intrexx installation
 5. Portal installation auf dem /share Verzeichniss
 6. Stop der Intrexx-Dienste
@@ -208,7 +208,7 @@ Playbook Ablauf:
 
 1. Änderung der /etc/host
 2. Installation des NFS Dienst und mount der NFS-Pattion unter dem Pfad /share (Verteilte Festplatte)
-3. Kopieren und Entpacken des Setups aus ./cloud-playbooks/files/professional.zip
+3. Kopieren und Entpacken des Setups.
 4. Intrexx installation
 5. Stop der Intrexx-Dienste
 6. Kopieren und Ersetzten der Dateien aus ./files

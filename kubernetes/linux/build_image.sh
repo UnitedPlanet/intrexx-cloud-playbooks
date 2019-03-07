@@ -10,16 +10,16 @@ fi
 
 cd $WORKDIR
 
-if [ ! -f "${WORKDIR}/professional/setup.sh" ]; then
-    echo "No setup found in folder professional. Please copy the professional setup folder."
+if [ ! -f "${WORKDIR}/intrexx/setup.sh" ]; then
+    echo "No setup found in folder intrexx. Please copy the intrexx setup folder."
     exit
 fi
 
 rm -rf $WORKDIR/share
 rm -rf $WORKDIR/server_share.tar.gz
 
-chmod a+x professional/setup.sh
-chmod a+x professional/jre/linux/amd64/bin/java
+chmod a+x intrexx/setup.sh
+chmod a+x intrexx/jre/linux/amd64/bin/java
 
 echo "start db container"
 docker run -d --name ixclouddb postgres:9.6
@@ -33,14 +33,14 @@ cd ..
 echo "start setup container"
 
 #use this command to install portal into local portal folder
-docker run -v "${WORKDIR}/professional":/tmp/ix-setup \
+docker run -v "${WORKDIR}/intrexx":/tmp/ix-setup \
     --link ixclouddb:ixclouddbservice -v "${WORKDIR}/share/cfg":/tmp/server_cfg \
     -v "${WORKDIR}/share/bin":/tmp/server_bin  -v "${WORKDIR}/share/portal":/opt/intrexx/org/cloud \
     --name="ixcloudfs-setup" \
     ixcloudfs-base /bin/bash -c "/tmp/ix-setup/setup.sh -t --configFile=/root/configuration.properties; /tmp/build_portal.sh;"
 
 #use this command to install portal in container image
-#docker run -v "${WORKDIR}/professional":/tmp/ix-setup --name="ixcloudfs-setup" ixcloudfs-base \
+#docker run -v "${WORKDIR}/intrexx":/tmp/ix-setup --name="ixcloudfs-setup" ixcloudfs-base \
 #   /bin/bash -c "/tmp/ix-setup/setup.sh -t --configFile=/root/configuration.properties; /tmp/build_portal.sh;"
 
 #commit image
