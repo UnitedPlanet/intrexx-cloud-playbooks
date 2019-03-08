@@ -26,7 +26,7 @@ if      [ $OPERATING_SYSTEM == "win" ]; then
         --subnet $VIRTUAL_SUBNETWORK_NAME       \
         --public-ip-address-allocation static   \
         --private-ip-address $3                 \
-        --data-disk-sizes-gb $AZ_DISK_SIZE_WIN  \
+        --data-disk-sizes-gb $AZ_DISK_SIZE_WIN $AZ_DISK_SIZE_WIN \
         --data-disk-caching ReadWrite           \
         --output $AZ_OUTPUT_FORMAT >> $OUTPUT_FILE
 elif    [ $OPERATING_SYSTEM == "linux" ]; then

@@ -37,7 +37,7 @@ if      [ $OPERATING_SYSTEM == "win" ]; then
         --count 1:1                                                                                                             \
         --associate-public-ip-address                                                                                           \
         --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value='$3'},{Key=RSG,Value='$RESOURCE_GROUP_NAME'}]'        \
-        --block-device-mappings '[{"DeviceName":"/dev/sda1","Ebs":{"VolumeSize":30,"DeleteOnTermination":true,"VolumeType":"standard"}}]' \
+        --block-device-mappings '[{"DeviceName":"/dev/sda1","Ebs":{"VolumeSize":30,"DeleteOnTermination":true,"VolumeType":"standard"}},{"DeviceName":"/dev/sdb1","Ebs":{"VolumeSize":50,"DeleteOnTermination":true,"VolumeType":"standard"}}]' \
         --output text                                                                                                           \
         --query 'Instances[0].[InstanceId]' | tr -d '\r')
 elif    [ $OPERATING_SYSTEM == "linux" ]; then
@@ -55,7 +55,7 @@ elif    [ $OPERATING_SYSTEM == "linux" ]; then
         --count 1:1                                                                                                             \
         --associate-public-ip-address                                                                                           \
         --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value='$3'},{Key=RSG,Value='$RESOURCE_GROUP_NAME'}]'        \
-        --block-device-mappings '[{"DeviceName":"/dev/sda1","Ebs":{"VolumeSize":15,"DeleteOnTermination":true,"VolumeType":"standard"}},{"DeviceName":"/dev/sdb","Ebs":{"VolumeSize":15,"DeleteOnTermination":false,"VolumeType":"gp2"}}]' \
+        --block-device-mappings '[{"DeviceName":"/dev/sda1","Ebs":{"VolumeSize":30,"DeleteOnTermination":true,"VolumeType":"standard"}},{"DeviceName":"/dev/sdb","Ebs":{"VolumeSize":50,"DeleteOnTermination":false,"VolumeType":"gp2"}}]' \
         --output text                                                                                                           \
         --query 'Instances[0].[InstanceId]' | tr -d '\r')
 fi

@@ -1,3 +1,0 @@
-{
-  "commandToExecute": "powershell Start-Service upixp_test"
-}
