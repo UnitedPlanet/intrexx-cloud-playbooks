@@ -55,7 +55,7 @@
   - name: Unzip intrexx
     win_command: '"C:\Program Files\7-Zip\7z.exe" x C:\install\intrexx-18.09.1-windows-x86_64.zip -oC:\install'
     args:
-      creates: C:\install\IX_18.09.1
+      creates: C:\install\{{ ix_setup_folder }}
       
   - name: Disable all firewalls
     win_firewall:
@@ -67,7 +67,7 @@
     tags: disable_firewall
 
   - name: Install Intrexx
-    win_command: C:\install\IX_18.09.1\setup.bat -t --configFile=C:\install\configuration.properties
+    win_command: C:\install\{{ ix_setup_folder }}\setup.bat -t --configFile=C:\install\configuration.properties
     args:
       creates: C:\intrexx\bin\windows\portal.bat
 

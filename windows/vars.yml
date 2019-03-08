@@ -1,5 +1,8 @@
 ---
 
+# Folder of the Intrexx setup
+ix_setup_folder: IX_18.09.1
+
 aws_username: ixadmin
 aws_services_pw: awsWin2019pw!!
 aws_portal_pw: awsWin2019pw!!

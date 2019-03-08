@@ -50,7 +50,7 @@
   - name: Unzip setup
     win_command: '"C:\Program Files\7-Zip\7z.exe" x C:\install\intrexx-18.09.1-windows-x86_64.zip -oC:\install'
     args:
-      creates: C:\install\IX_18.09.1
+      creates: C:\install\{{ ix_setup_folder }}
 
   - name: Firewall rule to allow Intrexx on TCP port 1337
     win_firewall_rule:
@@ -72,7 +72,7 @@
     tags: disable_firewall
 
   - name: Install intrexx
-    win_command: C:\install\IX_18.09.1\setup.bat -t --configFile=C:\install\configuration.properties
+    win_command: C:\install\{{ ix_setup_folder }}\setup.bat -t --configFile=C:\install\configuration.properties
     args:
       creates: C:\intrexx\bin\windows\portal.bat
     

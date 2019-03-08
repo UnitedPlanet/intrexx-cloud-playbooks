@@ -21,7 +21,7 @@ elif    [ $AZ_DATABASE_TYPE == "postgres" ]; then
     --resource-group $RESOURCE_GROUP_NAME \
     --admin-user $DB_SERVER_ADMIN_USER \
     --admin-password $DB_SERVER_ADMIN_PASSWD \
-    --sku-name S0 \
+    --sku-name $AZ_DATABASE_SKU \
     --location $AZ_AVAILABILITY_ZONE \
     --output $AZ_OUTPUT_FORMAT >> $OUTPUT_FILE
 fi

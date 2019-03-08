@@ -2,8 +2,10 @@
 # prepare setup
 - name: Download Intrexx setup
   get_url:
-    url: https://download.unitedplanet.com/intrexx/90000/intrexx-18.09.1-linux-x86_64.tar.gz
-    dest: {{ ix_remote_home }}/intrexx-18.09.1-linux-x86_64.tar.gz
+    url: "https://download.unitedplanet.com/intrexx/90000/{{ ix_setup_filename }}"
+    dest: "{{ ix_remote_home }}/{{ ix_setup_filename }}"
+#- name: copy setup
+#  copy: src=files/{{ ix_setup_filename }} dest={{ ix_remote_home }}/{{ ix_setup_filename }} force=no    
 - name: copy services setup cfg
   template: src=files/configuration.properties.j2 dest="{{ ix_remote_home }}/configuration.properties" owner=root group=root mode=0644
   when: "'appserver_services' in group_names"
@@ -11,21 +13,21 @@
   template: src=files/configuration_portal.properties.j2 dest="{{ ix_remote_home }}/configuration.properties" owner=root group=root mode=0644
   when: "'appserver_portal' in group_names"  
 - name: unzip setup
-  command: /usr/bin/7z x intrexx-18.09.1-linux-x86_64.tar.gz
+  command: /usr/bin/7z x {{ ix_setup_filename }}
   args:
     chdir: "{{ ix_remote_home }}"
-    creates: "{{ ix_remote_home }}/IX_18.09.1/setup.sh"
+    creates: "{{ ix_remote_home }}/{{ ix_setup_folder }}/setup.sh"
 - name: chmod setup
   file:
-    path: "{{ ix_remote_home }}/IX_18.09.1/setup.sh"
+    path: "{{ ix_remote_home }}/{{ ix_setup_folder }}/setup.sh"
     mode: 0777
 - name: chmod java
   file:
-    path: "{{ ix_remote_home }}/IX_18.09.1/jre/linux/amd64/bin/java"
+    path: "{{ ix_remote_home }}/{{ ix_setup_folder }}/java/packaged/linux/amd64/bin/java"
     mode: 0777
 
 # install Intrexx
 - name: install intrexx
-  command: "{{ ix_remote_home }}/IX_18.09.1/setup.sh -t --configFile={{ ix_remote_home }}/configuration.properties"
+  command: "{{ ix_remote_home }}/{{ ix_setup_folder }}/setup.sh -t --configFile={{ ix_remote_home }}/configuration.properties"
   args:
     creates: /opt/intrexx/bin/linux/portal.sh

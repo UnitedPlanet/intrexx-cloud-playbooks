@@ -34,7 +34,7 @@
     - name: copy /opt/intrexx/solr/server/solr -> "{{ ix_shared_folder }}/solr"
       command: cp -R /opt/intrexx/solr/server/solr "{{ ix_shared_folder }}/solr"
       args:
-        creates: "{{ ix_shared_folder }}/cfg/service.cfg"
+        creates: "{{ ix_shared_folder }}/solr/"
     - include: tasks/link_solr_folder.yml
 
     # fetch service files

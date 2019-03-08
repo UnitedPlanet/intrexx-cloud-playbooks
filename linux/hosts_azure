@@ -1,14 +1,14 @@
 [fileserver]
-10.0.0.5
+10.0.0.5 hostname=IxServices ipaddr=10.0.0.5
 
 [loadbalancer]
-10.0.0.5
+10.0.0.5 hostname=IxServices ipaddr=10.0.0.5
 
 [appserver_services]
-10.0.0.5 hostname=IxServices
+10.0.0.5 hostname=IxServices ipaddr=10.0.0.5
 
 [appserver_portal]
-10.0.0.6 hostname=IxAppServer
+10.0.0.6 hostname=IxAppServer ipaddr=10.0.0.6
 
 [glusterfs]
 10.0.0.10 hostname=IxGlusterFs1
