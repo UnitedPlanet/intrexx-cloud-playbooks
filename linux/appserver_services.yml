@@ -31,10 +31,10 @@
     - include: tasks/link_cfg_folder.yml
 
     # copy and link solr folder to share
-    - name: copy /opt/intrexx/solr/server/solr -> "{{ ix_shared_folder }}/solr"
-      command: cp -R /opt/intrexx/solr/server/solr "{{ ix_shared_folder }}/solr"
+    - name: copy /opt/intrexx/solr/ -> "{{ ix_shared_folder }}/solr"
+      command: cp -R /opt/intrexx/solr/ "{{ ix_shared_folder }}/solr"
       args:
-        creates: "{{ ix_shared_folder }}/solr/"
+        creates: "{{ ix_shared_folder }}/solr/server/"
     - include: tasks/link_solr_folder.yml
 
     # fetch service files

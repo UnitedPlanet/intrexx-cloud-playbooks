@@ -1,13 +1,13 @@
 ---
 
-- name: create /opt/intrexx/solr/server/solr
-  file: path=/opt/intrexx/solr/server state=directory
+- name: create /opt/intrexx/solr
+  file: path=/opt/intrexx/solr state=directory
   ignore_errors: yes
-- name: remove /opt/intrexx/solr/server/solr
-  file: path=/opt/intrexx/solr/server/solr state=absent
+- name: remove /opt/intrexx/solr
+  file: path=/opt/intrexx/solr state=absent
   ignore_errors: yes
-- name: symbollink /opt/intrexx/solr/server/solr -> {{ ix_shared_folder }}/solr
-  file: path=/opt/intrexx/solr/server/solr
+- name: symbollink /opt/intrexx/solr -> {{ ix_shared_folder }}/solr
+  file: path=/opt/intrexx/solr
         src="{{ ix_shared_folder }}/solr"
         state=link
         force=yes

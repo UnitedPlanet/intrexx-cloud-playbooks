@@ -120,6 +120,7 @@ AWS_DATABASE_PORT=5432
 AZ_DATABASE_TYPE=sql # sql | postgres
 AZ_DATABASE_DRIVER=mssql # mssql | postgresql
 AZ_DATABASE_PORT=1433 # 1433 | 5432
+AZ_DATABASE_SKU=GP_Gen5_2
 ########################
 
 ## AWS EFS related ##
