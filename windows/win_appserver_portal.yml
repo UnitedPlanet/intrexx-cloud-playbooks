@@ -4,6 +4,7 @@
 - hosts: appserver_portal
   vars_files:
     - ./vars.yml
+    - ./dbVars.yml
   tasks:
   - name: Create directory structure
     win_file:
@@ -35,12 +36,12 @@
       dest: C:\install\intrexx-18.09.1-windows-x86_64.zip
       creates: C:\install\intrexx-18.09.1-windows-x86_64.zip
   
-  #- name: Copy setup
-  #  win_copy:
-  #    src: files/intrexx-18.09.1-windows-x86_64.zip
-  #    dest: C:\install\intrexx-18.09.1-windows-x86_64.zip
-  #  args:
-  #    creates: C:\install\intrexx-18.09.1-windows-x86_64.zip
+    #- name: Copy setup
+    #win_copy:
+    #  src: files/professional.zip
+    #  dest: C:\install\professional.zip
+    #args:
+    #  creates: C:\install\professional.zip
 
   - name: Copy setup cfg
     win_template:
@@ -97,16 +98,10 @@
     args:
       creates: C:\intrexx\cfg\initial.cfg
 
-  - name: Create Solr directory structure
-    win_file:
-      path: C:\intrexx\solr\server\
-      state: directory
-      creates: C:\intrexx\solr\server\
-
   - name: Mount Solr folder
-    win_command: cmd /c mklink /D C:\intrexx\solr\server\solr C:\share\solr
+    win_command: cmd /c mklink /D C:\intrexx\solr C:\share\solr
     args:
-      creates: C:\intrexx\solr\server\solr\solr.xml
+      creates: C:\intrexx\solr\server\solr
     
   - name: Create and start portal service
     win_service:

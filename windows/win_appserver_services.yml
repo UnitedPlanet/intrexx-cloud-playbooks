@@ -4,6 +4,7 @@
 - hosts: appserver_services
   vars_files:
     - ./vars.yml
+    - ./dbVars.yml
   tasks:
   - name: Create directory structure
     win_file:
@@ -35,12 +36,12 @@
       dest: C:\install\intrexx-18.09.1-windows-x86_64.zip
       creates: C:\install\intrexx-18.09.1-windows-x86_64.zip
       
-  #- name: Copy setup
-  #  win_copy:
-  #    src: files/intrexx-18.09.1-windows-x86_64.zip
-  #    dest: C:\install\intrexx-18.09.1-windows-x86_64.zip
-  #  args:
-  #    creates: C:\install\intrexx-18.09.1-windows-x86_64.zip
+    #  - name: Copy setup
+    #win_copy:
+    #  src: files/professional.zip
+    #  dest: C:\install\professional.zip
+    #args:
+    #  creates: C:\install\professional.zip
 
   - name: Copy setup cfg
     win_template: 
@@ -98,8 +99,20 @@
       username: "{{ aws_username }}"
       password: "{{ aws_services_pw }}"
 
-  - name: Move cfg folder
-    win_command: cmd /c move C:\intrexx\cfg C:\share\
+  - name: Create directory structure
+    win_file:
+      path: C:\Share\cfg
+      state: directory
+
+  - name: Copy cfg folder
+    win_command: cmd /c xcopy C:\intrexx\cfg C:\share\cfg\ /s /e /h /i
+    args:
+      creates: C:\share\cfg\initial.cfg
+
+  - name: Remove cfg folder
+    win_file:
+     path: C:\intrexx\cfg
+     state: absent
     args:
       creates: C:\share\cfg\initial.cfg
 
@@ -108,15 +121,27 @@
     args:
       creates: C:\intrexx\cfg\initial.cfg
 
+  - name: Create directory structure
+    win_file:
+      path: C:\Share\solr
+      state: directory
+
   - name: Move Solr folder
-    win_command: cmd /c move C:\intrexx\solr\server\solr C:\share\
+    win_command: cmd /c xcopy C:\intrexx\solr C:\share\solr /s /e /h /i
     args:
-      creates: C:\share\solr\solr.xml
+      creates: C:\share\solr\server\solr
+
+  - name: Remove Solr folder
+    win_file:
+     path: C:\intrexx\solr
+     state: absent
+    args:
+      creates: C:\share\solr\server\solr
 
   - name: Link Solr folder
-    win_command: cmd /c mklink /D C:\intrexx\solr\server\solr C:\share\solr
+    win_command: cmd /c mklink /D C:\intrexx\solr C:\share\solr
     args:
-      creates: C:\intrexx\solr\server\solr\solr.xml
+      creates: C:\intrexx\solr\server\solr
       
   - name: Share portal folder
     win_share:
@@ -124,6 +149,11 @@
       path: C:\share
       list: 'yes'
       full: Everyone
+
+  - name: Create Solr service cfg
+    win_template: 
+      src: files/solr.wcf.j2
+      dest: C:\intrexx\cfg\solr.wcf
 
   - name: Start Solr service automatically
     win_service:

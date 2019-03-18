@@ -81,10 +81,10 @@ AZ_OS_TYPE_LINUX=UbuntuLTS
 ########################
 
 ## Disk size ##
-AWS_DISK_SIZE_WIN=30
-AWS_DISK_SIZE_LINUX=20
-AZ_DISK_SIZE_WIN=30
-AZ_DISK_SIZE_LINUX=20
+AWS_DISK_SIZE_WIN=50
+AWS_DISK_SIZE_LINUX=50
+AZ_DISK_SIZE_WIN=50
+AZ_DISK_SIZE_LINUX=50
 ######################## 
 
 ## General user ##
