@@ -29,8 +29,8 @@ ix_remote_user: ubuntu
 ix_remote_home: /home/ubuntu
 
 # Folder of the Intrexx setup
-#ix_setup_filename: intrexx-18.09.1-linux-x86_64.tar.gz
-#ix_setup_folder: IX_18.09.1
+ix_setup_filename: intrexx-18.09.1-linux-x86_64.tar.gz
+ix_setup_folder: IX_18.09.1
 #
 # Portal configuration
 #

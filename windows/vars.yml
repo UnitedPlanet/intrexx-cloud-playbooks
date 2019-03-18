@@ -1,7 +1,10 @@
 ---
 
 # Folder of the Intrexx setup
+ix_setup_filename: intrexx-18.09.1-windows-x86_64.zip
 ix_setup_folder: IX_18.09.1
+#ix_setup_filename: professional.zip
+#ix_setup_folder: professional
 
 aws_username: ixadmin
 aws_services_pw: awsWin2019pw!!

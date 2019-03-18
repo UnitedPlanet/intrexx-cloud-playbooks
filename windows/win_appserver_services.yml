@@ -31,10 +31,10 @@
       
   - name: Download Intrexx setup
     win_uri:
-      url: https://download.unitedplanet.com/intrexx/90000/intrexx-18.09.1-windows-x86_64.zip
+      url: https://download.unitedplanet.com/intrexx/90000/{{ ix_setup_filename }}
       method: GET
-      dest: C:\install\intrexx-18.09.1-windows-x86_64.zip
-      creates: C:\install\intrexx-18.09.1-windows-x86_64.zip
+      dest: C:\install\{{ ix_setup_filename }}
+      creates: C:\install\{{ ix_setup_filename }}
       
     #  - name: Copy setup
     #win_copy:
@@ -54,7 +54,7 @@
       dest: C:\install\portal_config.xml
 
   - name: Unzip intrexx
-    win_command: '"C:\Program Files\7-Zip\7z.exe" x C:\install\intrexx-18.09.1-windows-x86_64.zip -oC:\install'
+    win_command: '"C:\Program Files\7-Zip\7z.exe" x C:\install\{{ ix_setup_filename }} -oC:\install'
     args:
       creates: C:\install\{{ ix_setup_folder }}
       
