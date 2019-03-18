@@ -11,6 +11,16 @@
       path: C:\install
       state: directory
 
+  - name: Copy initDisks.ps1 script
+    win_copy:
+      src: files/initDisks.ps1
+      dest: C:\install\initDisks.ps1
+
+  - name: Initialize disks
+    win_shell: C:\install\initDisks.ps1
+      args:
+        creates: C:\share
+
   - name: Download 7zip setup
     win_uri:
       url: https://www.7-zip.org/a/7z1900-x64.msi
