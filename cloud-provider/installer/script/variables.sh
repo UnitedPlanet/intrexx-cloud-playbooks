@@ -17,6 +17,8 @@ INTREXX_SETUP_LINUX=intrexx-18.09.1-linux-x86_64.tar.gz
 # Name of the intrexx windows setup tarball (without the path; the dir path should be set in 'DATA_DIR')
 INTREXX_SETUP_WIN=intrexx-18.09.1-windows-x86_64.zip
 
+# For local setup file
+INTREXX_ZIP=professional.zip
 ##################################################################################
 #################################### ADVANCED ####################################
 ##################################################################################
