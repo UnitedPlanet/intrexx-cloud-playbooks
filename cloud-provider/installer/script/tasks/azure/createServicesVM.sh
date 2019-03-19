@@ -26,16 +26,16 @@ if      [ $OPERATING_SYSTEM == "win" ]; then
         --subnet $VIRTUAL_SUBNETWORK_NAME       \
         --public-ip-address-allocation static   \
         --private-ip-address $3                 \
-        --data-disk-sizes-gb $AZ_DISK_SIZE_WIN  \
-        --data-disk-caching ReadWrite           \
         --output $AZ_OUTPUT_FORMAT >> $OUTPUT_FILE
-    #az vm disk attach 
-    #    --vm-name $1                            \
-    #    --name "$1"DataDisk                     \
-    #    --new                                   \
-    #    --resource-group $RESOURCE_GROUP_NAME   \
-    #    --size-gb $AZ_DISK_SIZE_WIN             \
-    #    --sku Premium_LRS
+    az vm disk attach                           \
+        --vm-name $1                            \
+        --name "$1"DataDisk                     \
+        --new                                   \
+        --resource-group $RESOURCE_GROUP_NAME   \
+        --size-gb $AZ_DISK_SIZE_WIN             \
+        --caching ReadWrite                     \
+        --sku Premium_LRS                       \
+        --output $AZ_OUTPUT_FORMAT >> $OUTPUT_FILE
 elif    [ $OPERATING_SYSTEM == "linux" ]; then
     az vm create                                \
         --resource-group $RESOURCE_GROUP_NAME   \
@@ -52,8 +52,15 @@ elif    [ $OPERATING_SYSTEM == "linux" ]; then
         --subnet $VIRTUAL_SUBNETWORK_NAME       \
         --public-ip-address-allocation static   \
         --private-ip-address $3                 \
-        --data-disk-sizes-gb $AZ_DISK_SIZE_LINUX \
-        --data-disk-caching ReadWrite           \
+        --output $AZ_OUTPUT_FORMAT >> $OUTPUT_FILE
+    az vm disk attach                           \
+        --vm-name $1                            \
+        --name "$1"DataDisk                     \
+        --new                                   \
+        --resource-group $RESOURCE_GROUP_NAME   \
+        --size-gb $AZ_DISK_SIZE_LINUX           \
+        --caching ReadWrite                     \
+        --sku Premium_LRS                       \
         --output $AZ_OUTPUT_FORMAT >> $OUTPUT_FILE
 fi
               
