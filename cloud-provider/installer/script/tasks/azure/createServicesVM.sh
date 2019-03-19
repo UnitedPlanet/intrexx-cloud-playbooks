@@ -28,7 +28,6 @@ if      [ $OPERATING_SYSTEM == "win" ]; then
         --private-ip-address $3                 \
         --data-disk-sizes-gb $AZ_DISK_SIZE_WIN  \
         --data-disk-caching ReadWrite           \
-        --os-disk-size-gb 50                    \
         --output $AZ_OUTPUT_FORMAT >> $OUTPUT_FILE
     #az vm disk attach 
     #    --vm-name $1                            \
