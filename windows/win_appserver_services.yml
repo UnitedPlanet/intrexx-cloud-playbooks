@@ -18,8 +18,8 @@
 
   - name: Initialize disks
     win_shell: C:\install\initDisks.ps1
-      args:
-        creates: C:\share
+    args:
+      creates: C:\share
 
   - name: Download 7zip setup
     win_uri:
