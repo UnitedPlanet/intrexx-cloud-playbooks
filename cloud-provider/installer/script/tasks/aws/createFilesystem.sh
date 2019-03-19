@@ -3,7 +3,7 @@
 #Importing configuration variables
 source variables.sh
 
-echo "[SQL_SERVER] - Creating filesystem "
+echo "[FILESYSTEM] - Creating filesystem "
 
 EFS_FILESYSTEM_ID=$(aws efs create-file-system --creation-token $EFS_CREATION_TOKEN --performance-mode generalPurpose --throughput-mode bursting --output text --query "FileSystemId")
 

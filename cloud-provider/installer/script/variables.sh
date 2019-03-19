@@ -7,6 +7,9 @@ CLOUD_PROVIDER=aws
 # 'linux' or 'win'
 OPERATING_SYSTEM=linux
 
+# 'nfs' for Azure/AWS or 'efs' for AWS only (experimental)
+FILE_SYSTEM=nfs
+
 # name of the portal, which is going to be deployed
 PORTAL_NAME=intrexx
 
@@ -19,6 +22,7 @@ INTREXX_SETUP_WIN=intrexx-18.09.1-windows-x86_64.zip
 
 # For local setup file
 INTREXX_ZIP=professional.zip
+
 ##################################################################################
 #################################### ADVANCED ####################################
 ##################################################################################
@@ -83,9 +87,9 @@ AZ_OS_TYPE_LINUX=UbuntuLTS
 ########################
 
 ## Disk size ##
-AWS_DISK_SIZE_WIN=50
+AWS_DISK_SIZE_WIN=100
 AWS_DISK_SIZE_LINUX=50
-AZ_DISK_SIZE_WIN=50
+AZ_DISK_SIZE_WIN=100
 AZ_DISK_SIZE_LINUX=50
 ######################## 
 

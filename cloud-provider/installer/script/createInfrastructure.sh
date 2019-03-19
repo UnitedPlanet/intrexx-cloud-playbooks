@@ -91,7 +91,9 @@ case "$CLOUD_PROVIDER" in
                 
         ;;
     "aws")
-        checkAndRunOrLoad "$BASE_DIR_PATH/createFilesystem.sh"
+        if [ $FILE_SYSTEM == "efs" ]; then 
+            checkAndRunOrLoad "$BASE_DIR_PATH/createFilesystem.sh"
+        fi
         ;;        
     *)
         echo "$LOG_PREFIX The specified cloud provider \"$CLOUD_PROVIDER\" is not valid."
