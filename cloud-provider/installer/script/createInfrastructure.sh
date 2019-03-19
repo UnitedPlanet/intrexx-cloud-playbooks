@@ -59,7 +59,7 @@ esac
 case "$CLOUD_PROVIDER" in
     "azure")
         if      [ $OPERATING_SYSTEM == "win" ]; then 
-            checkAndRunRenaming "$BASE_DIR_PATH/createIntrexxVM.sh" "SERVICES" $SERVICES_NAME $AZ_INSTANCE_TYPE_SERVICES_WIN $SERVICES_PRIVATE_IP       
+            checkAndRunRenaming "$BASE_DIR_PATH/createServicesVM.sh" "SERVICES" $SERVICES_NAME $AZ_INSTANCE_TYPE_SERVICES_WIN $SERVICES_PRIVATE_IP       
             checkAndRunRenaming "$BASE_DIR_PATH/createIntrexxVM.sh" "APPSERVER" $APPSERVER_NAME $AZ_INSTANCE_TYPE_APPSERVER_WIN $APPSERVER_PRIVATE_IP       
         elif    [ $OPERATING_SYSTEM == "linux" ]; then
             checkAndRunRenaming "$BASE_DIR_PATH/createServicesVM.sh" "SERVICES" $SERVICES_NAME $AZ_INSTANCE_TYPE_SERVICES_LINUX $SERVICES_PRIVATE_IP   
@@ -69,7 +69,7 @@ case "$CLOUD_PROVIDER" in
         ;;
     "aws")
         if      [ $OPERATING_SYSTEM == "win" ]; then 
-            checkAndRunOrLoad "$BASE_DIR_PATH/createIntrexxVM.sh" "SERVICES" $SERVICES_NAME $AWS_INSTANCE_TYPE_SERVICES_WIN $SERVICES_PRIVATE_IP                       "tasks/initScripts/launchScript.ps1"   $EXTERNAL_SECURITY_GROUP_SSH_ID  $EXTERNAL_SECURITY_GROUP_SOAP_ID $INTERNAL_SECURITY_GROUP_ID
+            checkAndRunOrLoad "$BASE_DIR_PATH/createServicesVM.sh" "SERVICES" $SERVICES_NAME $AWS_INSTANCE_TYPE_SERVICES_WIN $SERVICES_PRIVATE_IP                       "tasks/initScripts/launchScript.ps1"   $EXTERNAL_SECURITY_GROUP_SSH_ID  $EXTERNAL_SECURITY_GROUP_SOAP_ID $INTERNAL_SECURITY_GROUP_ID
             checkAndRunOrLoad "$BASE_DIR_PATH/createIntrexxVM.sh" "APPSERVER" $APPSERVER_NAME $AWS_INSTANCE_TYPE_APPSERVER_WIN $APPSERVER_PRIVATE_IP                           "tasks/initScripts/launchScript.ps1"   $INTERNAL_SECURITY_GROUP_ID $EXTERNAL_SECURITY_GROUP_SSH_ID      
         elif    [ $OPERATING_SYSTEM == "linux" ]; then
             checkAndRunOrLoad "$BASE_DIR_PATH/createServicesVM.sh" "SERVICES" $SERVICES_NAME $AWS_INSTANCE_TYPE_SERVICES_LINUX $SERVICES_PRIVATE_IP                                                $EXTERNAL_SECURITY_GROUP_SSH_ID $EXTERNAL_SECURITY_GROUP_SOAP_ID $INTERNAL_SECURITY_GROUP_ID

@@ -28,7 +28,15 @@ if      [ $OPERATING_SYSTEM == "win" ]; then
         --private-ip-address $3                 \
         --data-disk-sizes-gb $AZ_DISK_SIZE_WIN  \
         --data-disk-caching ReadWrite           \
+        --os-disk-size-gb 50                    \
         --output $AZ_OUTPUT_FORMAT >> $OUTPUT_FILE
+    #az vm disk attach 
+    #    --vm-name $1                            \
+    #    --name "$1"DataDisk                     \
+    #    --new                                   \
+    #    --resource-group $RESOURCE_GROUP_NAME   \
+    #    --size-gb $AZ_DISK_SIZE_WIN             \
+    #    --sku Premium_LRS
 elif    [ $OPERATING_SYSTEM == "linux" ]; then
     az vm create                                \
         --resource-group $RESOURCE_GROUP_NAME   \
