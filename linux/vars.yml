@@ -7,7 +7,7 @@
 ix_cloud_provider: aws
 
 #ix_filesystem_type: type of shared filesystem, either nfs, efs (AWS EFS) or glusterfs
-ix_filesystem_type: efs
+ix_filesystem_type: nfs
 
 #ix_shared_folder: path to the shared folder
 ix_shared_folder: /share
