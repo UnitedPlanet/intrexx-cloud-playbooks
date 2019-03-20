@@ -12,19 +12,26 @@
 - name: copy portal setup cfg
   template: src=files/configuration_portal.properties.j2 dest="{{ ix_remote_home }}/configuration.properties" owner=root group=root mode=0644
   when: "'appserver_portal' in group_names"  
-- name: unzip setup
-  command: /usr/bin/7z x {{ ix_setup_filename }}
+- name: untar setup
+  command: tar xvfz {{ ix_setup_filename }}
   args:
     chdir: "{{ ix_remote_home }}"
     creates: "{{ ix_remote_home }}/{{ ix_setup_folder }}/setup.sh"
+#- name: unzip setup
+#  command: /usr/bin/7z x {{ ix_setup_filename }}
+#  args:
+#    chdir: "{{ ix_remote_home }}"
+#    creates: "{{ ix_remote_home }}/{{ ix_setup_folder }}/setup.sh"    
 - name: chmod setup
   file:
     path: "{{ ix_remote_home }}/{{ ix_setup_folder }}/setup.sh"
     mode: 0777
+  ignore_errors: true
 - name: chmod java
   file:
-    path: "{{ ix_remote_home }}/{{ ix_setup_folder }}/java/packaged/linux/amd64/bin/java"
+    path: "{{ ix_remote_home }}/{{ ix_setup_folder }}/java/current/bin/java"
     mode: 0777
+  ignore_errors: true
 
 # install Intrexx
 - name: install intrexx

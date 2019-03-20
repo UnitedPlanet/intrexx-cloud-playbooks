@@ -33,37 +33,6 @@ AVAILABILITY_SET=IxAvailabilitySet
 AZ_OUTPUT_FORMAT=table
 ########################
 
-## AWS only ##
-AWS_OUTPUT_FORMAT=table
-# Security group which allows access to the wild world outside 
-LB_SECURITY_GROUP="SG_LB"
-LB_SECURITY_GROUP_DESC="Security group which allows the load balancer access to the wild world outside "
-# Security group which allows access to the wild world outside 
-EXTERNAL_SECURITY_GROUP_SSH="SG_EXT SSH"
-EXTERNAL_SECURITY_GROUP_SSH_DESC="Security group which allows ssh access from the wild world outside"
-EXTERNAL_SECURITY_GROUP_SOAP="SG_EXT SOAP"
-EXTERNAL_SECURITY_GROUP_SOAP_DESC="Security group which allows SOAP access from the wild world outside"
-# Secure all instances of the autoscaling group as well as every instance, which should not be accessed via the internet
-INTERNAL_SECURITY_GROUP="SG_INT"
-INTERNAL_SECURITY_GROUP_DESC="Secure all instances of the autoscaling group as well as every instance, which should not be accessed via the internet"
-# Only allows specific database related access from inside the network
-DB_SECURITY_GROUP="SG_DB"
-DB_SECURITY_GROUP_DESC="Only allows specific database related access from inside the network"
-# Only allows specific database related access from inside the network
-DB_SECURITY_GROUP="SG_DB"
-DB_SECURITY_GROUP_DESC="Only allows specific database related access from inside the network"
-# Only allows specific filesystem related access from inside the network
-EFS_SECURITY_GROUP="SG_EFS"
-EFS_SECURITY_GROUP_DESC="Security Group for EFS"
-########################
-
-## Script related ##
-TEMP_EXE_FOLDER=execConfigurations
-WORK_DIR=./work
-SSH_KEY=$WORK_DIR/id_rsa_vm
-OUTPUT_FILE=output.log
-########################
-
 ## Hardware default ##
 AWS_INSTANCE_TYPE_SERVICES_WIN=t2.medium
 AWS_INSTANCE_TYPE_SERVICES_LINUX=t2.medium
@@ -80,7 +49,7 @@ AZ_INSTANCE_TYPE_PROVISIONING_LINUX=Standard_B1s
 
 ## Operating system default ##
 AWS_OS_TYPE_WIN=ami-e61b4a9f
-AWS_OS_TYPE_LINUX=ami-79c4de93
+AWS_OS_TYPE_LINUX=ami-08d658f84a6d84a80
 
 AZ_OS_TYPE_WIN=Win2016Datacenter
 AZ_OS_TYPE_LINUX=UbuntuLTS
@@ -197,6 +166,37 @@ INTREXX_HTTPS_CERTIFICATE_PEM=
 INTREXX_HTTPS_CERTIFICATE_CHAIN_PEM=
 INTREXX_HTTPS_CERTIFICATE_PRIVATE_KEY_PEM=
 INTREXX_HTTPS_CERTIFICATE_SECURITY_POLICY=
+########################
+
+## AWS only ##
+AWS_OUTPUT_FORMAT=table
+# Security group which allows access to the wild world outside 
+LB_SECURITY_GROUP="SG_LB"
+LB_SECURITY_GROUP_DESC="Security group which allows the load balancer access to the wild world outside "
+# Security group which allows access to the wild world outside 
+EXTERNAL_SECURITY_GROUP_SSH="SG_EXT SSH"
+EXTERNAL_SECURITY_GROUP_SSH_DESC="Security group which allows ssh access from the wild world outside"
+EXTERNAL_SECURITY_GROUP_SOAP="SG_EXT SOAP"
+EXTERNAL_SECURITY_GROUP_SOAP_DESC="Security group which allows SOAP access from the wild world outside"
+# Secure all instances of the autoscaling group as well as every instance, which should not be accessed via the internet
+INTERNAL_SECURITY_GROUP="SG_INT"
+INTERNAL_SECURITY_GROUP_DESC="Secure all instances of the autoscaling group as well as every instance, which should not be accessed via the internet"
+# Only allows specific database related access from inside the network
+DB_SECURITY_GROUP="SG_DB"
+DB_SECURITY_GROUP_DESC="Only allows specific database related access from inside the network"
+# Only allows specific database related access from inside the network
+DB_SECURITY_GROUP="SG_DB"
+DB_SECURITY_GROUP_DESC="Only allows specific database related access from inside the network"
+# Only allows specific filesystem related access from inside the network
+EFS_SECURITY_GROUP="SG_EFS"
+EFS_SECURITY_GROUP_DESC="Security Group for EFS"
+########################
+
+## Script related ##
+TEMP_EXE_FOLDER=execConfigurations
+WORK_DIR=./work
+SSH_KEY=$WORK_DIR/id_rsa_vm
+OUTPUT_FILE=output.log
 ########################
 
 # Options to be loaded in all scripts

@@ -2,3 +2,6 @@
 
 - name: copy upixp_portal systemd
   template: src=files/upixp_portal.j2 dest=/etc/systemd/system/upixp_{{ ix_portal_name }}.service mode=0755 force=yes
+
+- name: Create Solr service cfg
+  template: src= files/solr.wcf.j2  dest=/share/cfg/solr.wcf force=yes

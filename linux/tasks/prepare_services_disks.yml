@@ -23,21 +23,21 @@
 
 - name: AWS - partition disk for shared folder
   parted:
-    device: /dev/sdb
+    device: /dev/xvdb
     number: 1
     state: present
   when: ix_cloud_provider == "aws" and ix_filesystem_type == "nfs"
 
-- name: AWS - Create a ext4 filesystem on /dev/sdb1
+- name: AWS - Create a ext4 filesystem on /dev/xvdb1
   filesystem:
     fstype: ext4
-    dev: /dev/sdb1
+    dev: /dev/xvdb1
   when: ix_cloud_provider == "aws" and ix_filesystem_type == "nfs"
 
 - name: AWS - Mount device
   mount:
     path: /share
-    src: /dev/sdb1
+    src: /dev/xvb1
     fstype: ext4
     state: mounted
   when: ix_cloud_provider == "aws" and ix_filesystem_type == "nfs"
