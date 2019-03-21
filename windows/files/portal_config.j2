@@ -5,7 +5,13 @@
                 databaseName="{{ ix_db_database_name }}" adminLogin="{{ ix_db_admin_login }}" adminPassword="{{ ix_db_admin_password }}" 
                 create="{{ ix_db_create }}" userLogin="{{ ix_db_user_login }}" userPassword="{{ ix_db_user_password }}" characterSet="UTF8" driverIndex="0"/>
         <connectorSoap bindAddress="0.0.0.0" port="8101"/>
-        <connectorWeb  hostName="0.0.0.0" port="1337"/>
+        <connectorRest bindAddress="0.0.0.0" port="8101"/>
+        <connectorWeb  hostName="0.0.0.0" port="1337"
+                       baseDirectory="internal/tmp" 
+                       appBaseDirectory="localhost/appbase" 
+                       docBaseDirectory="external/htmlroot" 
+                       xmlBaseDirectory="localhost/xmlbase" 
+                       defaultWebXml="tomcat/conf/web.xml"/>
         <search class="de.uplanet.lucy.search.solr.SolrPortalManagerConfiguration">
                         <property name="de.uplanet.lucy.solr.authenticationType" value="none">
                 </property>
@@ -24,5 +30,5 @@
         <property name="de.uplanet.lucy.server.distributed.ipfinder.static.addresses" value="{{ ix_cluster_static_addresses }}"/>
         <property name="de.uplanet.lucy.server.distributed.ipfinder.sharedfs.path" value="{{ ix_cluster_ipfinder_sharedfs }}"/>
         <property name="de.uplanet.lucy.server.portal.logpath" value="{{ ix_portal_logpath }}"/>
-        <property name="de.uplanet.lucy.server.shutdown.delaySeconds" value="60" />
+        <property name="de.uplanet.lucy.server.shutdown.delaySeconds" value="15" />
 </portal>
