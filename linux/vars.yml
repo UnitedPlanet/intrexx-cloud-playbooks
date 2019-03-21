@@ -39,6 +39,7 @@ ix_portal_name: intrexx
 ix_portal_path: /share/intrexx
 ix_portal_logpath: /var/log/intrexx
 ix_portal_template_path: /opt/intrexx/orgtempl/blank
+ix_portal_dns_names: localhost,127.0.0.1,portalmanager.intrexx.local
 
 #
 # Database configuration

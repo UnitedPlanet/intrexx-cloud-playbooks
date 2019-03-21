@@ -26,6 +26,8 @@ ix_home: C:\intrexx
 ix_portal_name: intrexx
 ix_portal_path: C:\share\intrexx
 ix_portal_logpath: C:\intrexx\log\portal
+ix_portal_template_path: C:\intrexx\orgtempl\blank
+ix_portal_dns_names: localhost,127.0.0.1,portalmanager.intrexx.local
 ix_share_unc_path: \\10.0.0.5\share
 
 ix_tomcat_context: intrexx
