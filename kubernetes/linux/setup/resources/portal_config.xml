@@ -4,6 +4,7 @@
 	<database type="postgresql" timezone="UTC" hostName="ixclouddbservice" port="5432" databaseName="ixcloud" adminLogin="postgres" 
 				adminPassword="mysecretpassword" create="true" userLogin="postgres" userPassword="mysecretpassword" characterSet="UTF8" driverIndex="0"/>
 	<connectorSoap bindAddress="0.0.0.0" port="8101"/>
+	<connectorRest bindAddress="0.0.0.0" port="8101"/>
 	<connectorWeb  hostName="0.0.0.0" port="1337"/>
 	<search class="de.uplanet.lucy.search.solr.SolrPortalManagerConfiguration">
 		<property name="de.uplanet.lucy.solr.authenticationType" value="none">
