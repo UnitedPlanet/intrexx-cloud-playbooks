@@ -79,7 +79,7 @@ cd ..
 docker rmi ixcloudsetup:latest
 
 #cleanup dangling volumes
-/bin/bash -c "docker system prune -f"
+# /bin/bash -c "docker system prune -f"
 
 #create server share folder tarball
 tar cvfz server_share.tar.gz share/
