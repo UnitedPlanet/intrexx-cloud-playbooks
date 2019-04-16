@@ -29,7 +29,7 @@
   ignore_errors: true
 - name: chmod java
   file:
-    path: "{{ ix_remote_home }}/{{ ix_setup_folder }}/java/current/bin/java"
+    path: "{{ ix_remote_home }}/{{ ix_setup_folder }}/java/packaged/linux/amd64/bin/java"
     mode: 0777
   ignore_errors: true
 
