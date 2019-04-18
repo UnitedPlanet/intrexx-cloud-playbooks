@@ -22,7 +22,7 @@ chmod a+x intrexx/setup.sh
 chmod a+x intrexx/jre/linux/amd64/bin/java
 
 echo "start db container"
-docker run -d --name ixclouddb postgres:9.6
+docker run -d --name ixclouddb postgres:11
 
 echo "build base filesystem image"
 cd setup

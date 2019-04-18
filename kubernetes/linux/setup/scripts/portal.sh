@@ -42,51 +42,33 @@ CLASSPATH=$CLASSPATH$(s="$INTREXX_HOME/lib/custom"; find "$s" -maxdepth 1 -name 
 
 #set start environment
 cd "$PORTAL_DIR"
-JRE_HOME="$INTREXX_HOME"/jre/linux/$OS_ARCH
+JRE_HOME="$INTREXX_HOME"/java/packaged/linux/$OS_ARCH
 
 # now start the java vm
-if [ $OS_ARCH == "amd64" ]; then
-	exec "$JRE_HOME/bin/java" -Xbootclasspath/p:"$INTREXX_HOME"/lib/xsltc-hndl-fix.jar \
-						 -XX:NewSize=32m \
-						 -server \
-						 -Xms1024m \
-						 -Xmx2084m \
-						 -Dfile.encoding=UTF-8 \
-						 -Dgroovy.source.encoding=UTF-8 \
-						 -Djava.library.path="$INTREXX_HOME"/bin/linux/$OS_ARCH \
-						 -classpath "$CLASSPATH" \
-						 -Djava.security.auth.login.config=file:internal/cfg/LucyAuth.cfg \
-						 -Dlog4j.configurationFile=internal/cfg/log4j2.xml \
-						 -XX:+HeapDumpOnOutOfMemoryError \
-						 -Dde.uplanet.jdbc.dump=true \
-						 -Djavax.net.ssl.trustStore=internal/cfg/cacerts \
-                         -Djava.security.egd=file:/dev/urandom \
-						 -Djava.io.tmpdir=/tmp \
-						 -Dde.uplanet.lucy.logPath=/var/log/intrexx \
-						 -Djava.net.preferIPv4Stack=true \
-						  de.uplanet.lucy.server.portalserver.PortalService \
-						  --pid-file /var/run/intrexx/portal.pid
-else
-	exec "$JRE_HOME/bin/java" -Xbootclasspath/p:"$INTREXX_HOME"/lib/xsltc-hndl-fix.jar \
-						 -XX:NewSize=32m \
-						 -server \
-						 -Xms512m \
-						 -Xmx1024m \
-						 -Dfile.encoding=UTF-8 \
-						 -Dgroovy.source.encoding=UTF-8 \
-						 -Djava.library.path="$INTREXX_HOME"/bin/linux/$OS_ARCH \
-						 -classpath "$CLASSPATH" \
-						 -Djava.security.auth.login.config=file:internal/cfg/LucyAuth.cfg \
-						 -Dlog4j.configurationFile=internal/cfg/log4j2.xml \
-						 -XX:+HeapDumpOnOutOfMemoryError \
-						 -Djavax.net.ssl.trustStore=internal/cfg/cacerts \
-                         -Djava.security.egd=file:/dev/urandom \
-						 -Djava.io.tmpdir=/tmp \
-						 -Dde.uplanet.lucy.logPath=/var/log/intrexx \
-						 -Djava.net.preferIPv4Stack=true \
-						  de.uplanet.lucy.server.portalserver.PortalService \
-						  --pid-file /var/run/intrexx/portal.pid
-fi
-
-
-
+exec "$JRE_HOME/bin/java" \
+		-XX:NewSize=32m \
+		-server \
+		-Xms1024m \
+		-Xmx2084m \
+		-Dfile.encoding=UTF-8 \
+		-Dgroovy.source.encoding=UTF-8 \
+		-Djava.library.path="$INTREXX_HOME"/bin/linux/$OS_ARCH \
+		-classpath "$CLASSPATH" \
+		-Djava.security.auth.login.config=file:internal/cfg/LucyAuth.cfg \
+		-Dlog4j.configurationFile=internal/cfg/log4j2.xml \
+		-XX:+HeapDumpOnOutOfMemoryError \
+		-Dde.uplanet.jdbc.dump=true \
+		-Djavax.net.ssl.trustStore=internal/cfg/cacerts \
+		-Djava.security.egd=file:/dev/urandom \
+		-Djava.io.tmpdir=internal/tmp \
+		-Dde.uplanet.lucy.logPath=/var/log/intrexx \
+		-Djava.net.preferIPv4Stack=true \
+		--add-exports=java.base/jdk.internal.misc=ALL-UNNAMED \
+		--add-exports=java.base/sun.nio.cs=ALL-UNNAMED \
+		--add-exports=java.base/sun.nio.ch=ALL-UNNAMED \
+		--add-exports=java.management/com.sun.jmx.mbeanserver=ALL-UNNAMED \
+		--add-exports=jdk.internal.jvmstat/sun.jvmstat.monitor=ALL-UNNAMED \
+		--add-exports=java.base/sun.reflect.generics.reflectiveObjects=ALL-UNNAMED \
+		--illegal-access=permit \
+		de.uplanet.lucy.server.portalserver.PortalService \
+		--pid-file /var/run/intrexx/portal.pid

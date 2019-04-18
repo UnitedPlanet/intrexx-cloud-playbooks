@@ -29,7 +29,7 @@ CLASSPATH=$CLASSPATH$(s="$INTREXX_HOME/lib/custom"; find "$s" -maxdepth 1 -name 
 JRE_HOME="$INTREXX_HOME"/jre/linux/$OS_ARCH
 
 # now start the java vm
-	exec "$JRE_HOME/bin/java" -Xbootclasspath/p:"$INTREXX_HOME"/lib/xsltc-hndl-fix.jar \
+	exec "$JRE_HOME/bin/java" \
 						 -XX:+UseParNewGC \
 						 -Xms32m \
 						 -Xmx128m \
