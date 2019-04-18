@@ -7,16 +7,19 @@ services:
       - POSTGRES_PASSWORD:mysecretpassword
   solr:
     image: "ixcloudsolr:latest"
+    volumes:
+      - "/home/ubuntu/intrexx-cloud-playbooks/kubernetes/linux/share/cfg:/opt/intrexx/cfg"
+      - "/home/ubuntu/intrexx-cloud-playbooks/kubernetes/linux/share/portal:/opt/intrexx/org/cloud"
   portal:
     image: "ixcloud:latest"
-    command: /opt/intrexx/bin/linux/portal.sh
+    command: /opt/intrexx/bin/linux/portal.sh /opt/intrexx/org/cloud
     ports:
       - "8080:1337"
       - "8443:8443"
       - "8101:8101"
     volumes:
-      - "/home/manuel/development/projects/kubernetes-ix/share/cfg:/opt/intrexx/cfg"
-      - "/home/manuel/development/projects/kubernetes-ix/share/portal:/opt/intrexx/org/cloud"
+      - "/home/ubuntu/intrexx-cloud-playbooks/kubernetes/linux/share/cfg:/opt/intrexx/cfg"
+      - "/home/ubuntu/intrexx-cloud-playbooks/kubernetes/linux/share/portal:/opt/intrexx/org/cloud"
       - "/tmp/ixstandalone:/opt/intrexx/org/test/log"
     depends_on:
       - db
@@ -24,8 +27,8 @@ services:
     links:
       - db:ixclouddbservice
       - solr:ixcloudsolrservice
-    #deploy:
-    #  mode: replicated
-    #  replicas: 2  
+    deploy:
+      mode: replicated
+      replicas: 2  
 volumes:
   files:
