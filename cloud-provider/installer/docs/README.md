@@ -116,8 +116,8 @@ Generally, the parameters in `variables.sh` are divided in basic and advanced se
   Folder of the Intrexx setup package.
 5. INTREXX_SETUP_LINUX / INTREXX_SETUP_WIN
 * Name of the Intrexx setup package.
-* Intrexx download Linux: `https://download.unitedplanet.com/intrexx/90000/intrexx-18.09.1-linux-x86_64.tar.gz`
-* Intrexx download Windows: `https://download.unitedplanet.com/intrexx/90000/intrexx-18.09.1-windows-x86_64.zip`
+* Intrexx download Linux: `https://download.unitedplanet.com/intrexx/90200/intrexx-19.03.0-linux-x86_64.tar.gz`
+* Intrexx download Windows: `https://download.unitedplanet.com/intrexx/90200/intrexx-19.03.0-windows-x86_64.zip`
 
 Additional settings:
 

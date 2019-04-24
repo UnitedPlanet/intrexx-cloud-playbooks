@@ -41,7 +41,7 @@
       
   - name: Download Intrexx setup
     win_uri:
-      url: https://download.unitedplanet.com/intrexx/90000/{{ ix_setup_filename }}
+      url: https://download.unitedplanet.com/intrexx/90200/{{ ix_setup_filename }}
       method: GET
       dest: C:\install\{{ ix_setup_filename }}
       creates: C:\install\{{ ix_setup_filename }}
