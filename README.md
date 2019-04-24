@@ -1,4 +1,4 @@
-# Intrexx 18.09 Cloud Setup
+# Intrexx 19.03 Cloud Setup
 
 This repository contains setup scripts and resources for manual and automatic Intrexx Cloud deployments.
 
