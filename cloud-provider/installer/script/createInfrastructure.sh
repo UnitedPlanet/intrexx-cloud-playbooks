@@ -15,7 +15,7 @@ FILE_DIR_COMMON="tasks/common"
 echo "$LOG_PREFIX Recreating the entire infrastructure"
 echo "$LOG_PREFIX Sending output to output file" > $OUTPUT_FILE
 
-read -p "LOG_PREFIX About to create infraestrucutre to run Intrexx in $CLOUD_PROVIDER on the OS $OPERATING_SYSTEM. Before proceeding double-check your settings in variables.sh and press [ENTER] to continue..."
+read -p "LOG_PREFIX About to create infrastructure to run Intrexx on $CLOUD_PROVIDER based on the OS $OPERATING_SYSTEM. Before proceeding, double-check your settings in variables.sh and press [ENTER] to continue..."
 
 source ./tasks/general/executionMethods.sh
 
