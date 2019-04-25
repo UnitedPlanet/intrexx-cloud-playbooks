@@ -220,13 +220,25 @@ The script executes the following steps, which differ only in some aspects betwe
 2. Creates the autoscale set/group. This will create and remove portal server instances automatically based on rules defined in the scaling configuration. These rules must be defined manually. At the beginning the script creates a rule to start one instance.
 3. Creates the load balancer and connects it with the scale set.
 
-After the script finished all steps without error, you should be able to access the portal in the browser with the public IP address of the load balancer.
+### Finishing steps
+
+After the script finished all steps without error, you should be able to access the portal in the browser with the public IP address of the load balancer. You can now delete the obsolete IxAppServer instance and its public IP address.
+
+```bash
+./deleteGeneralizedVM.sh
+```
 
 ### Auto scale set settings
 
 If you want your auto scale set to react dynamically on the CPU consumption in your cluster, you have to define a policy. Use the CLI or the web console of your cloud provider to define rules and policies. Here is an example for AWS:
 
 ![alt text](images/aws/01.01.png)
+
+### *Important: Enable TLS/SSL for the load balancer*
+
+Unfortunately, the provisioning scripts cannot generate and install a TLS/SSL certificate for the load balancer automatically. *It is highly recommended to provide a server certificate and enable TLS encryption on the load balancer.* Otherwise the connection between the portal user's browser and the load balancer is not secure and user credentials as well as other data will be transmitted unencrypted.
+
+Please refer to the load balancer documentation of your cloud provider for instructions to enable and enforce TLS on the load balancer.
 
 ## Intrexx cluster operation
 
