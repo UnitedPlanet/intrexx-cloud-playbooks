@@ -7,7 +7,7 @@ The following guides and examples should not be used as is for production deploy
 
 ## Introduction
 
-A clustered Intrexx installation does not differ very much from a standalone Intrexx setup. Actually, you could install Intrexx as usual on one machine (VM, physical machines) and enable cluster mode afterwards by activating cluster configuration and sharing or mounting the portal folder on the other machines. While this is possible but cumbersome, the preferred way of setting up an Intrexx cluster is to prepare the required infrastructure (on premise, datacenter or cloud) and then use the setup scripts provided in this repository to install the Intrexx instances and required dependencies automatically.
+A clustered Intrexx installation does not differ very much from a standalone Intrexx setup. Actually, you can install Intrexx as usual on one machine (VM, physical machines) and enable cluster mode afterwards by activating cluster configuration and sharing or mounting the portal folder on the other machines. While this is possible but cumbersome, the preferred way of setting up an Intrexx cluster is to prepare the required infrastructure (on premise, datacenter or cloud) and then use the setup scripts provided in this repository to install the Intrexx instances and required dependencies automatically.
 
 As Intrexx uses internally a thin data grid layer to enable communication and data structure sharing between cluster instances, it is very flexible in the way a cluster can be designed, deployed and operated. There are only a few requirements and things you have to consider when migrating from Intrexx standalone to Intrexx distributed. In particular, these points are
 
@@ -27,7 +27,7 @@ An Intrexx cluster usually consists of several nodes (virtual machines, Kubernet
 - One fileserver instance for sharing the portal folder to the application server instances.
 - One database server instance (or a cloud provider database as a service) for the portal database.
 - Optional: One instance for the workflow engine, otherwise timer processes are triggered on one of the app server nodes.
-- Optional: One instance for the Solr search engine, otherwise installed on one of the app server nodes.
+- Optional: One instance for the Solr search engine, otherwise installed on the services nodes.
 - A Linux provisioning instance to execute the Ansible deployment scripts or to manage the Kubernetes cluster.
 
 ### Security settings
@@ -43,7 +43,7 @@ Configure your virtual private cloud security group to allow internal traffic on
 - 445 (tcp): Windows SMB server
 - 49152 - 65535 (tcp): Intrexx might need to contact DC LDAP, LDAP GC, Kerberos
 
-## Folder contents
+## Repository contents
 
 ### cloud-provider
 
@@ -81,23 +81,17 @@ See [cloud-provider/vagrant/README.md](cloud-provider/vagrant/README.md)
 
 ### Microsoft Azure
 
-Setup a full stack Intrexx Cloud deployment on Microsoft Azure with Linux or Windows instances.
+Setup a full stack Intrexx Cloud deployment on Microsoft Azure with Linux or Windows VM instances.
 
 - Script installer: [cloud-provider/installer/docs/README.md](cloud-provider/installer/docs/README.md)
-- Manual setup (outdated and not recommended): [cloud-provider/azure/README.md](cloud-provider/azure/README.md)
 - Collect log files with Logstash/Filebeat: [cloud-provider/azure/docs/Logstash.md](cloud-provider/azure/docs/Logstash.md)
-
-After VM provisioning, Intrexx must be installed with the Ansible playbooks found under `/linux` or `/windows`.
 
 ### Amazon Web Services
 
-Setup a full stack Intrexx Cloud deployment on Amazon Web Services with Linux or Windows instances.
+Setup a full stack Intrexx Cloud deployment on Amazon Web Services with Linux or Windows VM instances.
 
 - Script installer: [cloud-provider/installer/docs/README.md](cloud-provider/installer/docs/README.md)
-- Manual setup (outdated and not recommended): [cloud-provider/aws/README.md](cloud-provider/aws/README.md)
 - Collect log files with Logstash/Filebeat: [cloud-provider/azure/docs/Logstash.md](cloud-provider/azure/docs/Logstash.md)
-
-After infrastructure provisioning, Intrexx must be installed with the Ansible playbooks in `/linux` or `/windows`.
 
 ### Kubernetes
 
