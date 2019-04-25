@@ -157,7 +157,9 @@ Generally, the parameters in `variables.sh` are divided in basic and advanced se
 
 After having defined all settings in the `variables.sh` and when you are logged in to your cloud provider, you can start creating the infrastructure by executing 
 
-`./createInfrastructure.sh`
+```bash
+./createInfrastructure.sh
+```
 
 on the command line.
 
@@ -183,12 +185,17 @@ Follow these steps to install Intrexx and create a new portal:
 1. First of all, check the configuration files dbVars.yml, hosts_azure/aws.yml and vars.yml (see below for a description of the settings) that all settings are correct.
 2. If you want to import an existing portal, you can do so by uploading your portal export to the provisioning VM and then editing the `files/portal_config.j2` file to point the template path property to your portal export folder.
 3. If you are using Linux as Intrexx OS and do not use AWS EFS as filesystem, install the file server instance: 
-   `ansible-playbook -v -i hosts_azure/aws fileserver.yml`
+  ```bash
+  ansible-playbook -v -i hosts_azure/aws fileserver.yml
+  ```
 4. Install Intrexx on the services instance (Solr, SMB fileserver for Windows):
-   `ansible-playbook -v -i hosts_azure/aws appserver_services.yml`
+  ```bash
+  ansible-playbook -v -i hosts_azure/aws appserver_services.yml
+  ```
 5. Install the portal server instance:
-   `ansible-playbook -v -i hosts_azure/aws appserver_portal.yml`
-
+  ```bash
+  ansible-playbook -v -i hosts_azure/aws appserver_portal.yml
+  ```
 If something goes wrong during the playbook execution, you can always restart the playbook and it will continue after the last successfully executed step.
 
 After all steps have been executed successfully, you can exit the provisioning VM and go back to your local script folder. Now connect to the IxAppServer instance with SSH or RDP and check that Intrexx is up and running by opening the URL `http://localhost:1337/` in the browser or via `curl http://localhost:1337/`. You should see the Intrexx start page html content in the output.
@@ -199,7 +206,9 @@ After all steps have been executed successfully, you can exit the provisioning V
 
 To create the auto scale set and load balancer, execute 
 
-`./createScaleSet.sh` 
+```bash
+./createScaleSet.sh
+```
 
 on your local command line.
 
