@@ -3,7 +3,7 @@
 #Importing configuration variables
 source variables.sh
 
-GENERALIZED_STATE_COUNT=$(az vm get-instance-view --name $APPSERVER_NAME --query "length(instanceView.statuses[?code=='OSState/generalized'])" --output tsv)
+GENERALIZED_STATE_COUNT=$(az vm get-instance-view --resource-group $RESOURCE_GROUP_NAME --name $APPSERVER_NAME --query "length(instanceView.statuses[?code=='OSState/generalized'])" --output tsv)
 
 if [ "$GENERALIZED_STATE_COUNT" != '1' ]; then
     echo "[APPSERVER_VM] - The $APPSERVER_NAME machine is either not generalized or does not exist"
