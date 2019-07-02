@@ -63,6 +63,7 @@ exec "$JRE_HOME/bin/java" \
 		-Djava.io.tmpdir=internal/tmp \
 		-Dde.uplanet.lucy.logPath=/var/log/intrexx \
 		-Djava.net.preferIPv4Stack=true \
+		-DIGNITE_UPDATE_NOTIFIER=false \
 		--add-exports=java.base/jdk.internal.misc=ALL-UNNAMED \
 		--add-exports=java.base/sun.nio.cs=ALL-UNNAMED \
 		--add-exports=java.base/sun.nio.ch=ALL-UNNAMED \
