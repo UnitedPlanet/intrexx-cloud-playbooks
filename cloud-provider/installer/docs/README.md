@@ -281,7 +281,7 @@ Here are two examples of how Intrexx online updates can be installed on a runnin
 - Create new Intrexx server VM instance based on current scale set image (e.g. IxVmssImage).
 - Login to the new VM via RDP.
 - Start Supervisor service and portal manager.
-- Check if OU contains patches requiring a single running instance during OU installation (e.g. Ignite update, locked files by other app servers...). If so, terminate all running scale set instances and disable automatic scaling.
+- Terminate all running scale set instances and disable automatic scaling.
 - Start the online update with the portal manager.
 - Run sysprep.exe and prepare VM for image capturing: https://docs.microsoft.com/en-us/azure/virtual-machines/windows/capture-image-resource
 - Capture the image and define it as the new scale set image: https://docs.microsoft.com/en-us/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-upgrade-scale-set#how-to-update-global-scale-set-properties
@@ -291,8 +291,6 @@ az vmss show --resource-group IxResourceGroup --name IxScaleSet
 az image show --resource-group IxResourceGroup --name IxAppServer-image-20180723 (get resource path of new image)
 az vmss update --resource-group IxResourceGroup --name IxScaleSet --set virtualMachineProfile.storageProfile.imageReference.id=/subscriptions/dac0529a-cd62-466d-aeda-338da0a5827f/resourceGroups/IxResourceGroup/providers/Microsoft.Compute/images/IxAppServer-image-20180723 #(updates image in scale set)
 ```
-
-- Optional: Update running scale set instances (if scaling group was not terminated before update):
 
 ```bash
 az vmss update-instances --resource-group IxResourceGroup --name IxScaleSet --instance-ids *
