@@ -37,7 +37,7 @@
 - name: AWS - Mount device
   mount:
     path: /share
-    src: /dev/xvb1
+    src: /dev/xvdb1
     fstype: ext4
     state: mounted
   when: ix_cloud_provider == "aws" and ix_filesystem_type == "nfs"

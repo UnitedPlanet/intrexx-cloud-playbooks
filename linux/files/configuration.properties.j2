@@ -1,9 +1,13 @@
 #Intrexx installation configuration
-config.file.version=9000100
+config.file.version=9030000
 installation.dir={{ ix_home }}
 source.dir={{ ix_remote_home }}/{{ ix_setup_folder }}
 instance.daemon.manager=SYSTEMD
 instance.service.start.type=DEMAND_START
+de.uplanet.lucy.installer.jre.JrePackage.linked=false
+de.uplanet.lucy.installer.onlineupdate.OnlineUpdatePackage.fileType=false
+de.uplanet.lucy.installer.portalserver.distributed.PortalServerDistributedPackage.firstInstance=true
+de.uplanet.lucy.installer.portalserver.distributed.PortalServerDistributedPackage.installationShare={{ ix_shared_folder }}
 package.de.uplanet.lucy.installer.instsystem.InstallationSystemPackage=true
 package.de.uplanet.lucy.installer.portalmanager.PortalManagerPackage=true
 package.de.uplanet.lucy.installer.jre.JrePackage=true
