@@ -2,10 +2,10 @@
 # prepare setup
 - name: Download Intrexx setup
   get_url:
-    url: "https://download.unitedplanet.com/intrexx/90200/{{ ix_setup_filename }}"
+    url: "https://download.unitedplanet.com/intrexx/90300/{{ ix_setup_filename }}"
     dest: "{{ ix_remote_home }}/{{ ix_setup_filename }}"
-#- name: copy setup
-#  copy: src=files/{{ ix_setup_filename }} dest={{ ix_remote_home }}/{{ ix_setup_filename }} force=no    
+    #- name: copy setup
+    #  copy: src=files/{{ ix_setup_filename }} dest={{ ix_remote_home }}/{{ ix_setup_filename }} force=no    
 - name: copy services setup cfg
   template: src=files/configuration.properties.j2 dest="{{ ix_remote_home }}/configuration.properties" owner=root group=root mode=0644
   when: "'appserver_services' in group_names"
@@ -17,11 +17,11 @@
   args:
     chdir: "{{ ix_remote_home }}"
     creates: "{{ ix_remote_home }}/{{ ix_setup_folder }}/setup.sh"
-#- name: unzip setup
-#  command: /usr/bin/7z x {{ ix_setup_filename }}
-#  args:
-#    chdir: "{{ ix_remote_home }}"
-#    creates: "{{ ix_remote_home }}/{{ ix_setup_folder }}/setup.sh"    
+    #- name: unzip setup
+    #  command: /usr/bin/7z x {{ ix_setup_filename }}
+    #  args:
+    #    chdir: "{{ ix_remote_home }}"
+    #    creates: "{{ ix_remote_home }}/{{ ix_setup_folder }}/setup.sh"    
 - name: chmod setup
   file:
     path: "{{ ix_remote_home }}/{{ ix_setup_folder }}/setup.sh"
