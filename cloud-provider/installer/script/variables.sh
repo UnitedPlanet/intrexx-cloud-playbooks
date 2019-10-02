@@ -153,7 +153,7 @@ SCALE_SET_MAX=3
 LOAD_BALANCER_NAME=$SCALE_SET_NAME"LB"
 HEALTH_PROBE_NAME="IxHealthProbe"
 #Needs to be set to the correct portal otherwise azure LB wont forward requests 
-HEALTH_PROBE_PATH=/default.ixsp?qs_service=services/ping/
+HEALTH_PROBE_PATH=/service/ping/
 #Interval in seconds
 HEALTH_PROBE_INTERVAL=30
 #Ports für Intrexx
