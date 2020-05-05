@@ -19,10 +19,10 @@ rm -rf $WORKDIR/share
 rm -rf $WORKDIR/server_share.tar.gz
 
 chmod a+x intrexx/setup.sh
-chmod a+x intrexx/jre/linux/amd64/bin/java
+chmod a+x intrexx/java/packaged/linux/amd64/bin/java
 
 echo "start db container"
-docker run -d --name ixclouddb postgres:11
+docker run -d -e POSTGRES_PASSWORD=mysecretpassword --name ixclouddb postgres:11
 
 echo "build base filesystem image"
 cd setup
