@@ -35,7 +35,7 @@ echo "start setup container"
 #use this command to install portal into local portal folder
 docker run -v "${WORKDIR}/intrexx":/tmp/ix-setup \
     --link ixclouddb:ixclouddbservice -v "${WORKDIR}/share/cfg":/tmp/server_cfg \
-    -v "${WORKDIR}/share/bin":/tmp/server_bin  -v "${WORKDIR}/share/portal":/opt/intrexx/org/cloud \
+    -v "${WORKDIR}/share/bin":/tmp/server_bin  -v "${WORKDIR}/share/portal":/opt/intrexx/org/cloud -v "${WORKDIR}/import":/tmp/import \
     --name="ixcloudfs-setup" \
     ixcloudfs-base /bin/bash -c "/tmp/ix-setup/setup.sh -t --configFile=/root/configuration.properties; /tmp/build_portal.sh;"
 
