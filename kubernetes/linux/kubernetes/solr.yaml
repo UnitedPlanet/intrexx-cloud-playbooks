@@ -33,6 +33,8 @@ spec:
           name: ixcloudapp-volume-bin
         - mountPath: /opt/intrexx/cfg
           name: ixcloudapp-volume-cfg
+        - mountPath: /opt/intrexx/solr
+          name: ixcloudapp-volume-solr
       imagePullSecrets:
       - name: ixkubernetesregistry
       volumes:
@@ -48,3 +50,7 @@ spec:
         nfs:
           server: 10.240.0.7
           path: /share/cfg
+      - name: ixcloudapp-volume-solr
+        nfs:
+          server: 10.240.0.7
+          path: /share/solr
