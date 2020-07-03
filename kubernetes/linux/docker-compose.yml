@@ -9,7 +9,8 @@ services:
     image: "ixcloudsolr:latest"
     volumes:
       - "/home/ubuntu/intrexx-cloud-playbooks/kubernetes/linux/share/cfg:/opt/intrexx/cfg"
-      - "/home/ubuntu/intrexx-cloud-playbooks/kubernetes/linux/share/portal:/opt/intrexx/org/cloud"
+      - "/home/ubuntu/intrexx-cloud-playbooks/kubernetes/linux/share/portal:/opt/intrexx/org/cloud"     
+      - "/home/ubuntu/intrexx-cloud-playbooks/kubernetes//linux/share/solr:/opt/intrexx/solr"
   portal:
     image: "ixcloud:latest"
     command: /opt/intrexx/bin/linux/portal.sh /opt/intrexx/org/cloud
@@ -20,7 +21,8 @@ services:
     volumes:
       - "/home/ubuntu/intrexx-cloud-playbooks/kubernetes/linux/share/cfg:/opt/intrexx/cfg"
       - "/home/ubuntu/intrexx-cloud-playbooks/kubernetes/linux/share/portal:/opt/intrexx/org/cloud"
-      - "/tmp/ixstandalone:/opt/intrexx/org/test/log"
+      - "/home/ubuntu/intrexx-cloud-playbooks/kubernetes//linux/share/solr:/opt/intrexx/solr"
+      - "/tmp/ixstandalone:/var/log/intrexx"
     depends_on:
       - db
       - solr
