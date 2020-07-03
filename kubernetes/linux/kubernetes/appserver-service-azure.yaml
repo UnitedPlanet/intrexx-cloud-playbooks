@@ -2,8 +2,8 @@ kind: Service
 apiVersion: v1
 metadata:
   name: ixcloudservice
-  annotations:
-    service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+  #annotations:
+  #  service.beta.kubernetes.io/azure-load-balancer-internal: "true"
 spec:
   type: LoadBalancer
   ports:

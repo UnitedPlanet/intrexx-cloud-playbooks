@@ -6,7 +6,7 @@ metadata:
     app: ixcloudapp
   #namespace: ixcloud
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: ixcloudapp
@@ -16,17 +16,17 @@ spec:
         app: ixcloudapp
     spec:
       containers:
-      - image: ixkubernetesregistry.azurecr.io/ixdocker/ixcloud:latest
+      - image: ixk8scr.azurecr.io/ixcloud:latest
         name: ixcloudapp
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         command: ["/opt/intrexx/bin/linux/portal.sh"]
         args: ["/opt/intrexx/org/cloud"]
         resources:
           limits:
-            cpu:  2
+            cpu:  1
             memory: 2048Mi
           requests:
-            cpu:    1
+            cpu: 0.1
             memory:   1024Mi
         volumeMounts:
         - mountPath: /opt/intrexx/org/cloud
@@ -36,23 +36,23 @@ spec:
         - mountPath: /opt/intrexx/cfg
           name: ixcloudapp-volume-cfg
         - mountPath: /opt/intrexx/solr
-          name: ixcloudapp-volume-solr          
+          name: ixcloudapp-volume-solr 
       imagePullSecrets:
       - name: ixkubernetesregistry
       volumes:
       - name: ixcloudapp-volume
         nfs:
-          server: 10.240.0.7
-          path: /share/cloud
+          server: 52.157.110.160
+          path: /share/portal
       - name: ixcloudapp-volume-bin
         nfs:
-          server: 10.240.0.7
+          server: 52.157.110.160
           path: /share/bin
       - name: ixcloudapp-volume-cfg
         nfs:
-          server: 10.240.0.7
+          server: 52.157.110.160
           path: /share/cfg
       - name: ixcloudapp-volume-solr
         nfs:
-          server: 10.240.0.7
+          server: 52.157.110.160
           path: /share/solr

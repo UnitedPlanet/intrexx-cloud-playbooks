@@ -4,7 +4,7 @@
 authorized_keys
 *.pdf
 *.pem
-kubernetes/linux/import/*
+kubernetes/linux/import/
 kubernetes/linux/intrexx/
 kubernetes/linux/intrexx1903/
 kubernetes/linux/intrexx2003/

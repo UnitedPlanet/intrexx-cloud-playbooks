@@ -16,15 +16,15 @@ spec:
         app: ixcloudsolr
     spec:
       containers:
-      - image: ixkubernetesregistry.azurecr.io/ixdocker/ixcloudsolr:latest
+      - image: ixk8scr.azurecr.io/ixcloudsolr:latest
         name: ixcloudsolr
         imagePullPolicy: Always
         resources:
           limits:
-            cpu: 1
+            cpu: 1.0
             memory: 2048Mi
           requests:
-            cpu: 0.5
+            cpu: 0.1
             memory: 1024Mi
         volumeMounts:
         - mountPath: /opt/intrexx/org/cloud
@@ -40,17 +40,17 @@ spec:
       volumes:
       - name: ixcloudapp-volume
         nfs:
-          server: 10.240.0.7
-          path: /share/cloud
+          server: 52.157.110.160
+          path: /share/portal
       - name: ixcloudapp-volume-bin
         nfs:
-          server: 10.240.0.7
+          server: 52.157.110.160
           path: /share/bin
       - name: ixcloudapp-volume-cfg
         nfs:
-          server: 10.240.0.7
+          server: 52.157.110.160
           path: /share/cfg
       - name: ixcloudapp-volume-solr
         nfs:
-          server: 10.240.0.7
+          server: 52.157.110.160
           path: /share/solr
