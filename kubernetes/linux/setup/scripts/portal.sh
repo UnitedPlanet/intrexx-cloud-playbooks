@@ -46,7 +46,6 @@ JRE_HOME="$INTREXX_HOME"/java/packaged/linux/$OS_ARCH
 
 # now start the java vm
 exec "$JRE_HOME/bin/java" \
-		-XX:NewSize=32m \
 		-server \
 		-Xms1024m \
 		-Xmx2084m \
