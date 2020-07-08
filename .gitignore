@@ -4,7 +4,8 @@
 authorized_keys
 *.pdf
 *.pem
-kubernetes/linux/intrexx/*
+kubernetes/linux/import/
+kubernetes/linux/intrexx*/
 kubernetes/linux/share/*
 *.tar.gz
 kubectl

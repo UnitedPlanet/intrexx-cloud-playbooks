@@ -1,6 +1,6 @@
 # Intrexx 19.03 Cloud Setup
 
-This repository contains setup scripts and resources for manual and automatic Intrexx 19.03 Cloud deployments. Please check out the `v19.09` branch for Intrexx 19.09.
+This repository contains setup scripts and resources for manual and automatic Intrexx 19.03 LTS Cloud deployments. Please check out the `v20.03` branch for Intrexx 20.03.
 
 __Warning__:
 The following guides and examples should not be used as is for production deployments. Security and reliability of your cluster is out of scope of this documentation. Use this only for test and demonstration environments.
@@ -15,7 +15,7 @@ As Intrexx uses internally a thin data grid layer to enable communication and da
 - Database: You can use a database as a service offer from your cloud provider or setup one of the supported databases on a dedicated machine in your cluster.
 - Shared portal folder: A distributed network file system is required in order to share the portal folder between the portal servers. Currently Intrexx works with AWS EFS, NFS, SMB, GlusterFS and Ceph.
 - Workflows: You can decide whether timer jobs and workflows will run on a randomly chosen portal server instance in your cluster or on dedicated job scheduler instances. The latter option is recommended if you have many long running jobs or workflows.
-- Search engine: Only one Solr instance is required for the whole cluster. It is possible to cluster Solr as well.
+- Search engine: A Solr Cloud instance is required for the whole cluster.
 
 Please keep in mind that the database, shared filesystem, worklow and search services are all single point of failures and could potentially bring your whole cluster down if one of the services crashes. So it is important for production environments to replicate those external services as well. This can be achieved by using cloud provider services (e.g. database as a service, distributed filesystems, etc.) or by using common software components and techniques (e.g. Postgresql/MS SQL Server replication, GlusterFs/Ceph as distributed filesystem instead of NFS, Solr cluster...) to replicate the services on your own.
 
@@ -27,7 +27,7 @@ An Intrexx cluster usually consists of several nodes (virtual machines, Kubernet
 - One fileserver instance for sharing the portal folder to the application server instances.
 - One database server instance (or a cloud provider database as a service) for the portal database.
 - Optional: One instance for the workflow engine, otherwise timer processes are triggered on one of the app server nodes.
-- Optional: One instance for the Solr search engine, otherwise installed on the services nodes.
+- Optional: One instance for the Solr Cloud search engine, can otherwise also be installed on the services nodes.
 - A Linux provisioning instance to execute the Ansible deployment scripts or to manage the Kubernetes cluster.
 
 ### Security settings

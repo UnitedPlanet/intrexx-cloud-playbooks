@@ -18,7 +18,7 @@ Das generelle Konzept ist unabhängig von dem verwendeten Cloud-Anbieter. Es gib
 #### EC2 Instanzen
 
 1. IxServices
-       Die Service-Instanz beinhaltet den SOLR Server, das geteilte Dateisystem (sofern nicht AWS EFS eingesetzt wird) und bietet die SOAP-Schnittstelle, welche auch außerhalb des internen Netzes von AWS erreichbar ist. Diese Instanz muss von allen Portalservern erreichbar sein.
+       Die Service-Instanz beinhaltet den SOLR CLoud Server, das geteilte Dateisystem (sofern nicht AWS EFS eingesetzt wird) und bietet die SOAP-Schnittstelle, welche auch außerhalb des internen Netzes von AWS erreichbar ist. Diese Instanz muss von allen Portalservern erreichbar sein.
 2. IxAppServer
        Die Appserver-Instanz wird automatisiert komplett eingerichtet und daraufhin als Image für die Instanzen der Autoscale-Group verwendet. Diese Instanz wird am Ende des Skripts automatisch gestoppt und kann dann entfernt werden (terminiert im Kontext von AWS).
 3. IxProvisioning
@@ -137,11 +137,11 @@ Der Ablauf der Skripte unterscheidet sich nur unwesentlich bei AWS und Azure. Be
    Die Ansible-Dateien sowie die ZIP mit der Intrexx-Installation wird auf die Provisioning-Instanz kopiert.
 7. Neustart aller Instanzen.
 8. Installation von Intrexx über die Provisioning-Instanz.
-   Die Installation von Intrexx (Dateisystem und SOLR auf der IxServices-Instanz, sowie Intrexx auf der IxAppServer-Instanz) muss manuell gestartet werden, da vereinzelt Benutzereingaben nötig sein können.
+   Die Installation von Intrexx (Dateisystem und SOLR Cloud auf der IxServices-Instanz, sowie Intrexx auf der IxAppServer-Instanz) muss manuell gestartet werden, da vereinzelt Benutzereingaben nötig sein können.
 
 * Anpassen der hosts.yml und vars.yml Dateien.
 * Installation Fileserver (nur Azure) -> `ansible-playbook -v -i hosts_azure fileserver.yml`
-* Installation services (Solr, NFS) node -> `ansible-playbook -v -i hosts_azure appserver_services.yml`
+* Installation services (NFS) node -> `ansible-playbook -v -i hosts_azure appserver_services.yml`
 * Installation portal server -> `ansible-playbook -v -i hosts_azure appserver_portal.yml`
 
 ### Erzeugung der Autoscalegruppe
