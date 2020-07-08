@@ -21,7 +21,7 @@ services:
     volumes:
       - "/home/ubuntu/intrexx-cloud-playbooks/kubernetes/linux/share/cfg:/opt/intrexx/cfg"
       - "/home/ubuntu/intrexx-cloud-playbooks/kubernetes/linux/share/portal:/opt/intrexx/org/cloud"
-      - "/home/ubuntu/intrexx-cloud-playbooks/kubernetes//linux/share/solr:/opt/intrexx/solr"
+      - "/home/ubuntu/intrexx-cloud-playbooks/kubernetes/linux/share/solr:/opt/intrexx/solr"
       - "/tmp/ixstandalone:/var/log/intrexx"
     depends_on:
       - db
