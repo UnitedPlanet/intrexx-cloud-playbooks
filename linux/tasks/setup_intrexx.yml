@@ -2,7 +2,7 @@
 # prepare setup
 - name: Download Intrexx setup
   get_url:
-    url: "https://download.unitedplanet.com/intrexx/90200/{{ ix_setup_filename }}"
+    url: "https://download.unitedplanet.com/intrexx/90400/{{ ix_setup_filename }}"
     dest: "{{ ix_remote_home }}/{{ ix_setup_filename }}"
 #- name: copy setup
 #  copy: src=files/{{ ix_setup_filename }} dest={{ ix_remote_home }}/{{ ix_setup_filename }} force=no    

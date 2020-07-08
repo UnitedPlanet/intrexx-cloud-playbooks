@@ -74,10 +74,10 @@ Generell sind die Variablen in *`variables.sh`* unterteilt in basic und advanced
   Verzeichnis, in dem das Intrexx-Installationspaket gespeichert ist.
 5. INTREXX_SETUP_LINUX
 * Dateiname der Linux Intrexx-Installationspaket-Zipdatei.
-* Intrexx Download: `wget https://download.unitedplanet.com/intrexx/90200/intrexx-19.03.0-linux-x86_64.tar.gz`
+* Intrexx Download: `wget https://download.unitedplanet.com/intrexx/90400/intrexx-20.03-linux-x86_64.tar.gz`
 6. INTREXX_SETUP_WINDOWS
 * Dateiname der Windows Intrexx-Installationspaket-Zipdatei.
-* Intrexx Download: `wget https://download.unitedplanet.com/intrexx/90200/intrexx-19.03.0-windows-x86_64.zip`
+* Intrexx Download: `wget https://download.unitedplanet.com/intrexx/90400/intrexx-20.03-windows-x86_64.zip`
 
 
 Zusätzlich interessante Variablen:

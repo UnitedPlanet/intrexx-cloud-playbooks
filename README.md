@@ -1,6 +1,6 @@
-# Intrexx 19.03 Cloud Setup
+# Intrexx 20.03 Cloud Setup
 
-This repository contains setup scripts and resources for manual and automatic Intrexx 19.03 Cloud deployments. Please check out the `v19.09` branch for Intrexx 19.09.
+This repository contains setup scripts and resources for manual and automatic Intrexx 20.03 Cloud deployments. Please check out the `v19.09` branch for Intrexx 19.09.
 
 __Warning__:
 The following guides and examples should not be used as is for production deployments. Security and reliability of your cluster is out of scope of this documentation. Use this only for test and demonstration environments.
