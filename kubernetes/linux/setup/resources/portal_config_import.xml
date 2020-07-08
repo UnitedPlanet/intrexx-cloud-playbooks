@@ -10,15 +10,16 @@
 		<property name="de.uplanet.lucy.solr.authenticationType" value="none">
 		</property>
 
-		<property name="de.uplanet.lucy.solr.serverType" value="http">
+		<property name="de.uplanet.lucy.solr.serverType" value="cloud">
 		</property>
 
-		<property name="de.uplanet.lucy.solr.configurationBaseDirectory" value="/opt/intrexx/solr/server/solr">
+		<property name="de.uplanet.lucy.solr.configurationBaseDirectory" value="">
 		</property>
 
-		<property name="de.uplanet.lucy.solr.url" value="http://ixcloudsolrservice:8983/solr">
+		<property name="de.uplanet.lucy.solr.url" value="http://ixcloudsolr:8983/solr">
 		</property>
 	</search>
+	
 	
 	<property name="de.uplanet.lucy.server.distributed.ipfinder" value="sharedfs" />
 	<property name="de.uplanet.lucy.server.distributed.ipfinder.sharedfs.path" value="/opt/intrexx/org/cloud/cluster/addresses" />
