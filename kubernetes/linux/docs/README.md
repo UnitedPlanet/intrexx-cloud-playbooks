@@ -305,15 +305,6 @@ ixcloud-deployment-929028525-rtq8m   0/1       ContainerCreating   0          4m
 ixclouddb                            1/1       Running             0          56m
 ```
 
-To deploy the Solr and Intrexx pod, run the following commands.
-
-```bash
-kubectl create -f solr.yaml
-kubectl create -f solr-service.yaml
-
-kubectl create -f appserver.yaml
-```
-
 ### Create an internal load balancer (optional)
 
 When the portal server pods are up and running, we can deploy a Kubernetes service for our portal server pods. This service is the external entry point for the cluster and acts as a proxy and load balancer for external requests to our portal server cluster. In this case, the internal cluster port 8080 is mapped to a node port. So an external cloud load balancer can route requests to a given port on the nodes on which the Kubernetes proxy listens and redirects the request to internal cluster pods. In a real-world scenario one might use the ExternalLoadBalancer directive to let Kubernetes configure the cloud provider load balancer automatically instead of using node ports (see next chapter).
@@ -614,7 +605,41 @@ Kubernetes deployments provide the ability to apply software updates to a runnin
 
 ## Upgrade from Intrexx 19.03/19.09
 
-TBD 
+### Upgrade process
+
+1) Edit environment.sh.
+2) Extract Intrexx 20.03 setup to /intrex subfolder and download/copy `zookeeper-jute-3.5.5.jar` to `intrexx/lib/` folder.
+3) Backup the database and shared folder.
+4) Build new setup images and tag them with 20.03/latest.
+5) Remove the contents in folder `share/`.
+6) Delete the ixcloud-deployment and ixcloud-manager-deployment in your Kubernetes cluster to stop all running Intrexx instances.
+7) Mount nfs shared folder on the local Docker machine where you built the new images to the shared folder.  
+```bash
+mount -t nfs nfs-server-host:/share /path/to/your/repos/intrexx-cloud-playbooks/kubernetes/linux/share
+```
+8) Start a single appserver container based on your 19.03 image with an interactive shell:
+```bash
+docker run -ti -v /path/to/your/repos/intrexx-cloud-playbooks/kubernetes/linux/intrexx:/tmp/ix-setup \
+    -v /path/to/your/repos/intrexx-cloud-playbooks/kubernetes/linux/share/cfg:/opt/intrexx/cfg \
+    -v /path/to/your/repos/intrexx-cloud-playbooks/kubernetes/linux/share/bin:/opt/intrexx/bin \
+    -v /path/to/your/repos/intrexx-cloud-playbooks/kubernetes/linux/share/portal:/opt/intrexx/org/cloud \
+    --name="ixcloudupgrade" \
+    ixcloud:19.03.X /bin/bash
+```
+9) In container, edit the instance settings in installer/cfg/configuration.properties (firstInstance=false)
+10) Copy file setup/resources/configuration.properties to /tmp/ix-setup
+11) Remove symbolic link (crashes setup) -> rm /opt/intrexx/java/current
+12) Remove content (crashes setup) -> rm -rf /opt/intrexx/lib/update/*
+13) Remove content (crashes setup) -> rm -rf /opt/intrexx/client/lib/update/*
+14) Start the intrexx upgrade:
+```bash
+/tmp/ix-setup/setup.sh --configFile=configuration.properties -t --upgrade
+```
+15) Check internal/cfg/spring/00-ignite-cfg.xml settings and edit overwritten properties (Ignite tmp path, tcp cluster address finder path).
+16) Enable console in log4j2.xml.
+17) Unmount the NFS share.
+18) Edit the Kubernetes appserver deploment files and change image tag to 20.03.X. 
+19) Redeploy the ixcloud-deployment(s) in Kubernetes.
 
 ## Appendix
 
