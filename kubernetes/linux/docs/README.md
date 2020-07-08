@@ -33,12 +33,15 @@ We are going to deploy an Intrexx cluster consisting of Kubernetes nodes, pods a
 
 ### Pods
 
-- One SOLR search engine pod. It is highly recommended to deploy a Solr Cloud cluster for your Intrexx cluster. We will run Solr as a pod as it keeps things simple hered using a cloudprovider hosted block device for storage is mainly a simple change in the pod's configuration file.
-- A deployment (replication controller) of portal server pods with 2..n replicas.
+- A deployment (replication controller) of portal server pods with 2..n replicas. Another one for a dedicated portal manager instances can be deployed on demand.
 
 ### Services
 
-- To have cluster-wide virtual IPs and DNS names for the Postgres and Tomcat services, there is one Kubernetes service for the Solr pod and another one for the portal server pods.
+- To have cluster-wide virtual IPs and DNS names for the Postgres and Tomcat services, there is one Kubernetes service for the portal server pods and one for the portal manager node server instance.
+- 
+### Solr
+
+It is highly recommended to deploy a Solr Cloud cluster for your Intrexx cluster. We will run Solr on the shared folder VM instance to keep things simple here.
 
 ### Postgresql database
 
@@ -138,8 +141,6 @@ Now that the registry is available, the images can be tagged to the external reg
 ```bash
 docker login <registryname>.azurecr.io -u <registry_username> -p <registry_password>
 docker tag ixcloud <registryname>.azurecr.io/ixdocker/ixcloud
-docker tag ixcloudsolr <registryname>.azurecr.io/ixdocker/ixcloudsolr
-docker push <registryname>.azurecr.io/ixdocker/ixcloudsolr
 ```
 
 Don't forget to adjust the registry URL and location as well as username and password in the snippet above. Upload of the images will take a while.
@@ -160,6 +161,10 @@ SSH into the created VM and install the NFS required packages.
 ```bash
 sudo apt-get install nfs-kernel-server
 ```
+
+### Solr Clour server installation
+
+Install Solr Cloud on the NFS server instance.
 
 ### Creating the portal folder
 
@@ -198,7 +203,7 @@ Then restart the nfs service `sudo systemctl restart nfs-server`. The exported f
 ```bash
 showmount -e
 ```
-Therefore, if everything worked correctly, the output of this statement should look like this:
+If everything works correctly, the output of this statement should look like this:
 
 ```bash
 ubuntu@ixshare:~$ showmount -e
@@ -284,15 +289,6 @@ kubectl create -f db.yaml
 kubectl create -f db-service.yaml
 ```
 
-### Solr server deploment and service
-
-Edit the solr.yaml file and verify that the container image URI and image pull secrets match your settings.
-
-```bash
-kubectl create -f solr.yaml
-kubectl create -f solr-service.yaml
-```
-
 ### Portal server deployment
 
 After the database is available, we can deploy the portal server pods. Edit the appserver.yaml file and verify that the container image URI and image pull secrets as well as the nfs server IP adress match your settings.
@@ -360,6 +356,10 @@ This deployment descriptor creates one instance of the portalserver container de
 $ kubectl create -f appserver-manager.yaml
 $ kubectl create -f appserver-manager-service.yaml
 ```
+
+### Enable Solr Cloud
+
+When the portal manager instance is running, you can connect to it with a local portal manager installation. Then connect to your cloud portal and edit the Solr Cloud server url in the portal search configuration.
 
 ### External load balancer (manually)
 
@@ -606,10 +606,15 @@ kubectl apply -f appserver.yaml
 
 Kubernetes deployments provide the ability to apply software updates to a running cluster without restarting all instances at once. Currently an Intrexx update would take the following steps:
 
-1. Build new portalserver images including the online updates.
-2. Upload the images to the container registry.
-3. Follow the instructions [here](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/) to restart and update the portal server instances in Kubernetes. Kubernetes will start and kill instances in such a way that there are always enough instances running to serve requests during the update process.
-4. Run a new portal server pod and execute an interactive bash console on the pod. On the terminal, call the shell script to apply online updates to the shared portal folder and database. Wait until the job has finished, then exit and kill the supervisor pod.
+1. Build new portalserver image including the online updates and tag it with the current Intrexx version (e.g. ixcloud:20.03.1 for OU1).
+2. Upload the image to the container registry.
+3. Update the image version tag in the Kubernetes deployment descriptors.
+4. Follow the instructions [here](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/) to restart and update the portal server instances in Kubernetes. Kubernetes will start and kill instances in such a way that there are always enough instances running to serve requests during the update process.
+5. Run a new portal server manager pod and execute an interactive bash console in the pod. On the terminal, call the shell scripts to download and apply online updates to the shared portal folder and database. Wait until the job has finished, then exit and kill the pod.
+
+## Upgrade from Intrexx 19.03/19.09
+
+TBD 
 
 ## Appendix
 
