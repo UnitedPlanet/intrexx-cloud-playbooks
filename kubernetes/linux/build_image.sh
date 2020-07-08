@@ -21,7 +21,6 @@ rm -rf $WORKDIR/server_share.tar.gz
 mkdir -p $WORKDIR/share/bin
 mkdir -p $WORKDIR/share/cfg
 mkdir -p $WORKDIR/share/portal
-mkdir -p $WORKDIR/share/solr
 
 chmod a+x intrexx/setup.sh
 chmod a+x intrexx/java/packaged/linux/amd64/bin/java
@@ -41,7 +40,7 @@ echo "start setup container"
 docker run -v "${WORKDIR}/intrexx":/tmp/ix-setup \
     --link ixclouddb:ixclouddbservice -v "${WORKDIR}/share/cfg":/tmp/server_cfg \
     -v "${WORKDIR}/share/bin":/tmp/server_bin  -v "${WORKDIR}/share/portal":/opt/intrexx/org/cloud \
-    -v "${WORKDIR}/share/solr":/opt/intrexx/solr -v "${WORKDIR}/import":/tmp/import \
+    -v "${WORKDIR}/import":/tmp/import \
     --name="ixcloudfs-setup" \
     ixcloudfs-base /bin/bash -c "/tmp/ix-setup/setup.sh -t --configFile=/root/configuration.properties; /tmp/build_portal.sh;"
 

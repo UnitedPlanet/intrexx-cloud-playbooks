@@ -4,7 +4,7 @@
 
 cp /tmp/portal.sh /opt/intrexx/bin/linux
 
-touch /opt/intrexx/org/cloud/external/htmlroot/websurge-allow.txt
+#touch /opt/intrexx/org/cloud/external/htmlroot/websurge-allow.txt
 
 if [ -d "/tmp/server_cfg" ]; then
     cp -R /opt/intrexx/cfg/* /tmp/server_cfg
