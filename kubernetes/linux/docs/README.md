@@ -636,10 +636,11 @@ docker run -ti -v /path/to/your/repos/intrexx-cloud-playbooks/kubernetes/linux/i
 /tmp/ix-setup/setup.sh --configFile=configuration.properties -t --upgrade
 ```
 15) Check internal/cfg/spring/00-ignite-cfg.xml settings and edit overwritten properties (Ignite tmp path, tcp cluster address finder path).
-16) Enable console in log4j2.xml.
-17) Unmount the NFS share.
-18) Edit the Kubernetes appserver deploment files and change image tag to 20.03.X. 
-19) Redeploy the ixcloud-deployment(s) in Kubernetes.
+16) The upgrade process might leave older Ignite jar files in the `lib/distributed` folder. Check the contents of the folder and delete older `ignite-*-2.7.*.jars`.
+17) Enable console in log4j2.xml.
+18) Unmount the NFS share.
+19) Edit the Kubernetes appserver deploment files and change image tag to 20.03.X. 
+20) Redeploy the ixcloud-deployment(s) in Kubernetes.
 
 ## Appendix
 
