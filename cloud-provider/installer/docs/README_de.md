@@ -18,7 +18,7 @@ Das generelle Konzept ist unabhängig von dem verwendeten Cloud-Anbieter. Es gib
 #### EC2 Instanzen
 
 1. IxServices
-       Die Service-Instanz beinhaltet den SOLR Server, das geteilte Dateisystem (sofern nicht AWS EFS eingesetzt wird) und bietet die SOAP-Schnittstelle, welche auch außerhalb des internen Netzes von AWS erreichbar ist. Diese Instanz muss von allen Portalservern erreichbar sein.
+       Die Service-Instanz beinhaltet den SOLR CLoud Server, das geteilte Dateisystem (sofern nicht AWS EFS eingesetzt wird) und bietet die SOAP-Schnittstelle, welche auch außerhalb des internen Netzes von AWS erreichbar ist. Diese Instanz muss von allen Portalservern erreichbar sein.
 2. IxAppServer
        Die Appserver-Instanz wird automatisiert komplett eingerichtet und daraufhin als Image für die Instanzen der Autoscale-Group verwendet. Diese Instanz wird am Ende des Skripts automatisch gestoppt und kann dann entfernt werden (terminiert im Kontext von AWS).
 3. IxProvisioning

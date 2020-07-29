@@ -57,7 +57,7 @@ The cluster architecture is independent of the chosen cloud provider. An Intrexx
 1. IxProvisioning VM:
       The provisioning instance is used for running the Ansible playbooks to install the Intrexx cluster on the infrastructure. It can be stopped after installation but should not be terminated as it will be used for managing tasks and installing updates on the cluster.
 2. IxServices VM:
-      The service instance runs the SOLR search server, the filesystem server (NFS for Linux, SMB for Windows, if not using AWS EFS) for the portal server instances to access the shared portal folder and provides the portal manager REST interface, which can be accessed from outside the internal virtual private cloud. This instance must be reachable by all portal server instances.
+      The service instance runs the SOLR Cloud search server, the filesystem server (NFS for Linux, SMB for Windows, if not using AWS EFS) for the portal server instances to access the shared portal folder and provides the portal manager REST interface, which can be accessed from outside the internal virtual private cloud. This instance must be reachable by all portal server instances.
 3. IxAppServer VM:
       The app server instance is the template for the portal server VM image used in the autoscale group. At the end of the installation, it will be stopped and can be terminated and removed when the VM image and scale set has been created.
 4. Database server:
@@ -178,7 +178,7 @@ If something goes wrong during the script execution, you can always restart the 
     
 ## Intrexx cluster installation
 
-When the infrastructure scripts finished successfully, it prints the ssh command to connect to the provisioning VM on the console. Use that to connect to the VM and start the Intrexx installation. Intrexx and its services (shared file system and SOLR on the IxServices instance as well as the portal server on the IxAppServer instance) need to be installed by starting Ansible playbooks on the provisioning VM.
+When the infrastructure scripts finished successfully, it prints the ssh command to connect to the provisioning VM on the console. Use that to connect to the VM and start the Intrexx installation. Intrexx and its services (shared file system and SOLR Cloud on the IxServices instance as well as the portal server on the IxAppServer instance) need to be installed by starting Ansible playbooks on the provisioning VM.
 
 Follow these steps to install Intrexx and create a new portal:
 
@@ -188,7 +188,7 @@ Follow these steps to install Intrexx and create a new portal:
   ```bash
   ansible-playbook -v -i hosts_azure/aws fileserver.yml
   ```
-4. Install Intrexx on the services instance (Solr, SMB fileserver for Windows):
+4. Install required services on the services instance (SMB fileserver for Windows):
   ```bash
   ansible-playbook -v -i hosts_azure/aws appserver_services.yml
   ```
@@ -328,7 +328,7 @@ sudo ./updinstall.sh
 * vars.yml => Default variables for the infrastructure provisioning.
 * hosts => Defines the IP address of all hosts in the cluster.
 * files => Contains files required for Intrexx installation.
-* appserver_services.yml => Playbook creates IxServices instance (NFS, SMB, SOLR).
+* appserver_services.yml => Playbook creates IxServices instance (NFS, SMB).
 * appserver_portal.yml => Playbook creates the IxAppServer instance (portal server).
 * appserver_restart.yml => Restarts all app server instances.
 * dbserver.yml => Playbook creates a Postgresql database instance (only required for non database as a service setups).

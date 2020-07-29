@@ -15,7 +15,7 @@ As Intrexx uses internally a thin data grid layer to enable communication and da
 - Database: You can use a database as a service offer from your cloud provider or setup one of the supported databases on a dedicated machine in your cluster.
 - Shared portal folder: A distributed network file system is required in order to share the portal folder between the portal servers. Currently Intrexx works with AWS EFS, NFS, SMB, GlusterFS and Ceph.
 - Workflows: You can decide whether timer jobs and workflows will run on a randomly chosen portal server instance in your cluster or on dedicated job scheduler instances. The latter option is recommended if you have many long running jobs or workflows.
-- Search engine: Only one Solr instance is required for the whole cluster. It is possible to cluster Solr as well.
+- Search engine: A Solr Cloud instance is required for the whole cluster.
 
 Please keep in mind that the database, shared filesystem, worklow and search services are all single point of failures and could potentially bring your whole cluster down if one of the services crashes. So it is important for production environments to replicate those external services as well. This can be achieved by using cloud provider services (e.g. database as a service, distributed filesystems, etc.) or by using common software components and techniques (e.g. Postgresql/MS SQL Server replication, GlusterFs/Ceph as distributed filesystem instead of NFS, Solr cluster...) to replicate the services on your own.
 
