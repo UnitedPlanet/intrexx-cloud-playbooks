@@ -1,5 +1,5 @@
 #Intrexx installation configuration
-config.file.version=9000100
+config.file.version=9050000
 installation.dir={{ ix_home }}
 source.dir={{ ix_remote_home }}/{{ ix_setup_folder }}
 instance.daemon.manager=SYSTEMD
@@ -18,3 +18,5 @@ de.uplanet.lucy.installer.portalserver.PortalServerPackage.charset=en_US.UTF-8
 package.de.uplanet.lucy.installer.databasedrivers.DatabaseDriversPackage=true
 package.de.uplanet.lucy.installer.oracle.OraclePackage=true
 de.uplanet.lucy.installer.oracle.OraclePackage.driver=12r2
+de.uplanet.lucy.installer.portalserver.distributed.PortalServerDistributedPackage.firstInstance=true
+de.uplanet.lucy.installer.portalserver.distributed.PortalServerDistributedPackage.installationShare=/share

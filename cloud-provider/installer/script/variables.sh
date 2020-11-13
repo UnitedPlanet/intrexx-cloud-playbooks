@@ -16,9 +16,9 @@ PORTAL_NAME=intrexx
 # Dir which contains the intrexx related data (e.g. the trunk zip) 
 DATA_DIR=./awsDeploy/data
 # Name of the intrexx linux setup tarball (without the path; the dir path should be set in 'DATA_DIR')
-INTREXX_SETUP_LINUX=intrexx-20.03-linux-x86_64.tar.gz
+INTREXX_SETUP_LINUX=intrexx-20.09-linux-x86_64.tar.gz
 # Name of the intrexx windows setup tarball (without the path; the dir path should be set in 'DATA_DIR')
-INTREXX_SETUP_WIN=intrexx-20.03-windows-x86_64.zip
+INTREXX_SETUP_WIN=intrexx-20.09-windows-x86_64.zip
 
 # For local setup file
 INTREXX_ZIP=professional.zip

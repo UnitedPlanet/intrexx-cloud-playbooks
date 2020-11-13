@@ -1,5 +1,5 @@
 #Intrexx installation configuration
-config.file.version=9000100
+config.file.version=9050000
 installation.dir={{ ix_home }}
 source.dir={{ ix_remote_home }}/{{ ix_setup_folder }}
 instance.daemon.manager=SYSTEMD
@@ -22,3 +22,5 @@ de.uplanet.lucy.installer.onlineupdate.OnlineUpdatePackage.fileType=false
 package.de.uplanet.lucy.installer.solr.SolrPackage=true
 de.uplanet.lucy.installer.solr.SolrPackage.host=0.0.0.0
 de.uplanet.lucy.installer.solr.SolrPackage.port=8983
+de.uplanet.lucy.installer.portalserver.distributed.PortalServerDistributedPackage.firstInstance=true
+de.uplanet.lucy.installer.portalserver.distributed.PortalServerDistributedPackage.installationShare=/share
