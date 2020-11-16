@@ -116,7 +116,7 @@ The upload is similar to the procedure earlier and therefore not described in mo
 First of all, the required Docker images for Intrexx must be prepared and built:
 
 1. Clone repository `git clone https://github.com/UnitedPlanet/intrexx-cloud-playbooks` and change to folder `kubernetes/linux`.
-2. Download Intrexx setup tarball via `wget https://download.unitedplanet.com/intrexx/90400/intrexx-20.09-linux-x86_64.tar.gz` and extract it into the repository root folder: `tar cvfz intrexx-20.09-linux-x86_64.tar.gz`. Then rename the `IX_20.09` folder to `intrexx`.
+2. Download Intrexx setup tarball via `wget https://download.unitedplanet.com/intrexx/90500/intrexx-20.09-linux-x86_64.tar.gz` and extract it into the repository root folder: `tar cvfz intrexx-20.09-linux-x86_64.tar.gz`. Then rename the `IX_20.09` folder to `intrexx`.
 3. Open `setup/resources/portal_config.xml` and verify the settings.
 4. Now build the Intrexx Docker images. Execute `./build_image.sh` to start the Intrexx setup process. You should see the output of the setup process in the console.
 5. After the build finished successfully, you will have a new `portal` folder and `portal.tar.gz` file. This contains all files for the shared portal folder. Furthermore, three Docker images were created and stored in the local Docker registry. One for the application servers (`ixcloud`), one for Solr (`ixcloudsolr`) and one for the Postgresql database (`ixclouddb`). Check that the images are available with `docker images`.

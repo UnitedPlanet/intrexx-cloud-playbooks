@@ -28,7 +28,7 @@ if      [ $OPERATING_SYSTEM == "linux" ]; then
     ssh -o "StrictHostKeyChecking no" -i $SSH_KEY $AWS_ADMIN_USER_LINUX@$PROVISIONING_PUBLIC_IP "echo '[dbserver]' > $TEMP_HOSTS_FILE && echo $DB_DNS_ADDRESS >> $TEMP_HOSTS_FILE && echo "" >> $TEMP_HOSTS_FILE && cat ~/cloud-playbooks/hosts_azure >> $TEMP_HOSTS_FILE"
     ssh -o "StrictHostKeyChecking no" -i $SSH_KEY $AWS_ADMIN_USER_LINUX@$PROVISIONING_PUBLIC_IP "mv $TEMP_HOSTS_FILE ~/cloud-playbooks/hosts_$CLOUD_PROVIDER"
     echo "[PROVISIONING_MACHINE] - Download Intrexx setup"
-    ssh -o "StrictHostKeyChecking no" -i $SSH_KEY $AWS_ADMIN_USER_LINUX@$PROVISIONING_PUBLIC_IP "wget -nv -O ~/cloud-playbooks/files/$INTREXX_SETUP_LINUX https://download.unitedplanet.com/intrexx/90400/$INTREXX_SETUP_LINUX"
+    ssh -o "StrictHostKeyChecking no" -i $SSH_KEY $AWS_ADMIN_USER_LINUX@$PROVISIONING_PUBLIC_IP "wget -nv -O ~/cloud-playbooks/files/$INTREXX_SETUP_LINUX https://download.unitedplanet.com/intrexx/90500/$INTREXX_SETUP_LINUX"
     echo "[PROVISIONING_MACHINE] - Download Intrexx setup finished"
 elif    [ $OPERATING_SYSTEM == "win" ]; then
     echo "[PROVISIONING_MACHINE] - Copying files for the ansible windows installation"
@@ -37,7 +37,7 @@ elif    [ $OPERATING_SYSTEM == "win" ]; then
     ssh -o "StrictHostKeyChecking no" -i $SSH_KEY $AWS_ADMIN_USER_LINUX@$PROVISIONING_PUBLIC_IP "echo '[dbserver]' > $TEMP_HOSTS_FILE && echo $DB_DNS_ADDRESS >> $TEMP_HOSTS_FILE && echo "" >> $TEMP_HOSTS_FILE && cat ~/cloud-playbooks/hosts >> $TEMP_HOSTS_FILE"
     ssh -o "StrictHostKeyChecking no" -i $SSH_KEY $AWS_ADMIN_USER_LINUX@$PROVISIONING_PUBLIC_IP "mv $TEMP_HOSTS_FILE ~/cloud-playbooks/hosts_$CLOUD_PROVIDER"
     echo "[PROVISIONING_MACHINE] - Download Intrexx setup"
-    ssh -o "StrictHostKeyChecking no" -i $SSH_KEY $AWS_ADMIN_USER_LINUX@$PROVISIONING_PUBLIC_IP "wget -nv -O ~/cloud-playbooks/files/$INTREXX_SETUP_WIN https://download.unitedplanet.com/intrexx/90400/$INTREXX_SETUP_WIN" 
+    ssh -o "StrictHostKeyChecking no" -i $SSH_KEY $AWS_ADMIN_USER_LINUX@$PROVISIONING_PUBLIC_IP "wget -nv -O ~/cloud-playbooks/files/$INTREXX_SETUP_WIN https://download.unitedplanet.com/intrexx/90500/$INTREXX_SETUP_WIN" 
     echo "[PROVISIONING_MACHINE] - Download Intrexx setup finished"
 fi
 
