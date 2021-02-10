@@ -116,7 +116,7 @@ The upload is similar to the procedure earlier and therefore not described in mo
 First of all, the required Docker images for Intrexx must be prepared and built:
 
 1. Clone repository `git clone https://github.com/UnitedPlanet/intrexx-cloud-playbooks` and change to folder `kubernetes/linux`.
-2. Download Intrexx setup tarball via `wget https://download.unitedplanet.com/intrexx/90500/intrexx-20.09-linux-x86_64.tar.gz` and extract it into the repository root folder: `tar cvfz intrexx-20.09-linux-x86_64.tar.gz`. Then rename the `IX_20.09` folder to `intrexx`.
+2. Download Intrexx setup tarball via `wget https://download.unitedplanet.com/intrexx/90500/intrexx-21.03-linux-x86_64.tar.gz` and extract it into the repository root folder: `tar cvfz intrexx-21.03-linux-x86_64.tar.gz`. Then rename the `IX_21.03` folder to `intrexx`.
 3. Open `setup/resources/portal_config.xml` and verify the settings.
 4. Now build the Intrexx Docker images. Execute `./build_image.sh` to start the Intrexx setup process. You should see the output of the setup process in the console.
 5. After the build finished successfully, you will have a new `portal` folder and `portal.tar.gz` file. This contains all files for the shared portal folder. Furthermore, three Docker images were created and stored in the local Docker registry. One for the application servers (`ixcloud`), one for Solr (`ixcloudsolr`) and one for the Postgresql database (`ixclouddb`). Check that the images are available with `docker images`.
@@ -598,22 +598,22 @@ kubectl apply -f appserver.yaml
 To install online updates in your Intrexx cluster, execute the following steps on a VM in the private network of your cluster (where you build the Intrexx docker images).
 
 1. Edit environment.sh.
-2. Extract Intrexx 20.09 setup to `/intrexx` folder.
+2. Extract Intrexx 21.03 setup to `/intrexx` folder.
 3. Backup the production database and NFS shared portal folder contents.
-4. Build new 20.09 images with the `build_image.sh` script. The updates will be downloaded and installed during the setup process. Afterwards tag  the new images with `20.09.XX` and `latest`. Replace `XX` with the OU patch level.
+4. Build new 21.03 images with the `build_image.sh` script. The updates will be downloaded and installed during the setup process. Afterwards tag  the new images with `21.03.XX` and `latest`. Replace `XX` with the OU patch level.
 5. Delete the ixcloud- and ixcloud-manager-deployments in your Kubernetes cluster to stop all running Intrexx instances.
 6. Mount nfs shared folder to the folder `share` on the local machine where you built the new images.  
 ```bash
 mount -t nfs nfs-server-host:/share /path/to/your/repos/intrexx-cloud-playbooks/kubernetes/linux/share
 ```
-7. Start a shell in an appserver container based on your current 20.09.XX-1 image (not the previously built image) with an interactive shell:
+7. Start a shell in an appserver container based on your current 21.03.XX-1 image (not the previously built image) with an interactive shell:
 ```bash
 docker run -ti -v /path/to/your/repos/intrexx-cloud-playbooks/kubernetes/linux/intrexx:/tmp/ix-setup \
     -v /path/to/your/repos/intrexx-cloud-playbooks/kubernetes/linux/share/cfg:/opt/intrexx/cfg \
     -v /path/to/your/repos/intrexx-cloud-playbooks/kubernetes/linux/share/bin:/opt/intrexx/bin \
     -v /path/to/your/repos/intrexx-cloud-playbooks/kubernetes/linux/share/portal:/opt/intrexx/org/cloud \
     --name="ixcloudupgrade" \
-    ixcloud:20.09.X /bin/bash
+    ixcloud:21.03.X /bin/bash
 ```
 8. Downlad and install the the online updates. This will patch the shared portal folder contents and the database.
 ```bash
@@ -621,12 +621,12 @@ docker run -ti -v /path/to/your/repos/intrexx-cloud-playbooks/kubernetes/linux/i
 /opt/intrexx/bin/linux/updinstall.sh
 ```
 9. Exit the shell and stop and remove the Docker container.
-10. Now update the container image tag in the Kubernetes deployment files (`appserver.yaml´ and ´appserver-manager.yaml`) to use the newly created image with the latest patches `20.09.XX`.
+10. Now update the container image tag in the Kubernetes deployment files (`appserver.yaml´ and ´appserver-manager.yaml`) to use the newly created image with the latest patches `21.03.XX`.
 11. Redeploy the appserver deployments. Your Intrexx cluster is now updated to the latest patch level.
 
 Kubernetes deployments provide the ability to apply software updates to a running cluster without restarting all instances at once. Currently this would take the following steps. Be aware that this is not a safe update process (because of the running instances while the database and shared folder are being patched) and must be tested first on a test cluster before updating a production cluster.
 
-1. Build new portalserver image including the online updates and tag it with the current Intrexx version (e.g. ixcloud:20.09.1 for OU1) as described above but without deleting the running cluster instances.
+1. Build new portalserver image including the online updates and tag it with the current Intrexx version (e.g. ixcloud:21.03.1 for OU1) as described above but without deleting the running cluster instances.
 2. Upload the image to the container registry.
 3. Update the image version tag in the Kubernetes deployment descriptors.
 4. Follow the instructions [here](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/) to restart and update the portal server instances in Kubernetes. Kubernetes will start and kill instances in such a way that there are always enough instances running to serve requests during the update process.
@@ -636,12 +636,12 @@ Kubernetes deployments provide the ability to apply software updates to a runnin
 
 ### Upgrade process
 
-To upgrade Intrexx from 19.03 to 20.09, execute the following steps on a VM in the private network of your cluster (where you build the Intrexx/OU docker images).
+To upgrade Intrexx from 19.03 to 21.03, execute the following steps on a VM in the private network of your cluster (where you build the Intrexx/OU docker images).
 
 1) Edit environment.sh.
-2) Extract Intrexx 20.09 setup to `/intrexx` subfolder and download/copy `zookeeper-jute-3.5.5.jar` to `intrexx/lib/` folder.
+2) Extract Intrexx 21.03 setup to `/intrexx` subfolder and download/copy `zookeeper-jute-3.5.5.jar` to `intrexx/lib/` folder.
 3) Backup the production database and NFS shared portal folder contents.
-4) Build new 20.09 images with the `build_image.sh` script and tag them with `20.09` or `latest`.
+4) Build new 21.03 images with the `build_image.sh` script and tag them with `21.03` or `latest`.
 5) Delete the contents in folder `share/`.
 6) Delete the ixcloud- and ixcloud-manager-deployments in your Kubernetes cluster to stop all running Intrexx instances.
 7) Mount nfs shared folder on the local Docker machine where you built the new images to the shared folder.  
@@ -674,7 +674,7 @@ de.uplanet.lucy.installer.portalserver.distributed.PortalServerDistributedPackag
 16) The upgrade process might leave older Ignite jar files in the `lib/distributed` folder. Check the contents of the folder and delete older `ignite-*-2.7.*.jars`.
 17) Enable console in `log4j2.xml`.
 18) Unmount the NFS share.
-19) Edit the Kubernetes appserver deploment files and change image tag to 20.09.X. 
+19) Edit the Kubernetes appserver deploment files and change image tag to 21.03.X. 
 20) Redeploy the ixcloud-deployment(s) in Kubernetes.
 
 ## Appendix
