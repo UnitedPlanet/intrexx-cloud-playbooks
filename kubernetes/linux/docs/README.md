@@ -632,14 +632,14 @@ Kubernetes deployments provide the ability to apply software updates to a runnin
 4. Follow the instructions [here](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/) to restart and update the portal server instances in Kubernetes. Kubernetes will start and kill instances in such a way that there are always enough instances running to serve requests during the update process.
 5. Run a new portal server manager pod and execute an interactive bash console in the pod. On the terminal, call the shell scripts to download and apply online updates to the shared portal folder and database. Wait until the job has finished, then exit and kill the pod.
 
-## Upgrade from Intrexx 19.03/20.03
+## Upgrade from Intrexx 19.03/20.03/20.09
 
 ### Upgrade process
 
 To upgrade Intrexx from 19.03 to 21.03, execute the following steps on a VM in the private network of your cluster (where you build the Intrexx/OU docker images).
 
 1) Edit environment.sh.
-2) Extract Intrexx 21.03 setup to `/intrexx` subfolder and download/copy `zookeeper-jute-3.5.5.jar` to `intrexx/lib/` folder.
+2) Extract Intrexx 21.03 setup to `/intrexx` subfolder.
 3) Backup the production database and NFS shared portal folder contents.
 4) Build new 21.03 images with the `build_image.sh` script and tag them with `21.03` or `latest`.
 5) Delete the contents in folder `share/`.
@@ -663,19 +663,16 @@ de.uplanet.lucy.installer.portalserver.distributed.PortalServerDistributedPackag
 de.uplanet.lucy.installer.portalserver.distributed.PortalServerDistributedPackage.installationShare=/opt/intrexx
 ```
 10) Copy file setup/resources/configuration.properties to `/tmp/ix-setup`.
-11) Remove symbolic link (crashes setup) `rm /opt/intrexx/java/current`.
-12) Remove content (crashes setup) `rm -rf /opt/intrexx/lib/update/*`.
-13) Remove content (crashes setup) `rm -rf /opt/intrexx/client/lib/update/*`.
-14) Start the intrexx upgrade:
+11) Start the intrexx upgrade:
 ```bash
 /tmp/ix-setup/setup.sh --configFile=configuration.properties -t --upgrade
 ```
-15) Check `internal/cfg/spring/00-ignite-cfg.xml` settings and edit overwritten properties (Ignite tmp path, tcp cluster address finder bean and path).
-16) The upgrade process might leave older Ignite jar files in the `lib/distributed` folder. Check the contents of the folder and delete older `ignite-*-2.7.*.jars`.
-17) Enable console in `log4j2.xml`.
-18) Unmount the NFS share.
-19) Edit the Kubernetes appserver deploment files and change image tag to 21.03.X. 
-20) Redeploy the ixcloud-deployment(s) in Kubernetes.
+12) Check `internal/cfg/spring/00-ignite-cfg.xml` settings and edit overwritten properties (Ignite tmp path, tcp cluster address finder bean and path).
+13) The upgrade process might leave older Ignite jar files in the `lib/distributed` folder. Check the contents of the folder and delete older `ignite-*-2.7.*.jars`.
+14) Enable console in `log4j2.xml`.
+15) Unmount the NFS share.
+16) Edit the Kubernetes appserver deploment files and change image tag to 21.03.X. 
+17) Redeploy the ixcloud-deployment(s) in Kubernetes.
 
 ## Appendix
 
