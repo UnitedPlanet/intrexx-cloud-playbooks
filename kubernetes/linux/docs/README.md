@@ -119,7 +119,7 @@ First of all, the required Docker images for Intrexx must be prepared and built:
 2. Download Intrexx setup tarball via `wget https://download.unitedplanet.com/intrexx/90500/intrexx-21.03-linux-x86_64.tar.gz` and extract it into the repository root folder: `tar cvfz intrexx-21.03-linux-x86_64.tar.gz`. Then rename the `IX_21.03` folder to `intrexx`.
 3. Open `setup/resources/portal_config.xml` and verify the settings.
 4. Now build the Intrexx Docker images. Execute `./build_image.sh` to start the Intrexx setup process. You should see the output of the setup process in the console.
-5. After the build finished successfully, you will have a new `portal` folder and `portal.tar.gz` file. This contains all files for the shared portal folder. Furthermore, three Docker images were created and stored in the local Docker registry. One for the application servers (`ixcloud`), one for Solr (`ixcloudsolr`) and one for the Postgresql database (`ixclouddb`). Check that the images are available with `docker images`.
+5. After the build finished successfully, you will have a new `share` folder and `share.tar.gz` file. This contains all files for the shared portal folder. Furthermore, three Docker images were created and stored in the local Docker registry. One for the application servers (`ixcloud`), one for Solr (`ixcloudsolr`) and one for the Postgresql database (`ixclouddb`). Check that the images are available with `docker images`.
 
 ## Docker container registry
 
@@ -168,7 +168,7 @@ Install Solr Cloud on the NFS server instance.
 
 ### Creating the portal folder
 
-Copy (scp) the previously built `portal.tar.gz` onto the VM and extract to the `/share` folder.
+Copy (scp) the previously built `share.tar.gz` onto the VM and extract to the `/share` folder.
 
 ```bash
 scp server_share.tar.gz ubuntu@40.68.162.226:~/
